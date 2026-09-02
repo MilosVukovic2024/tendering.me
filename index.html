@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="sr-Latn-ME">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tendering.me — Javna nabavka po zakonu. Bez diskriminacije.</title>
+<meta name="description" content="AI forenzika javnih nabavki u Crnoj Gori. Od pojašnjenja tenderske dokumentacije do tužbe Upravnom sudu.">
+<style>
+  :root{
+    --ink:#1d1d1f; --grey:#6e6e73; --hair:#d2d2d7; --cloud:#f5f5f7; --paper:#ffffff;
+    --accent:#1e4dd8;
+    --display:-apple-system,"SF Pro Display","Helvetica Neue",Inter,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    --max:980px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--display);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:10;height:48px;background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:100%}
+  .brand{font-weight:600;font-size:17px;letter-spacing:-.02em;color:var(--ink)}
+  .brand span{color:var(--grey);font-weight:400}
+  nav ul{display:flex;gap:28px;list-style:none;font-size:12px}
+  nav ul a{color:var(--ink);opacity:.8}
+  nav ul a:hover{opacity:1;text-decoration:none}
+  .pill{background:var(--accent);color:#fff;padding:5px 12px;border-radius:999px;font-size:12px}
+  .pill:hover{text-decoration:none;filter:brightness(1.08)}
+
+  /* type scale */
+  h1,h2,h3{font-weight:600;letter-spacing:-.025em;line-height:1.08}
+  h1{font-size:clamp(44px,8vw,80px)}
+  h2{font-size:clamp(34px,5vw,56px)}
+  h3{font-size:24px;letter-spacing:-.015em}
+  .lede{font-size:clamp(19px,2.3vw,28px);color:var(--grey);font-weight:400;letter-spacing:-.01em;line-height:1.3}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--grey)}
+  section{padding:120px 0}
+  section.cloud{background:var(--cloud)}
+  .center{text-align:center}
+  .measure{max-width:640px;margin-left:auto;margin-right:auto}
+
+  /* hero */
+  .hero{padding:96px 0 60px;text-align:center}
+  .hero h1{max-width:820px;margin:0 auto 18px}
+  .hero .lede{max-width:600px;margin:0 auto 32px}
+  .cta{display:inline-flex;align-items:center;gap:10px;font-size:17px;padding:12px 24px;border-radius:999px;background:var(--accent);color:#fff}
+  .cta:hover{text-decoration:none;filter:brightness(1.08)}
+  .cta.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  /* signature: fingerprint */
+  .print{width:min(420px,70vw);height:auto;margin:64px auto 0;display:block}
+  .print path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 2.4s cubic-bezier(.4,0,.2,1) forwards}
+  .print path:nth-child(2n){animation-delay:.15s}.print path:nth-child(3n){animation-delay:.3s}.print path:nth-child(5n){animation-delay:.45s}
+  .print path.flag{stroke:var(--accent);stroke-width:3;animation-delay:2.2s;animation-duration:1s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  /* procedure – a real sequence, so numbering carries meaning */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 24px;margin-top:64px}
+  .step{padding:24px 0;border-top:1px solid var(--ink)}
+  .step .n{font-family:var(--mono);font-size:12px;color:var(--grey);margin-bottom:10px}
+  .step h3{font-size:19px;margin-bottom:8px}
+  .step p{font-size:14px;color:var(--grey)}
+  .foot{font-size:13px;color:var(--grey);margin-top:32px}
+  .step .law{font-family:var(--mono);font-size:11px;color:var(--grey);margin-top:12px}
+
+  .ico{width:36px;height:36px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px;display:block}
+  .ill{width:min(520px,90vw);height:auto;display:block;margin:56px auto 0}
+  .ill .l{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .ill .stamp{fill:none;stroke:var(--accent);stroke-width:3;transform:rotate(-12deg);transform-origin:400px 210px}
+  .ill .stampt{font-family:var(--display);font-weight:700;font-size:30px;fill:var(--accent);letter-spacing:-.02em;transform:rotate(-12deg);transform-origin:400px 210px}
+  /* big number */
+  .stat{font-size:clamp(72px,14vw,160px);font-weight:600;letter-spacing:-.04em;line-height:1}
+  .stat small{font-size:.35em;color:var(--grey);font-weight:500;letter-spacing:-.02em;vertical-align:baseline;margin-left:.15em}
+  .stat-note{color:var(--grey);font-size:19px;max-width:520px;margin:20px auto 0}
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:72px;max-width:760px;margin-left:auto;margin-right:auto}
+  .pillar .stat{font-size:clamp(56px,7vw,96px)}
+  .pillar .stat-note{font-size:16px;max-width:300px}
+
+  /* features */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:64px}
+  .card{background:var(--paper);border-radius:22px;padding:40px 36px;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end}
+  .cloud .card{background:var(--paper)} section:not(.cloud) .card{background:var(--cloud)}
+  .card .eyebrow{margin-bottom:auto}
+  .card h3{margin-bottom:10px}
+  .card p{color:var(--grey);font-size:17px}
+  .card.wide{grid-column:1/-1;min-height:220px}
+  .spec{font-family:var(--mono);font-size:13px;line-height:1.7;background:var(--ink);color:#e8e8ed;border-radius:14px;padding:18px 20px;margin-bottom:24px;overflow-x:auto}
+  .spec mark{background:rgba(30,77,216,.35);color:#fff;padding:0 3px;border-radius:3px}
+
+  /* pricing */
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:760px;margin:56px auto 0}
+  .plan{border:1px solid var(--hair);border-radius:22px;padding:36px 32px;background:var(--paper)}
+  .plan.pro{border-color:var(--ink)}
+  .plan .name{font-size:24px;font-weight:600;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px}
+  .plan.pro .name{font-size:30px}
+  .plan.pro li{font-size:17px}
+  .price{font-size:48px;font-weight:600;letter-spacing:-.03em;line-height:1}
+  .price small{font-size:17px;color:var(--grey);font-weight:400;letter-spacing:0}
+  .yearly{font-size:13px;color:var(--grey);margin:6px 0 24px}
+  .plan ul{list-style:none;margin:0 0 28px;font-size:15px}
+  .plan li{padding:8px 0;border-top:1px solid var(--hair)}
+  .plan li.pro-only::before{content:"Max · ";color:var(--accent);font-weight:600}
+  .plan .cta{width:100%;justify-content:center}
+
+  /* footer */
+  footer{padding:40px 0;font-size:12px;color:var(--grey);border-top:1px solid var(--hair)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1;transform:none;transition:none}
+    .print path{animation:none;stroke-dashoffset:0}
+    html{scroll-behavior:auto}
+  }
+  @media (max-width:820px){
+    nav ul{display:none}
+    .pillars{grid-template-columns:1fr;gap:56px}
+    .steps{grid-template-columns:1fr 1fr}
+    .grid2,.plans{grid-template-columns:1fr}
+    section{padding:80px 0}
+  }
+  @media (max-width:480px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#">Tendering<span>.me</span></a>
+    <ul>
+      <li><a href="#postupak">Postupak</a></li>
+      <li><a href="#cijene">Cijene</a></li>
+      <li><a class="pill" href="mailto:office@fidelityconsulting.me?subject=Upit%20%E2%80%94%20Tendering.me">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Javna nabavka po zakonu. Bez diskriminacije.</h1>
+    <p class="lede">Vi napišete koji postupak pokrećemo. Mi uradimo sve ostalo — najkasnije za 24 sata.</p>
+
+    <svg class="print" viewBox="0 0 400 300" aria-label="Otisak prsta sastavljen od linija tenderske dokumentacije" role="img">
+      <path d="M200 40c-70 0-125 55-125 125 0 35 10 70 30 95"/>
+      <path d="M200 60c-58 0-105 47-105 105 0 30 8 58 24 82"/>
+      <path d="M200 80c-47 0-85 38-85 85 0 26 7 50 20 70"/>
+      <path d="M200 100c-36 0-65 29-65 65 0 20 6 40 16 57"/>
+      <path d="M200 120c-25 0-45 20-45 45 0 16 5 32 13 46"/>
+      <path d="M200 140c-14 0-25 11-25 25 0 12 4 24 10 35"/>
+      <path d="M200 40c70 0 125 55 125 125 0 35-10 70-30 95"/>
+      <path d="M200 60c58 0 105 47 105 105 0 30-8 58-24 82"/>
+      <path d="M200 80c47 0 85 38 85 85 0 26-7 50-20 70"/>
+      <path d="M200 100c36 0 65 29 65 65 0 20-6 40-16 57"/>
+      <path d="M200 120c25 0 45 20 45 45 0 16-5 32-13 46"/>
+      <path class="flag" d="M200 140c14 0 25 11 25 25 0 12-4 24-10 35"/>
+      <path d="M200 160v90"/>
+    </svg>
+    <p class="lede measure" style="margin-top:40px;font-size:19px">Za Vas radimo kompletnu analizu javne nabavke kao i sve zakonski propisane procedure u vezi iste — bez obzira na predmet tendera: roba, usluge ili radovi.</p>
+  </div>
+</header>
+
+<section id="postupak" class="cloud">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Cijeli postupak po ZJN</p>
+      <h2 style="margin-top:12px;max-width:760px">Od tenderske dokumentacije do Upravnog suda.</h2>
+      <p class="lede" style="margin-top:16px;max-width:640px">Deset koraka postupka po ZJN, za svaki predmet nabavke — od vozila i medicinske opreme do softvera i građevinskih radova. Za svaki Tendering.me isporučuje analizu i dokument najkasnije za 24 sata — dovoljno rano za svaki rok koji zakon propisuje.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/><path d="M15 21h12M21 15v12"/></svg><div class="n">1</div><h3>Istraživanje tržišta</h3><p>Tehnički dijalog i prethodno istraživanje — prilika da se uslovi oblikuju prije objave.</p><div class="law">Tehnički dijalog</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 6h16l8 8v28H12z"/><path d="M28 6v8h8"/><path d="M18 22h12M18 28h12M18 34h8"/></svg><div class="n">2</div><h3>Pregled TD</h3><p>Forenzička analiza specifikacije čim se objavi: sakriveni brend, nesrazmjerni uslovi, rokovi.</p><div class="law">Nalaz</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 10h32v22H22l-8 8v-8H8z"/><path d="M24 16c-3 0-5 2-5 4"/><path d="M24 16c3 0 5 2 5 4s-5 3-5 6"/><circle cx="24" cy="28" r=".8"/></svg><div class="n">3</div><h3>Priprema zahtjeva za pojašnjenje TD</h3><p>Precizna pitanja koja naručioca obavezuju da otkrije šta zapravo nabavlja.</p><div class="law">ZJN čl. 94</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 6h16l8 8v28H12z"/><path d="M28 6v8h8"/><path d="M32 24l6 6-10 10-7 1 1-7z"/></svg><div class="n">4</div><h3>Priprema zahtjeva za izmjenu TD</h3><p>Predlog za izmjenu diskriminatornih uslova, sa obrazloženjem koje naručilac mora razmotriti.</p><div class="law">ZJN čl. 94</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 10h20v32H14z"/><path d="M19 6h10v6H19z"/><path d="M19 20h10M19 26h10M19 32h6"/></svg><div class="n">5</div><h3>Analiza zapisnika</h3><p>Analiza zapisnika: ko je ponudio, koliko, i šta u ponudama ne odgovara uslovima.</p><div class="law">Zapisnik</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 12h14v28H8z"/><path d="M26 12h14v28H26z"/><path d="M12 20h6M12 26h6M30 20h6M30 26h6"/></svg><div class="n">6</div><h3>Analiza ponuda</h3><p>Pregled konkurentskih ponuda, stavka po stavka, i priprema dokaza.</p><div class="law">Zahtjev za uvid</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h28v32H10z"/><path d="M16 22l6 6 10-12"/></svg><div class="n">7</div><h3>Analiza odluke naručioca</h3><p>Analiza odluke o izboru ili obustavi postupka — osnov za žalbu ili prihvatanje.</p><div class="law">Ocjena odluke</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 12h36v24H6z"/><path d="M6 12l18 14 18-14"/><path d="M28 30l6-6 6 6M34 24v12"/></svg><div class="n">8</div><h3>Pisanje žalbe Komisiji*</h3><p>Žalba Komisiji za zaštitu prava u postupcima javnih nabavki, spremna za podnošenje, sa navodima i dokazima.</p><div class="law">ZJN čl. 185</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8v32M10 40h28"/><path d="M8 18h32"/><path d="M12 18l-6 12h12zM36 18l-6 12h12z"/></svg><div class="n">9</div><h3>Analiza rješenja Komisije</h3><p>Analiza rješenja Komisije za zaštitu prava u postupcima javnih nabavki i poređenje sa praksom iz baze od 4.800+ rješenja.</p><div class="law">Analiza rješenja</div></div>
+      <div class="step rv"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40h32M10 18h28M24 8L8 18h32z"/><path d="M14 18v22M24 18v22M34 18v22"/></svg><div class="n">10</div><h3>Pisanje tužbe Upravnom sudu*</h3><p>Tužba Upravnom sudu kada Komisija pogriješi — i praćenje izvršenja presude.</p><div class="law">Tužba</div></div>
+    </div>
+    <p class="foot rv">* Zahtijeva finalnu provjeru od strane klijenta.</p>
+  </div>
+</section>
+
+<section class="center">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Brzina · Kvalitet</p>
+      <h2 style="margin-top:12px">Svaki korak gotov najkasnije za 24 sata.</h2>
+      <p class="lede measure" style="margin-top:16px">Rokovi po ZJN se mjere danima. Zato svaki dokument (analizu, zahtjev, žalbu ili tužbu) isporučujemo najkasnije za 24 sata od prijema instrukcije od klijenta.</p>
+    </div>
+    <svg class="ill rv" viewBox="0 0 520 300" aria-label="Dokument sa žigom 24h" role="img">
+      <path d="M120 30h180l60 60v190H120z" class="l"/><path d="M300 30v60h60" class="l"/>
+      <path d="M150 120h140M150 150h180M150 180h120M150 210h160M150 240h100" class="l"/>
+      <circle cx="400" cy="210" r="56" class="stamp"/><circle cx="400" cy="210" r="46" class="stamp"/>
+      <text x="400" y="222" text-anchor="middle" class="stampt">24 h</text>
+    </svg>
+    <div class="pillars">
+      <div class="pillar rv"><div class="stat">24<small>h</small></div><p class="stat-note">od prijema instrukcije klijenta do gotovog dokumenta, za svaki od deset koraka postupka.</p></div>
+      <div class="pillar rv"><div class="stat">15<small>mil €</small></div><p class="stat-note">vrijednost tendera u kojima je naša analiza dovela do izmjene dokumentacije ili poništenja postupka.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cijene" class="cloud center">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Cijene</p>
+      <h2 style="margin-top:12px">Dva paketa. Bez sitnih slova.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan rv">
+        <div class="name">Osnovni</div>
+        <div class="price">499 €<small>/mj*</small></div>
+        <div class="yearly">ili 5.499 € godišnje · *bez PDV</div>
+        <ul style="text-align:left">
+          <li>Do 3 postupka mjesečno</li>
+          <li>Svaki korak gotov najkasnije za 24 sata</li>
+          <li>Forenzička analiza specifikacija</li>
+          <li>Zahtjevi za pojašnjenje i izmjenu TD</li>
+        </ul>
+        <a class="cta ghost" href="mailto:office@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj&body=Po%C5%A1tovani%2C%0Azainteresovan%20sam%20za%20paket%20Osnovni%20%28499%20%E2%82%AC/mj%20bez%20PDV%2C%20ili%205.499%20%E2%82%AC%2Fgod%2C%20do%203%20postupka%20mjese%C4%8Dno%29.%0ABran%C5%A1a%20/%20predmet%20nabavki%20koje%20pratimo%3A%0A%0A%0AIme%20i%20firma%3A%0ATelefon%3A%0A">Izaberi Osnovni</a>
+      </div>
+      <div class="plan pro rv">
+        <div class="name">Max</div>
+        <div class="price">1.499 €<small>/mj*</small></div>
+        <div class="yearly">ili 16.499 € godišnje · *bez PDV</div>
+        <ul style="text-align:left">
+          <li>Neograničen broj postupaka iz vaše branše</li>
+          <li>Svaki korak gotov najkasnije za 24 sata</li>
+          <li>Sve iz Osnovnog paketa</li>
+          <li class="pro-only">Pretraga i analiza rješenja Komisije za zaštitu prava u postupcima javnih nabavki</li>
+          <li class="pro-only">Uvid u ponude i analiza odluke</li>
+          <li class="pro-only">Žalba Komisiji za zaštitu prava u postupcima javnih nabavki*</li>
+          <li class="pro-only">Analiza rješenja Komisije i tužba Upravnom sudu*</li>
+        </ul>
+        <p class="foot" style="margin:-12px 0 20px;text-align:left">* Zahtijeva finalnu provjeru od strane klijenta.</p>
+        <a class="cta" href="mailto:office@fidelityconsulting.me?subject=Paket%20Max%20%E2%80%94%201.499%20%E2%82%AC/mj&body=Po%C5%A1tovani%2C%0Azainteresovan%20sam%20za%20paket%20Max%20%281.499%20%E2%82%AC/mj%20bez%20PDV%2C%20ili%2016.499%20%E2%82%AC%2Fgod%2C%20neograni%C4%8Deno%20iz%20bran%C5%A1e%29.%0ABran%C5%A1a%20/%20predmet%20nabavki%20koje%20pratimo%3A%0A%0A%0AIme%20i%20firma%3A%0ATelefon%3A%0A">Izaberi Max</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="center">
+  <div class="wrap rv">
+    <h2>Pošaljite nam tender.</h2>
+    <p class="lede measure" style="margin-top:16px">Prvu analizu radimo bez naknade. Ako otisak postoji, naći ćemo ga.</p>
+    <div class="ctas" style="margin-top:32px">
+      <a class="cta" href="mailto:office@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu&body=Po%C5%A1tovani%2C%0A%C5%A1aljem%20tender%20za%20prvu%20analizu%20%28link%20na%20CEJN%20ili%20prilog%29%3A%0A%0A%0AIme%20i%20firma%3A%0ATelefon%3A%0A">office@fidelityconsulting.me</a>
+      <a class="cta ghost" href="tel:+38267525774">067 525 774</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Tendering.me · Fidelity Consulting d.o.o. Podgorica</span>
+    <span>Javna nabavka po zakonu. Bez diskriminacije.</span>
+  </div>
+</footer>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%5)*60+'ms';io.observe(el)});
+</script>
+</body>
+</html>
