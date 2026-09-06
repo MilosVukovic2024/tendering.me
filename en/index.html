@@ -112,7 +112,6 @@
         <a href="#forenzika" data-i18n="navDemo" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Forenzika</a>
         <a href="/usluge/" data-i18n="navSteps" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Usluge</a>
         <a href="/vodic/" data-i18n="navGuides" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Vodiči</a>
-        <a href="/praksa/" data-i18n="navPraksa" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Praksa</a>
         <a href="#cijene" data-i18n="navPrice" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Cijene</a>
         <div style="display:flex;border:2px solid #201e1d">
           <a href="/" id="btn-me" class="lang-btn" hreflang="sr-Latn-ME" style="padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.06em">ME</a>
@@ -496,7 +495,7 @@
 
 const T = {
   me: {
-    navDemo: "Forenzika", navSteps: "Usluge", navGuides: "Vodiči", navPraksa: "Praksa", navPrice: "Cijene", navContact: "Kontakt",
+    navDemo: "Forenzika", navSteps: "Usluge", navGuides: "Vodiči", navPrice: "Cijene", navContact: "Kontakt",
     heroKicker: "Javne nabavke · Crna Gora",
     heroTitleA: "Javne nabavke u Crnoj Gori po zakonu.", heroTitleB: "Bez diskriminacije.",
     heroLede: "Vi kažete koji korak pokrećemo. Mi isporučimo analizu i dokument — najkasnije za 24 sata.",
@@ -540,7 +539,7 @@ const T = {
     faq5q: "Radite li za strane ponuđače?", faq5a: "Da — dokumenti na crnogorskom za podnošenje preko ESJN-a, komunikacija i sažeci na engleskom."
   },
   en: {
-    navDemo: "Forensics", navSteps: "Services", navGuides: "Guide", navPraksa: "Appeals", navPrice: "Pricing", navContact: "Contact",
+    navDemo: "Forensics", navSteps: "Services", navGuides: "Guide", navPrice: "Pricing", navContact: "Contact",
     heroKicker: "Public procurement · Montenegro",
     heroTitleA: "Public procurement in Montenegro, by the book.", heroTitleB: "Without discrimination.",
     heroLede: "You name the step. We deliver the analysis and the document — within 24 hours.",
@@ -717,7 +716,7 @@ let scanTimer = null, stepTimer = null, countRaf = null;
 function renderText() {
   const t = T[state.lang];
   if (state.lang === "en") {
-    const L = { navSteps: "/en/services/tender-documentation-review/", navGuides: "/en/guide/montenegro-public-procurement-law/", navPraksa: "/en/services/tender-appeal-montenegro/", navPrice: "/en/pricing/",
+    const L = { navSteps: "/en/services/tender-documentation-review/", navGuides: "/en/guide/montenegro-public-procurement-law/", navPrice: "/en/pricing/",
                 faq1l: "/en/services/tender-appeal-montenegro/", faq2l: "/en/services/tender-appeal-montenegro/", faq3l: "/en/guide/montenegro-public-procurement-law/" };
     Object.keys(L).forEach((k) => { const el = document.querySelector('[data-i18n="' + k + '"]'); if (el) el.href = L[k]; });
   }

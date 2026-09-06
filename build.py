@@ -157,7 +157,7 @@ def render(meta, body_md, extra_schema=None):
         "NAV_HOME": "/en/" if lang == "en" else "/",
         "NAV": (('<a href="/en/services/tender-appeal-montenegro/">Appeals</a><a href="/en/guide/montenegro-public-procurement-law/">Guide</a><a href="/en/pricing/">Pricing</a><a href="/">ME</a>')
                 if lang == "en" else
-                '<a href="/usluge/">Usluge</a><a href="/vodic/">Vodiči</a><a href="/praksa/">Praksa</a><a href="/blog/">Blog</a><a href="/cijene/">Cijene</a><a href="/en/">EN</a>'),
+                '<a href="/usluge/">Usluge</a><a href="/vodic/">Vodiči</a><a href="/cijene/">Cijene</a><a href="/en/">EN</a>'),
         "YEAR": str(datetime.date.today().year),
     }.items():
         out = out.replace("{{" + k + "}}", v)
