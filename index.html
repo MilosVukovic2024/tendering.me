@@ -31,6 +31,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap">
 <style>
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  #top,#forenzika,#postupak,#cijene,#pitanja,#kontakt{scroll-margin-top:72px}
   body{margin:0;background:#f3f2f2;color:#201e1d;font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:#96040e;text-decoration:none}
   a:hover{color:#d40511}
@@ -1011,6 +1013,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, { threshold: 0.12 });
   document.querySelectorAll("[data-rv]").forEach((el) => io.observe(el));
+
+  // Skok na sekciju preko linka (#postupak i sl.): odmah prikaži njen sadržaj, bez čekanja na scroll-reveal.
+  const revealTarget = () => {
+    const t = location.hash && document.querySelector(location.hash);
+    if (!t) return;
+    t.querySelectorAll("[data-rv]").forEach((el) => { el.setAttribute("data-in", ""); io.unobserve(el); });
+    if (t.hasAttribute("data-rv")) { t.setAttribute("data-in", ""); io.unobserve(t); }
+  };
+  revealTarget();
+  window.addEventListener("hashchange", revealTarget);
 
   const poster = document.querySelector("[data-poster]");
   const statsIo = new IntersectionObserver((entries) => {
