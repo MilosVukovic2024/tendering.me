@@ -18,7 +18,7 @@ from pathlib import Path
 import markdown
 
 ROOT = Path(__file__).parent
-SITE = "https://tendering.me"
+SITE = "https://www.tendering.me"
 CONTENT = ROOT / "content"
 TEMPLATE = (ROOT / "templates" / "page.html").read_text(encoding="utf-8")
 TODAY = datetime.date.today().isoformat()
