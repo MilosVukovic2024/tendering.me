@@ -110,7 +110,7 @@
       <a href="#top" style="font-size:19px;font-weight:800;letter-spacing:-.03em;color:#201e1d">Tendering<span style="color:#d40511">.me</span></a>
       <div style="display:flex;align-items:center;gap:28px">
         <a href="#forenzika" data-i18n="navDemo" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Forenzika</a>
-        <a href="/usluge/" data-i18n="navSteps" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">10 koraka javne nabavke</a>
+        <a href="#postupak" data-i18n="navSteps" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">10 koraka javne nabavke</a>
         <a href="/vodic/" data-i18n="navGuides" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Vodiči</a>
         <a href="#cijene" data-i18n="navPrice" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Cijene</a>
         <div style="display:flex;border:2px solid #201e1d">
@@ -738,7 +738,7 @@ let scanTimer = null, stepTimer = null, countRaf = null;
 function renderText() {
   const t = T[state.lang];
   if (state.lang === "en") {
-    const L = { navSteps: "/en/services/tender-documentation-review/", navGuides: "/en/guide/montenegro-public-procurement-law/", navPrice: "/en/pricing/",
+    const L = { navGuides: "/en/guide/montenegro-public-procurement-law/", navPrice: "/en/pricing/",
                 faq1l: "/en/services/tender-appeal-montenegro/", faq2l: "/en/services/tender-appeal-montenegro/", faq3l: "/en/guide/montenegro-public-procurement-law/" };
     Object.keys(L).forEach((k) => { const el = document.querySelector('[data-i18n="' + k + '"]'); if (el) el.href = L[k]; });
   }
