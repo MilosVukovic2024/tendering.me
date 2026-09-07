@@ -23,7 +23,7 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 <li>Forenzička analiza specifikacija</li>
 <li>Zahtjevi za pojašnjenje i predlozi za izmjenu tenderske dokumentacije</li>
 </ul>
-<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj">Izaberi Osnovni</a>
+<a class="btn btn-outline" href="mailto:tendering@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj">Izaberi Osnovni</a>
 </div>
 <div class="plan">
 <div class="name">Max <span class="tag">Cijeli postupak</span></div>
@@ -37,7 +37,7 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 <li>Žalba Komisiji za zaštitu prava*</li>
 <li>Tužba Upravnom sudu i praćenje izvršenja*</li>
 </ul>
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Paket%20Max%20%E2%80%94%201.499%20%E2%82%AC/mj">Izaberi Max</a>
+<a class="btn btn-red" href="mailto:tendering@fidelityconsulting.me?subject=Paket%20Max%20%E2%80%94%201.499%20%E2%82%AC/mj">Izaberi Max</a>
 </div>
 </div>
 
@@ -55,7 +55,7 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 <li>Test kumulativnog efekta sa tabelom proizvođača</li>
 <li>U roku od 24 sata, bez obaveze pretplate</li>
 </ul>
-<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
+<a class="btn btn-outline" href="mailto:tendering@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
 </div>
 <div class="plan">
 <div class="name">Pretplata <span class="tag">Neograničeno</span></div>
@@ -66,7 +66,7 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 <li>Završna provjera prije objave na ESJN</li>
 <li>Svaki dokument u roku od 24 sata</li>
 </ul>
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
+<a class="btn btn-red" href="mailto:tendering@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
 </div>
 </div>
 

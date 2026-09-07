@@ -66,4 +66,4 @@ teme: kumulativni-efekat, vjestacenje, rokovi-postupka     # slugovi iz TEMA_OPI
 
 ## Kontakt
 
-office@fidelityconsulting.me · 067 525 774
+tendering@fidelityconsulting.me · 067 525 774

@@ -18,7 +18,7 @@ The first tender documentation review is free. A subscription starts when you de
 - Forensic analysis of specifications
 - Clarification and amendment requests
 
-<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Basic%20package%20%E2%80%94%20%E2%82%AC499/mo">Choose Basic</a>
+<a class="btn btn-outline" href="mailto:tendering@fidelityconsulting.me?subject=Basic%20package%20%E2%80%94%20%E2%82%AC499/mo">Choose Basic</a>
 
 ## Max — full procedure — €1,499 / month (or €16,499 / year), excl. VAT
 
@@ -29,7 +29,7 @@ The first tender documentation review is free. A subscription starts when you de
 - Appeal to the Commission for Protection of Rights*
 - Administrative Court claim and enforcement follow-through*
 
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Max%20package%20%E2%80%94%20%E2%82%AC1,499/mo">Choose Max</a>
+<a class="btn btn-red" href="mailto:tendering@fidelityconsulting.me?subject=Max%20package%20%E2%80%94%20%E2%82%AC1,499/mo">Choose Max</a>
 
 *\* Requires final review by the client; court representation is by an attorney.*
 

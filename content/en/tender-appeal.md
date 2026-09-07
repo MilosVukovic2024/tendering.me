@@ -54,7 +54,7 @@ Included in the **Max** package (1,499 €/month or 16,499 €/year, excl. VAT).
 
 *Every document requires final review by the client before filing.*
 
-[Send the tender — free first assessment] · office@fidelityconsulting.me · +382 67 525 774
+[Send the tender — free first assessment] · tendering@fidelityconsulting.me · +382 67 525 774
 
 ---
 *Related:* [Tender documentation review](/en/services/tender-documentation-review/) · [Montenegro public procurement law — guide](/en/guide/montenegro-public-procurement-law/)

@@ -28,7 +28,7 @@ ORG = {
     "@id": SITE + "/#organization", "name": "Tendering.me",
     "legalName": "Fidelity Consulting d.o.o.", "url": SITE + "/",
     "image": SITE + "/og-image.png", "telephone": "+382 67 525 774",
-    "email": "office@fidelityconsulting.me",
+    "email": "tendering@fidelityconsulting.me",
     "address": {"@type": "PostalAddress", "streetAddress": "Baku 5", "postalCode": "81000", "addressLocality": "Podgorica", "addressCountry": "ME"},
     "vatID": "02822199",
     "areaServed": {"@type": "Country", "name": "Montenegro"},
@@ -67,7 +67,7 @@ def front_matter(text):
     return meta, m.group(2)
 
 
-MAILTO = "mailto:office@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu"
+MAILTO = "mailto:tendering@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu"
 
 
 def md(text):

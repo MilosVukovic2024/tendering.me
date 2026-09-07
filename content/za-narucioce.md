@@ -69,7 +69,7 @@ Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. B
 <li>Nalaz u roku od 24 sata</li>
 <li>Bez obaveze pretplate</li>
 </ul>
-<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
+<a class="btn btn-outline" href="mailto:tendering@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
 </div>
 <div class="plan">
 <div class="name">Pretplata <span class="tag">Neograničeno</span></div>
@@ -81,7 +81,7 @@ Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. B
 <li>Završna provjera prije objave na ESJN</li>
 <li>Svaki dokument u roku od 24 sata</li>
 </ul>
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
+<a class="btn btn-red" href="mailto:tendering@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
 </div>
 </div>
 
@@ -93,4 +93,4 @@ Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. B
 
 **Radite li i sa ponuđačima?** Da — to je druga strana istog posla. Ali nikad na istom postupku za obje strane.
 
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Kontrola%20nacrta%20tenderske%20dokumentacije">Pošaljite nacrt dokumentacije</a>
+<a class="btn btn-red" href="mailto:tendering@fidelityconsulting.me?subject=Kontrola%20nacrta%20tenderske%20dokumentacije">Pošaljite nacrt dokumentacije</a>

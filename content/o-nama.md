@@ -18,7 +18,7 @@ Ne dajemo mišljenje. Dajemo nalaz koji je već upoređen sa onim što su Komisi
 |---|---|
 | **Adresa** | Baku 5, 81000 Podgorica, Crna Gora |
 | **PIB** | 02822199 |
-| **E-mail** | [office@fidelityconsulting.me](mailto:office@fidelityconsulting.me) |
+| **E-mail** | [tendering@fidelityconsulting.me](mailto:tendering@fidelityconsulting.me) |
 | **Telefon** | [+382 67 525 774](tel:+38267525774) |
 
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Upit%20%E2%80%94%20Tendering.me">Kontaktirajte nas</a>
+<a class="btn btn-red" href="mailto:tendering@fidelityconsulting.me?subject=Upit%20%E2%80%94%20Tendering.me">Kontaktirajte nas</a>

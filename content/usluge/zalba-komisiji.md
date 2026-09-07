@@ -65,7 +65,7 @@ Ako Komisija odbije žalbu, sljedeći korak je [tužba Upravnom sudu](/usluge/tu
 
 **Koliko traje odlučivanje?** Komisija odlučuje u zakonskom roku od prijema kompletne dokumentacije; u praksi obično nekoliko nedelja. Postupak nabavke je zaustavljen dok traje.
 
-[Pošaljite tender — prva analiza besplatna] · office@fidelityconsulting.me · 067 525 774
+[Pošaljite tender — prva analiza besplatna] · tendering@fidelityconsulting.me · 067 525 774
 
 ---
 *Povezano:* [Rokovi za žalbu](/vodic/rokovi-za-zalbu/) · [Naknada 1 %](/vodic/naknada-za-zalbu/) · [Diskriminacija u specifikaciji](/vodic/diskriminacija-u-tehnickoj-specifikaciji/) · [Predlog za izmjenu](/usluge/predlog-za-izmjenu-tenderske-dokumentacije/)

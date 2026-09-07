@@ -72,7 +72,7 @@ Judicial review before the Administrative Court. The Court does not review exped
 
 Tendering.me drafts every filing in Montenegrin for ESJN submission, with analysis and communication in English, within 24 hours. First documentation review is free.
 
-[Send us a tender — free first review] · office@fidelityconsulting.me · +382 67 525 774
+[Send us a tender — free first review] · tendering@fidelityconsulting.me · +382 67 525 774
 
 ---
 *Related:* [Tender appeal in Montenegro](/en/services/tender-appeal-montenegro/) · [Tender documentation review](/en/services/tender-documentation-review/)
