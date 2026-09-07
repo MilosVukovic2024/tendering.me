@@ -146,6 +146,7 @@
         <a href="#forenzika" data-i18n="navDemo" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Forenzika</a>
         <a href="#postupak" data-i18n="navSteps" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">10 koraka javne nabavke</a>
         <a href="/za-narucioce/" data-i18n="navBuyers" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Za naručioce</a>
+        <a href="/primjeri/" data-i18n="navCases" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Primjeri iz prakse</a>
         <a href="/vodic/" data-i18n="navGuides" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Vodiči</a>
         <a href="#cijene" data-i18n="navPrice" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Cijene</a>
         <div style="display:flex;border:2px solid #201e1d">
@@ -550,7 +551,7 @@
 
 const T = {
   me: {
-    navDemo: "Forenzika", navSteps: "10 koraka javne nabavke", navGuides: "Vodiči", navBuyers: "Za naručioce", navPrice: "Cijene", navContact: "Kontakt",
+    navDemo: "Forenzika", navSteps: "10 koraka javne nabavke", navGuides: "Vodiči", navBuyers: "Za naručioce", navCases: "Primjeri iz prakse", navPrice: "Cijene", navContact: "Kontakt",
     heroKicker: "Javne nabavke · Crna Gora",
     heroTitleA: "Javne nabavke u Crnoj Gori po zakonu.", heroTitleB: "Bez diskriminacije.",
     heroLede: "Vi kažete koji korak pokrećemo. Mi isporučimo analizu i dokument — najkasnije za 24 sata.",
@@ -595,7 +596,7 @@ const T = {
     dlgStep: "Korak", dlgWhen: "Kada", dlgMore: "Detaljno o ovom koraku →", dlgCta: "Pošaljite tender", dlgClose: "Zatvori"
   },
   en: {
-    navDemo: "Forensics", navSteps: "10 steps of procurement", navGuides: "Guide", navBuyers: "For authorities", navPrice: "Pricing", navContact: "Contact",
+    navDemo: "Forensics", navSteps: "10 steps of procurement", navGuides: "Guide", navBuyers: "For authorities", navCases: "Case studies", navPrice: "Pricing", navContact: "Contact",
     heroKicker: "Public procurement · Montenegro",
     heroTitleA: "Public procurement in Montenegro, by the book.", heroTitleB: "Without discrimination.",
     heroLede: "You name the step. We deliver the analysis and the document — within 24 hours.",
@@ -773,7 +774,7 @@ let scanTimer = null, stepTimer = null, countRaf = null;
 function renderText() {
   const t = T[state.lang];
   if (state.lang === "en") {
-    const L = { navGuides: "/en/guide/montenegro-public-procurement-law/", navBuyers: "/za-narucioce/", navPrice: "/en/pricing/",
+    const L = { navGuides: "/en/guide/montenegro-public-procurement-law/", navBuyers: "/za-narucioce/", navCases: "/primjeri/", navPrice: "/en/pricing/",
                 faq1l: "/en/services/tender-appeal-montenegro/", faq2l: "/en/services/tender-appeal-montenegro/", faq3l: "/en/guide/montenegro-public-procurement-law/" };
     Object.keys(L).forEach((k) => { const el = document.querySelector('[data-i18n="' + k + '"]'); if (el) el.href = L[k]; });
   }
