@@ -60,8 +60,19 @@
   .cta .links a:hover{background:#000}
   footer .wrap{padding:32px;display:flex;flex-wrap:wrap;gap:16px 28px;justify-content:space-between;font-size:12px;font-weight:600;color:#605d5d}
   footer a{color:#605d5d}footer a:hover{color:#d40511}
-  @media (max-width:900px){.cta .wrap{grid-template-columns:1fr;padding:48px 32px}.nav{gap:14px}}
-  @media (max-width:600px){.wrap{padding:0 20px}.nav a{font-size:12px}}
+  @media (max-width:900px){
+    .cta .wrap{grid-template-columns:1fr;padding:48px 32px}
+    .bar .wrap{height:auto;min-height:60px;flex-wrap:wrap;padding:10px 20px}
+    .nav{gap:6px 14px;width:100%;justify-content:flex-start}
+    .nav .btn{margin-left:auto}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 20px}.bar .wrap{padding:10px 20px}
+    .nav a{font-size:12px}.nav .btn{width:100%;justify-content:center;margin:6px 0 0}
+    article{padding:20px 0 56px}article h1{font-size:32px}article h2{font-size:22px;margin-top:40px}
+    article p,article li{font-size:16px}
+    .cta .wrap{padding:40px 20px}footer .wrap{padding:24px 20px}
+  }
 </style>
 </head>
 <body>

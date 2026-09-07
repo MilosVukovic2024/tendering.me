@@ -87,6 +87,33 @@
     [data-g="steps"]{grid-template-columns:repeat(2,1fr) !important}
   }
   @media (max-width:900px){
+    body{overflow-x:hidden}
+    #bar{padding:0 20px !important;flex-wrap:wrap;height:auto !important;min-height:60px}
+    #nav-toggle{display:inline-block !important}
+    #nav{display:none !important;width:100%;flex-direction:column;align-items:stretch !important;gap:0 !important;padding:6px 0 14px;border-top:2px solid #d7d3d3}
+    #nav.open{display:flex !important}
+    #nav > a{padding:13px 0;border-bottom:2px solid #eae9e9;font-size:15px !important}
+    #nav > a.btn-red{margin-top:12px;justify-content:center;padding:14px 18px !important;border-bottom:0}
+    #nav > div{margin-top:12px;align-self:flex-start}
+    #top > [data-g="split"] > *:first-child{padding:44px 0 40px !important}
+    #top > [data-g="split"] > *:last-child{padding:24px 0 !important;max-height:300px}
+    #top > [data-g="split"] svg{max-width:240px}
+    [data-paper]{display:none}
+    #forenzika > div,#postupak > div,#cijene > div,#pitanja > div,#kontakt > div{padding:56px 20px 64px !important}
+    #forenzika [data-g="split"] > *{padding:24px 0 28px !important}
+    #forenzika #tabs{margin-top:28px !important}
+    .foot{padding:24px 20px !important}
+    .tab-btn{flex:1 1 100% !important;border-right:0 !important;border-bottom:2px solid #d7d3d3}
+    #steps-grid{margin-top:28px !important}
+    [data-poster] > div{padding:56px 20px 60px !important}
+    [data-poster] [data-g="poster"]{margin-top:36px !important}
+    #cijene [data-g="split"] > *{padding:28px 0 32px !important;background:transparent !important}
+    #kontakt > div{gap:28px !important}
+    .goods-head{padding:56px 20px 0 !important}
+    [data-marquee]{margin-top:28px !important;padding-bottom:56px !important}
+    [data-marquee] figure{width:260px !important}
+    [data-marquee] figure > div{height:180px !important}
+    #step-dialog > div{padding:22px 20px 26px !important}
     [data-g]{grid-template-columns:1fr !important;gap:0 !important}
     [data-g="split"] > *{border-left:0 !important;padding-left:0 !important;padding-right:0 !important;border-top:2px solid #201e1d}
     [data-g="split"] > *:first-child{border-top:0}
@@ -96,7 +123,11 @@
     [data-g="stats"]{grid-template-columns:1fr !important;gap:2px !important}
     [data-g="stats"] > *{padding:16px 0 16px !important}
     [data-g="poster"] > *{padding:28px 0 28px !important}
-    h1{font-size:44px !important}
+    h1{font-size:40px !important}
+    h2{font-size:clamp(28px,8vw,40px) !important}
+    [data-g="stats"] > *{padding:14px 0 !important}
+    [data-g="stats"] > * > div:first-child{font-size:26px !important}
+    [data-g="poster"] > * > div:first-child{font-size:clamp(40px,12vw,64px) !important}
   }
   @media (max-width:560px){
     [data-g="steps"]{grid-template-columns:1fr !important}
@@ -108,9 +139,10 @@
 <div style="min-height:100vh;background:#f3f2f2">
 
   <div style="position:sticky;top:0;z-index:20;background:#f3f2f2;border-bottom:2px solid #201e1d">
-    <div style="max-width:1280px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <div id="bar" style="max-width:1280px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px">
       <a href="#top" style="font-size:19px;font-weight:800;letter-spacing:-.03em;color:#201e1d">Tendering<span style="color:#d40511">.me</span></a>
-      <div style="display:flex;align-items:center;gap:28px">
+      <button type="button" id="nav-toggle" aria-label="Meni" aria-expanded="false" aria-controls="nav" style="display:none;border:2px solid #201e1d;background:transparent;font:inherit;font-weight:700;font-size:13px;letter-spacing:.06em;padding:8px 12px;cursor:pointer">MENI</button>
+      <div id="nav" style="display:flex;align-items:center;gap:28px">
         <a href="#forenzika" data-i18n="navDemo" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Forenzika</a>
         <a href="#postupak" data-i18n="navSteps" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">10 koraka javne nabavke</a>
         <a href="/vodic/" data-i18n="navGuides" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Vodiči</a>
@@ -259,7 +291,7 @@
   </div>
 
   <div style="border-bottom:2px solid #201e1d;overflow:hidden">
-    <div style="max-width:1280px;margin:0 auto;padding:80px 32px 0">
+    <div class="goods-head" style="max-width:1280px;margin:0 auto;padding:80px 32px 0">
       <div data-rv style="display:flex;flex-wrap:wrap;gap:24px;align-items:end;justify-content:space-between">
         <div>
           <span data-i18n="goodsKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Predmeti nabavke</span>
@@ -484,7 +516,7 @@
     </div>
   </div>
 
-  <div style="max-width:1280px;margin:0 auto;padding:32px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:12px;font-weight:600;color:#605d5d">
+  <div class="foot" style="max-width:1280px;margin:0 auto;padding:32px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:12px;font-weight:600;color:#605d5d">
     <span>© 2026 Tendering.me · Fidelity Consulting d.o.o. Podgorica</span>
     <span><a href="/usluge/" style="color:#605d5d">Usluge</a> · <a href="/vodic/" style="color:#605d5d">Vodiči</a> · <a href="/praksa/" style="color:#605d5d">Praksa</a> · <a href="/blog/" style="color:#605d5d">Blog</a> · <a href="/o-nama/" style="color:#605d5d">O nama</a> · <a href="/en/" style="color:#605d5d">English</a></span>
     <span data-i18n="footTag">Javna nabavka po zakonu. Bez diskriminacije.</span>
@@ -1000,6 +1032,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("scan-btn").addEventListener("click", () => runScan());
 
   render();
+
+  const navT = document.getElementById("nav-toggle"), nav = document.getElementById("nav");
+  navT.addEventListener("click", () => { const o = nav.classList.toggle("open"); navT.setAttribute("aria-expanded", o ? "true" : "false"); });
+  nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { nav.classList.remove("open"); navT.setAttribute("aria-expanded", "false"); }));
 
   const dlg = document.getElementById("step-dialog");
   document.getElementById("dlg-close").addEventListener("click", () => dlg.close());
