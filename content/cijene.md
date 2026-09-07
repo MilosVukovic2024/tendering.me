@@ -32,6 +32,12 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 
 *\* Zahtijeva finalnu provjeru od strane klijenta; zastupanje pred sudom vrši advokat.*
 
+## Za naručioce — kontrola dokumentacije prije objave
+
+**999 € mjesečno + PDV** za neograničen broj upita, ili **199 € + PDV za jednu analizu** nacrta tenderske dokumentacije. [Šta obuhvata →](/za-narucioce/)
+
+<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Kontrola%20nacrta%20tenderske%20dokumentacije">Pošaljite nacrt dokumentacije</a>
+
 ## Česta pitanja
 
 **Da li je naknada za žalbu (1 %) uključena u cijenu?** Ne — naknada iz čl. 188 ZJN plaća se Komisiji i trošak je klijenta. Vraća se ako je žalba osnovana. [O naknadi →](/vodic/naknada-za-zalbu/)
@@ -40,4 +46,4 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 
 **Šta znači „24 sata"?** Od trenutka kad dobijemo vašu instrukciju i kompletnu dokumentaciju do gotovog dokumenta, radnim danima.
 
-**Radite li za naručioce?** Da — preventivnu kontrolu nacrta tenderske dokumentacije prije objave, da dokumentacija ne padne na Komisiji.
+**Radite li za naručioce?** Da — preventivnu kontrolu nacrta tenderske dokumentacije prije objave: 999 €/mj za neograničen broj upita ili 199 € po analizi. [Detaljno →](/za-narucioce/)

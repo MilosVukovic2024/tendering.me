@@ -56,11 +56,21 @@ Izmjena dokumentacije kasnije od 15 dana prije roka za ponude povlači obavezno 
 
 Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. Bez brendiranja — dokument je interni radni materijal naručioca.
 
+## Cijena
+
+**Pretplata — 999 € mjesečno + PDV.** Neograničen broj upita: svaki nacrt dokumentacije, izmjena, pojašnjenje i završna provjera prije objave — bez brojanja postupaka.
+
+**Pojedinačna analiza — 199 € + PDV.** Jedan nacrt tenderske dokumentacije, kompletan dvodjelni dokument (nalaz + predlog korigovanih odredbi). Bez obaveze pretplate.
+
+<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Pretplata 999 €/mj</a> <a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Jedna analiza 199 €</a>
+
 ## Česta pitanja
 
 **Da li ovo znači da specifikacija mora biti „najblaža moguća"?** Ne. Legitimno strog zahtjev sa dokumentovanim objektivnim opravdanjem je potpuno u redu — i reći ćemo vam koje zahtjeve ne treba mijenjati.
 
 **Šta ako na tržištu stvarno postoje samo dva proizvođača?** Specifikacija zbog toga nije nezakonita, ali to stanje tržišta mora biti dokumentovano ispitivanjem tržišta (čl. 85) i konstatovano u spisima prije objave.
+
+**Šta ako imamo više nabavki mjesečno?** Pretplata od 999 € pokriva neograničen broj upita; već od šest analiza mjesečno je jeftinija od pojedinačnih.
 
 **Radite li i sa ponuđačima?** Da — to je druga strana istog posla. Ali nikad na istom postupku za obje strane.
 
