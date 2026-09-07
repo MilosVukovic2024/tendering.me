@@ -80,7 +80,6 @@ Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. B
 <li>Izmjene, pojašnjenja i odgovori na predloge ponuđača</li>
 <li>Završna provjera prije objave na ESJN</li>
 <li>Svaki dokument u roku od 24 sata</li>
-<li>Isplativije već od šest analiza mjesečno</li>
 </ul>
 <a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
 </div>
@@ -91,8 +90,6 @@ Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. B
 **Da li ovo znači da specifikacija mora biti „najblaža moguća"?** Ne. Legitimno strog zahtjev sa dokumentovanim objektivnim opravdanjem je potpuno u redu — i reći ćemo vam koje zahtjeve ne treba mijenjati.
 
 **Šta ako na tržištu stvarno postoje samo dva proizvođača?** Specifikacija zbog toga nije nezakonita, ali to stanje tržišta mora biti dokumentovano ispitivanjem tržišta (čl. 85) i konstatovano u spisima prije objave.
-
-**Šta ako imamo više nabavki mjesečno?** Pretplata od 999 € pokriva neograničen broj upita; već od šest analiza mjesečno je jeftinija od pojedinačnih.
 
 **Radite li i sa ponuđačima?** Da — to je druga strana istog posla. Ali nikad na istom postupku za obje strane.
 
