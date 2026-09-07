@@ -29,7 +29,8 @@ ORG = {
     "legalName": "Fidelity Consulting d.o.o.", "url": SITE + "/",
     "image": SITE + "/og-image.png", "telephone": "+382 67 525 774",
     "email": "office@fidelityconsulting.me",
-    "address": {"@type": "PostalAddress", "addressLocality": "Podgorica", "addressCountry": "ME"},
+    "address": {"@type": "PostalAddress", "streetAddress": "Baku 5", "postalCode": "81000", "addressLocality": "Podgorica", "addressCountry": "ME"},
+    "vatID": "02822199",
     "areaServed": {"@type": "Country", "name": "Montenegro"},
     "founder": {"@type": "Person", "name": "Miloš Vuković", "jobTitle": "Izvršni direktor"},
 }
