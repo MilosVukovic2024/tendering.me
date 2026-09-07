@@ -53,6 +53,19 @@
   article hr{border:0;border-top:2px solid #d7d3d3;margin:36px 0}
   article a.btn{margin:6px 0 10px}
   .tbl{overflow-x:auto}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:8px 0 28px;border-top:2px solid #201e1d}
+  .plan{padding:32px 36px 36px 0}
+  .plan+.plan{border-left:2px solid #201e1d;padding:32px 0 36px 36px;background:#eae9e9}
+  .plan .name{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .plan .tag{background:#d40511;color:#fff;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .plan .price{display:flex;align-items:baseline;gap:8px;margin-top:18px}
+  .plan .price b{font-size:clamp(40px,4.4vw,60px);font-weight:800;letter-spacing:-.035em;line-height:1}
+  .plan .price span{font-size:16px;font-weight:600;color:#605d5d}
+  .plan .sub{margin-top:8px;font-size:13px;font-weight:600;color:#605d5d}
+  .plan ul{list-style:none;padding:0;margin:28px 0 0}
+  .plan li{border-top:2px solid #d7d3d3;padding:12px 0;font-size:15px;line-height:1.4;margin:0}
+  .plan .btn{margin-top:28px}
+  @media (max-width:700px){.plans{grid-template-columns:1fr}.plan{padding:28px 0 32px !important}.plan+.plan{border-left:0;border-top:2px solid #201e1d;background:transparent}}
   .cta{background:#d40511;color:#fff;border-top:2px solid #201e1d;border-bottom:2px solid #201e1d}
   .cta .wrap{padding:64px 32px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
   .cta h2{margin:0;font-size:clamp(30px,4.2vw,56px);font-weight:800;letter-spacing:-.035em;line-height:1}
@@ -88,15 +101,24 @@
   <article>
 <h1>Dva paketa. Bez sitnih slova.</h1>
 <p>Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad odlučite da idete dalje.</p>
-<h2>Osnovni — 499 € mjesečno (ili 5.499 € godišnje), bez PDV-a</h2>
+<h2>Za ponuđače</h2>
+<div class="plans" markdown="0">
+<div class="plan">
+<div class="name">Osnovni</div>
+<div class="price"><b>499 €</b><span>/mj bez PDV</span></div>
+<div class="sub">ili 5.499 € godišnje</div>
 <ul>
 <li>Do 3 postupka mjesečno</li>
 <li>Svaki korak gotov najkasnije za 24 sata</li>
 <li>Forenzička analiza specifikacija</li>
 <li>Zahtjevi za pojašnjenje i predlozi za izmjenu tenderske dokumentacije</li>
 </ul>
-<p><a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj">Izaberi Osnovni</a></p>
-<h2>Max — cijeli postupak — 1.499 € mjesečno (ili 16.499 € godišnje), bez PDV-a</h2>
+<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj">Izaberi Osnovni</a>
+</div>
+<div class="plan">
+<div class="name">Max <span class="tag">Cijeli postupak</span></div>
+<div class="price"><b>1.499 €</b><span>/mj bez PDV</span></div>
+<div class="sub">ili 16.499 € godišnje</div>
 <ul>
 <li>Neograničen broj postupaka iz vaše branše</li>
 <li>Sve iz paketa Osnovni</li>
@@ -105,11 +127,38 @@
 <li>Žalba Komisiji za zaštitu prava*</li>
 <li>Tužba Upravnom sudu i praćenje izvršenja*</li>
 </ul>
-<p><a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Paket%20Max%20%E2%80%94%201.499%20%E2%82%AC/mj">Izaberi Max</a></p>
+<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Paket%20Max%20%E2%80%94%201.499%20%E2%82%AC/mj">Izaberi Max</a>
+</div>
+</div>
+
 <p><em>* Zahtijeva finalnu provjeru od strane klijenta; zastupanje pred sudom vrši advokat.</em></p>
 <h2>Za naručioce — kontrola dokumentacije prije objave</h2>
-<p><strong>999 € mjesečno + PDV</strong> za neograničen broj upita, ili <strong>199 € + PDV za jednu analizu</strong> nacrta tenderske dokumentacije. <a href="/za-narucioce/">Šta obuhvata →</a></p>
-<p><a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Kontrola%20nacrta%20tenderske%20dokumentacije">Pošaljite nacrt dokumentacije</a></p>
+<div class="plans" markdown="0">
+<div class="plan">
+<div class="name">Pojedinačna analiza</div>
+<div class="price"><b>199 €</b><span>+ PDV</span></div>
+<div class="sub">za jedan nacrt tenderske dokumentacije</div>
+<ul>
+<li>Nalaz nekonzistentnosti + predlog korigovanih odredbi</li>
+<li>Test kumulativnog efekta sa tabelom proizvođača</li>
+<li>U roku od 24 sata, bez obaveze pretplate</li>
+</ul>
+<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
+</div>
+<div class="plan">
+<div class="name">Pretplata <span class="tag">Neograničeno</span></div>
+<div class="price"><b>999 €</b><span>/mj + PDV</span></div>
+<div class="sub">neograničen broj upita</div>
+<ul>
+<li>Svaki nacrt, izmjena i pojašnjenje</li>
+<li>Završna provjera prije objave na ESJN</li>
+<li>Svaki dokument u roku od 24 sata</li>
+</ul>
+<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
+</div>
+</div>
+
+<p><a href="/za-narucioce/">Šta obuhvata kontrola za naručioce →</a></p>
 <h2>Česta pitanja</h2>
 <p><strong>Da li je naknada za žalbu (1 %) uključena u cijenu?</strong> Ne — naknada iz čl. 188 ZJN plaća se Komisiji i trošak je klijenta. Vraća se ako je žalba osnovana. <a href="/vodic/naknada-za-zalbu/">O naknadi →</a></p>
 <p><strong>Mogu li platiti pojedinačni dokument bez pretplate?</strong> Pišite nam — za jednokratne slučajeve dogovaramo cijenu po dokumentu.</p>

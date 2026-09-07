@@ -58,11 +58,33 @@ Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. B
 
 ## Cijena
 
-**Pretplata — 999 € mjesečno + PDV.** Neograničen broj upita: svaki nacrt dokumentacije, izmjena, pojašnjenje i završna provjera prije objave — bez brojanja postupaka.
-
-**Pojedinačna analiza — 199 € + PDV.** Jedan nacrt tenderske dokumentacije, kompletan dvodjelni dokument (nalaz + predlog korigovanih odredbi). Bez obaveze pretplate.
-
-<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Pretplata 999 €/mj</a> <a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Jedna analiza 199 €</a>
+<div class="plans" markdown="0">
+<div class="plan">
+<div class="name">Pojedinačna analiza</div>
+<div class="price"><b>199 €</b><span>+ PDV</span></div>
+<div class="sub">za jedan nacrt tenderske dokumentacije</div>
+<ul>
+<li>Kompletan dvodjelni dokument: nalaz + predlog korigovanih odredbi</li>
+<li>Test kumulativnog efekta sa tabelom proizvođača</li>
+<li>Nalaz u roku od 24 sata</li>
+<li>Bez obaveze pretplate</li>
+</ul>
+<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
+</div>
+<div class="plan">
+<div class="name">Pretplata <span class="tag">Neograničeno</span></div>
+<div class="price"><b>999 €</b><span>/mj + PDV</span></div>
+<div class="sub">neograničen broj upita</div>
+<ul>
+<li>Sve iz pojedinačne analize, za svaki nacrt</li>
+<li>Izmjene, pojašnjenja i odgovori na predloge ponuđača</li>
+<li>Završna provjera prije objave na ESJN</li>
+<li>Svaki dokument u roku od 24 sata</li>
+<li>Isplativije već od šest analiza mjesečno</li>
+</ul>
+<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
+</div>
+</div>
 
 ## Česta pitanja
 

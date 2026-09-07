@@ -53,6 +53,19 @@
   article hr{border:0;border-top:2px solid #d7d3d3;margin:36px 0}
   article a.btn{margin:6px 0 10px}
   .tbl{overflow-x:auto}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:8px 0 28px;border-top:2px solid #201e1d}
+  .plan{padding:32px 36px 36px 0}
+  .plan+.plan{border-left:2px solid #201e1d;padding:32px 0 36px 36px;background:#eae9e9}
+  .plan .name{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .plan .tag{background:#d40511;color:#fff;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .plan .price{display:flex;align-items:baseline;gap:8px;margin-top:18px}
+  .plan .price b{font-size:clamp(40px,4.4vw,60px);font-weight:800;letter-spacing:-.035em;line-height:1}
+  .plan .price span{font-size:16px;font-weight:600;color:#605d5d}
+  .plan .sub{margin-top:8px;font-size:13px;font-weight:600;color:#605d5d}
+  .plan ul{list-style:none;padding:0;margin:28px 0 0}
+  .plan li{border-top:2px solid #d7d3d3;padding:12px 0;font-size:15px;line-height:1.4;margin:0}
+  .plan .btn{margin-top:28px}
+  @media (max-width:700px){.plans{grid-template-columns:1fr}.plan{padding:28px 0 32px !important}.plan+.plan{border-left:0;border-top:2px solid #201e1d;background:transparent}}
   .cta{background:#d40511;color:#fff;border-top:2px solid #201e1d;border-bottom:2px solid #201e1d}
   .cta .wrap{padding:64px 32px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
   .cta h2{margin:0;font-size:clamp(30px,4.2vw,56px);font-weight:800;letter-spacing:-.035em;line-height:1}
@@ -123,9 +136,34 @@
 </ol>
 <p>Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. Bez brendiranja — dokument je interni radni materijal naručioca.</p>
 <h2>Cijena</h2>
-<p><strong>Pretplata — 999 € mjesečno + PDV.</strong> Neograničen broj upita: svaki nacrt dokumentacije, izmjena, pojašnjenje i završna provjera prije objave — bez brojanja postupaka.</p>
-<p><strong>Pojedinačna analiza — 199 € + PDV.</strong> Jedan nacrt tenderske dokumentacije, kompletan dvodjelni dokument (nalaz + predlog korigovanih odredbi). Bez obaveze pretplate.</p>
-<p><a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Pretplata 999 €/mj</a> <a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Jedna analiza 199 €</a></p>
+<div class="plans" markdown="0">
+<div class="plan">
+<div class="name">Pojedinačna analiza</div>
+<div class="price"><b>199 €</b><span>+ PDV</span></div>
+<div class="sub">za jedan nacrt tenderske dokumentacije</div>
+<ul>
+<li>Kompletan dvodjelni dokument: nalaz + predlog korigovanih odredbi</li>
+<li>Test kumulativnog efekta sa tabelom proizvođača</li>
+<li>Nalaz u roku od 24 sata</li>
+<li>Bez obaveze pretplate</li>
+</ul>
+<a class="btn btn-outline" href="mailto:office@fidelityconsulting.me?subject=Pojedina%C4%8Dna%20analiza%20nacrta%20TD%20%E2%80%94%20199%20%E2%82%AC">Naruči analizu</a>
+</div>
+<div class="plan">
+<div class="name">Pretplata <span class="tag">Neograničeno</span></div>
+<div class="price"><b>999 €</b><span>/mj + PDV</span></div>
+<div class="sub">neograničen broj upita</div>
+<ul>
+<li>Sve iz pojedinačne analize, za svaki nacrt</li>
+<li>Izmjene, pojašnjenja i odgovori na predloge ponuđača</li>
+<li>Završna provjera prije objave na ESJN</li>
+<li>Svaki dokument u roku od 24 sata</li>
+<li>Isplativije već od šest analiza mjesečno</li>
+</ul>
+<a class="btn btn-red" href="mailto:office@fidelityconsulting.me?subject=Pretplata%20za%20naru%C4%8Dioce%20%E2%80%94%20999%20%E2%82%AC/mj">Izaberi pretplatu</a>
+</div>
+</div>
+
 <h2>Česta pitanja</h2>
 <p><strong>Da li ovo znači da specifikacija mora biti „najblaža moguća"?</strong> Ne. Legitimno strog zahtjev sa dokumentovanim objektivnim opravdanjem je potpuno u redu — i reći ćemo vam koje zahtjeve ne treba mijenjati.</p>
 <p><strong>Šta ako na tržištu stvarno postoje samo dva proizvođača?</strong> Specifikacija zbog toga nije nezakonita, ali to stanje tržišta mora biti dokumentovano ispitivanjem tržišta (čl. 85) i konstatovano u spisima prije objave.</p>
