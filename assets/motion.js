@@ -205,22 +205,20 @@
       es.forEach(function (e) {
         if (!e.isIntersecting) return;
         io.unobserve(e.target);
-        var el = e.target, hero = el.closest(".a-hero");
-        if (hero) {
-          // U heroju: brojanje kreće kad se brojka pojavi (CSS kašnjenje); ako je skripta zakasnila, ostaje statično.
-          var host = el.closest(".a-after") || el, delay = parseFloat(getComputedStyle(host).animationDelay) * 1000 || 0;
-          var elapsed = fcp ? performance.now() - fcp : 0;
-          if (elapsed > delay + 120) return;
-          return setTimeout(function () { count(el); }, Math.max(0, delay - elapsed));
-        }
-        // Van heroja: samo ako nije bila vidljiva pri učitavanju (inače bi se vidio skok konačno → 0).
-        if (el.dataset.seen) return;
-        count(el);
+        if (!e.target.dataset.seen) count(e.target);
       });
     }, { rootMargin: "0px 0px -15% 0px" });
     els.forEach(function (el) {
-      var r = el.getBoundingClientRect(), armed = el.closest(".is-armed");
-      if (!el.closest(".a-hero") && !armed && r.top < vh() && r.bottom > 0) el.dataset.seen = "1";
+      var r = el.getBoundingClientRect(), inView = r.top < vh() && r.bottom > 0;
+      if (inView && el.closest(".a-hero")) {
+        // Hero: brojanje kreće kad se brojka pojavi (CSS kašnjenje ulaska); ako je skripta zakasnila, ostaje statično.
+        var host = el.closest(".a-after") || el, delay = parseFloat(getComputedStyle(host).animationDelay) * 1000 || 0;
+        var elapsed = fcp ? performance.now() - fcp : 0;
+        if (elapsed <= delay + 120) setTimeout(function () { count(el); }, Math.max(0, delay - elapsed));
+        return;
+      }
+      // Van heroja: broji se samo ako nije bila vidljiva pri učitavanju (inače bi se vidio skok konačno → 0).
+      if (inView) el.dataset.seen = "1";
       io.observe(el);
     });
   }
@@ -239,8 +237,10 @@
         var r = box.getBoundingClientRect(), head = vh() * 0.6;
         var p = Math.max(0, Math.min(1, (head - r.top) / r.height));
         if (p > max) { max = p; line.style.transform = "scaleY(" + max.toFixed(4) + ")"; }
-        var lit = items().filter(function (x) { return x.getBoundingClientRect().top < head; })
-          .sort(function (a, b) { var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(); return ra.top - rb.top || ra.left - rb.left; });
+        // Korak se pali kad linija stigne do njegovog broja (kartica: .a-num; lista: vrh stavke, gdje je oznaka).
+        function top(x) { return (x.querySelector(".a-num") || x).getBoundingClientRect().top; }
+        var lit = items().filter(function (x) { return top(x) < head; })
+          .sort(function (a, b) { return top(a) - top(b) || a.getBoundingClientRect().left - b.getBoundingClientRect().left; });
         lit.forEach(function (x, i) { x.dataset.pending = "1"; setTimeout(function () { x.classList.add("is-on"); delete x.dataset.pending; }, i * 60); });
         if (max >= 1 && !items().length) { done = true; stop(); }
       }

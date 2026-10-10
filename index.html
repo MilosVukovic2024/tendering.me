@@ -42,49 +42,38 @@
   ::selection{background:#ffc4c7}
   :focus-visible{outline:2px solid #d40511;outline-offset:2px}
   button{font-family:inherit}
-  [data-rv]{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
-  [data-rv][data-in]{opacity:1;transform:none}
-  @keyframes draw{to{stroke-dashoffset:0}}
-  @keyframes fly{
-    0%{transform:translate3d(0,60px,0) rotate(-10deg);opacity:0}
-    10%{opacity:.95}
-    85%{opacity:.95}
-    100%{transform:translate3d(-300px,-460px,0) rotate(26deg);opacity:0}
-  }
-  @keyframes flyb{
-    0%{transform:translate3d(0,80px,0) rotate(14deg);opacity:0}
-    12%{opacity:.9}
-    88%{opacity:.9}
-    100%{transform:translate3d(180px,-500px,0) rotate(-22deg);opacity:0}
-  }
-  @keyframes pan{to{transform:translateX(-42%)}}
-  @keyframes wave{0%,100%{opacity:.15}50%{opacity:1}}
-  @keyframes roll{to{transform:rotate(360deg)}}
-  @keyframes road{to{stroke-dashoffset:-96}}
-  @keyframes hop{0%,22%{transform:translate(0,0)}28%,50%{transform:translate(84px,0)}56%,78%{transform:translate(84px,72px)}84%,100%{transform:translate(0,72px)}}
-  @keyframes fillup{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
-  @keyframes sweep{0%{stroke-dashoffset:104}55%,100%{stroke-dashoffset:0}}
-  @keyframes lift{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-  [data-marquee]:hover [data-track]{animation-play-state:paused}
-  @media (prefers-reduced-motion:reduce){
-    [data-paper],[data-track]{animation:none !important}
-    [data-paper]{opacity:.9}
-    [data-rv]{opacity:1;transform:none;transition:none}
-  }
-  @keyframes scanline{0%{top:0;opacity:0}10%{opacity:1}100%{top:100%;opacity:.9}}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-
-  .btn-red{background:#d40511;color:#fff;transition:background .2s ease}
+  .topbar{position:sticky;top:0;z-index:20;background:#f3f2f2;border-bottom:2px solid #201e1d}
+  .btn-red{background:#d40511;color:#fff}
   .btn-red:hover{background:#b00410}
-  .btn-dark{background:#201e1d;color:#f3f2f2;transition:background .2s ease}
+  .btn-dark{background:#201e1d;color:#f3f2f2}
   .btn-dark:hover{background:#d40511}
-  .btn-outline{border:2px solid #201e1d;color:#201e1d;background:transparent;transition:background .2s ease,color .2s ease}
+  .btn-outline{border:2px solid #201e1d;color:#201e1d;background:transparent}
   .btn-outline:hover{background:#201e1d;color:#f3f2f2}
-  .step-card{transition:background .2s ease}
+  .step-card{transition:background-color 200ms var(--a-ease)}
+  .a-stagger.is-in > .step-card{transition:opacity var(--a-enter) var(--a-ease) calc(var(--rb,0ms) + var(--rd,0ms)),transform var(--a-enter) var(--a-ease) calc(var(--rb,0ms) + var(--rd,0ms)),background-color 200ms var(--a-ease)}
   .step-card:hover{background:#fff0f1}
-  #scan-btn{border:0;cursor:pointer;font:inherit}
-  .tab-btn{border:0;border-right:2px solid #d7d3d3;font:inherit;cursor:pointer;transition:background .2s ease,color .2s ease}
-  .lang-btn{border:0;font:inherit;cursor:pointer;transition:background .2s ease,color .2s ease}
+  .step-num{font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511}
+  #scan-btn{border:0;cursor:pointer;font:inherit;display:inline-grid}
+  #scan-btn > span{grid-area:1/1;visibility:hidden}
+  #scan-btn[data-phase="idle"] > [data-l="idle"],#scan-btn[data-phase="scanning"] > [data-l="scanning"],#scan-btn[data-phase="done"] > [data-l="done"]{visibility:visible}
+  #scan-btn.is-busy,#scan-btn.is-busy:hover{background:#201e1d}
+  .tab-btn{border:0;border-right:2px solid #d7d3d3;font:inherit;cursor:pointer;background:transparent;color:#201e1d;flex:1 1 200px;text-align:left;padding:18px 20px;font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .tab-btn.is-active{background:#201e1d;color:#f3f2f2}
+  .lang-btn{border:0;font:inherit;cursor:pointer}
+  .scan-line{position:absolute;left:0;right:0;top:0;height:3px;background:#d40511;box-shadow:0 0 24px 6px rgba(236,48,19,.45);pointer-events:none;z-index:1}
+  .scan-line[hidden]{display:none}
+  .mk{background:#eae9e9;color:#201e1d;font-weight:600;padding:1px 0;transition:background-color 150ms var(--a-ease),color 150ms var(--a-ease)}
+  .mk-a{padding-left:4px}.mk-z{padding-right:4px}
+  .mk.is-hit{background:#d40511;color:#fff}
+  .finding{border-top:2px solid #201e1d;padding:18px 0 20px;visibility:hidden;opacity:0;transform:translateY(12px)}
+  .finding.is-in{visibility:visible;opacity:1;transform:none;transition:opacity 400ms var(--a-ease),transform 400ms var(--a-ease)}
+  #demo-cta-wrap.is-hidden{visibility:hidden}
+  .goods-scroll{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-left:32px;scrollbar-width:thin;scrollbar-color:#bab6b6 transparent}
+  .goods-scroll figure{scroll-snap-align:start}
+  .goods-scroll:focus-visible{outline-offset:-2px}
+  @media (prefers-reduced-motion:reduce){
+    .mk,.finding.is-in,.step-card,.a-stagger.is-in > .step-card{transition:none !important}
+  }
 
   @media (max-width:1080px){
     [data-g="steps"]{grid-template-columns:repeat(2,1fr) !important}
@@ -92,22 +81,22 @@
   @media (max-width:900px){
     body{overflow-x:hidden}
     #bar{padding:0 20px !important;flex-wrap:wrap;height:auto !important;min-height:60px}
-    #nav-toggle{display:inline-block !important}
-    #nav{display:none !important;width:100%;flex-direction:column;align-items:stretch !important;gap:0 !important;padding:6px 0 14px;border-top:2px solid #d7d3d3}
-    #nav.open{display:flex !important}
+    .js #nav-toggle{display:inline-block !important}
+    #nav{width:100%;flex-direction:column;align-items:stretch !important;gap:0 !important}
+    html:not(.js) #nav{padding:6px 0 14px;border-top:2px solid #d7d3d3}
+    html:not(.js) .topbar{position:relative}
     #nav > a{padding:13px 0;border-bottom:2px solid #eae9e9;font-size:15px !important}
     #nav > a.btn-red{margin-top:12px;justify-content:center;padding:14px 18px !important;border-bottom:0}
     #nav > div{margin-top:12px;align-self:flex-start}
     #top > [data-g="split"] > *:first-child{padding:44px 0 40px !important}
     #top > [data-g="split"] > *:last-child{padding:24px 0 !important;max-height:300px}
     #top > [data-g="split"] svg{max-width:240px}
-    [data-paper]{display:none}
     #forenzika > div,#postupak > div,#cijene > div,#pitanja > div,#kontakt > div{padding:56px 20px 64px !important}
     #forenzika [data-g="split"] > *{padding:24px 0 28px !important}
     #forenzika #tabs{margin-top:28px !important}
     .foot{padding:24px 20px !important}
     .tab-btn{flex:1 1 100% !important;border-right:0 !important;border-bottom:2px solid #d7d3d3}
-    #steps-grid{margin-top:28px !important}
+    #steps-wrap{margin-top:28px !important}
     [data-poster] > div{padding:56px 20px 60px !important}
     [data-poster] [data-g="poster"]{margin-top:36px !important}
     #cijene [data-g="split"] > *{padding:28px 0 32px !important;background:transparent !important}
@@ -136,6 +125,11 @@
     [data-g="steps"]{grid-template-columns:1fr !important}
   }
 </style>
+<!-- MOTION:START (build.py umeće iz assets/motion.css i motion.js) -->
+<script>document.documentElement.classList.add("js");addEventListener("pagereveal",function(e){if(e.viewTransition&&location.hash)e.viewTransition.skipTransition()})</script>
+<style>:root{--a-ease:cubic-bezier(0.16,1,0.3,1);--a-enter:600ms;--a-micro:200ms;--a-accent:#d40511;}@keyframes a-rise-t{from{transform:translateY(12px);}}@keyframes a-rise{from{opacity:0;transform:translateY(12px);}}.a-title .a-line{display:block;}.a-title br{display:none;}.js .a-hero .a-line,.js article[data-motion] > h1{animation:a-rise-t var(--a-enter) var(--a-ease) backwards;}.js .a-hero .a-line:nth-of-type(2){animation-delay:80ms;}.js .a-hero .a-line:nth-of-type(3){animation-delay:160ms;}.js .a-hero .a-after{animation:a-rise var(--a-enter) var(--a-ease) backwards;animation-delay:var(--a-delay,calc(var(--a-base,150ms) + var(--ai,0) * 60ms));}.js article[data-motion="flow"] > h1 + p{animation:a-rise-t var(--a-enter) var(--a-ease) 150ms backwards;}@keyframes a-draw{from{stroke-dashoffset:var(--a-len);}}.js .a-draw > g{--a-len:1200;animation:a-draw 900ms var(--a-ease) 100ms backwards;}.js .a-draw > path{--a-len:80;animation:a-draw 300ms var(--a-ease) 800ms backwards;}.motion .a-reveal.is-armed,.motion .a-sec.is-armed,.motion .a-stagger.is-armed > *{opacity:0;transform:translateY(16px);}.motion .a-group.is-armed .a-line,.motion .a-group.is-armed .a-after{opacity:0;transform:translateY(12px);}.a-reveal.is-in,.a-sec.is-in,.a-stagger.is-in > *,.a-group.is-in .a-line,.a-group.is-in .a-after{transition:opacity var(--a-enter) var(--a-ease),transform var(--a-enter) var(--a-ease);transition-delay:calc(var(--rb,0ms) + var(--rd,0ms));}.a-stagger > :nth-child(2){--rd:60ms;}.a-stagger > :nth-child(3){--rd:120ms;}.a-stagger > :nth-child(4){--rd:180ms;}.a-stagger > :nth-child(5){--rd:240ms;}.a-stagger > :nth-child(6){--rd:300ms;}.a-stagger > :nth-child(n+7){--rd:360ms;}.a-group .a-line:nth-of-type(2){--rd:80ms;}.a-group .a-line:nth-of-type(3){--rd:160ms;}.a-group .a-after{--rd:calc(var(--a-base,150ms) + var(--ai,0) * 60ms);}.a-instant,.a-instant > *,.a-instant .a-line,.a-instant .a-after{transition:none !important;}.a-count{font-variant-numeric:tabular-nums;}.a-count.is-counting > *{grid-area:1 / 1;}.a-count.is-counting > .a-count-real{visibility:hidden;}.a-card{position:relative;}.a-card::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 2px var(--a-accent);opacity:0;transition:opacity var(--a-micro) var(--a-ease);}.a-card > *,.a-card-media > *{transition:transform var(--a-micro) var(--a-ease);}.a-card-media{overflow:hidden;}.a-card:focus-visible::after{opacity:1;}@media (hover:hover) and (pointer:fine){.a-card:hover::after{opacity:1;}.a-card:not(:has(.a-card-media)):hover > *{transform:translateY(-2px);}.a-card:hover .a-card-media > *{transform:translateY(-4px);}}.btn,.btn-red,.btn-dark,.btn-outline,.tab-btn,.a-btn{transition:background-color 150ms var(--a-ease),color 150ms var(--a-ease),transform 150ms var(--a-ease);}.btn:active,.btn-red:active,.btn-dark:active,.btn-outline:active,.tab-btn:active,.a-btn:active{transform:scale(0.98);}.a-navlink{position:relative;}.a-navlink::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:0 50%;transition:transform var(--a-micro) var(--a-ease);}.a-navlink:focus-visible::after{transform:scaleX(1);}@media (hover:hover) and (pointer:fine){.a-navlink:hover::after{transform:scaleX(1);}}.js .a-bar{border-bottom-color:transparent;transition:background-color 0s;}.js .a-bar::before,.js .a-bar::after{content:"";position:absolute;pointer-events:none;opacity:0;transition:opacity var(--a-micro) var(--a-ease);}.js .a-bar::before{inset:0;z-index:-1;background:rgba(243,242,242,0.82);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);}.js .a-bar::after{left:0;right:0;bottom:-2px;height:2px;background:#201e1d;}.js .a-bar.is-scrolled{background-color:transparent;transition-delay:var(--a-micro);}.js .a-bar.is-scrolled::before,.js .a-bar.is-scrolled::after{opacity:1;}@media (max-width:900px){.js .a-menu{position:absolute;top:calc(100% + 2px);left:0;right:0;padding:6px 20px 14px;background:#f3f2f2;border-bottom:2px solid #201e1d;max-height:calc(100vh - 64px);max-height:calc(100dvh - 64px);overflow-y:auto;overscroll-behavior:contain;visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity 250ms var(--a-ease),transform 250ms var(--a-ease),visibility 0s linear 250ms;}.js .a-menu.open{visibility:visible;opacity:1;transform:none;transition-delay:0s;}.a-menu .a-navlink::after{display:none;}}.a-steps{position:relative;}.a-steps-line{display:none;}.a-steps.is-live > .a-steps-line{display:block;position:absolute;top:0;bottom:0;left:var(--a-line-x,0);width:2px;background:var(--a-accent);transform:scaleY(0);transform-origin:50% 0;pointer-events:none;z-index:1;}.a-num{position:relative;}.a-num-on{position:absolute;left:0;top:0;color:var(--a-accent);opacity:0;transition:opacity var(--a-micro) var(--a-ease);}.a-steps.is-live .a-num{color:#7d7979 !important;}.a-steps.is-live .is-on .a-num-on{opacity:1;}.a-steps.is-live li::marker{color:#7d7979;}.a-steps.is-live li.is-on::marker{color:var(--a-accent);}.a-sheen{position:relative;clip-path:inset(-2px 0 0 0);}.a-sheen::before{content:"";position:absolute;left:0;top:-2px;width:100%;height:2px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--a-accent) 35%,#ff8a92 50%,var(--a-accent) 65%,transparent);transform:translateX(-100%);opacity:0;}.is-in .a-sheen::before,.is-in.a-sheen::before{animation:a-sheen 900ms var(--a-ease) 350ms;}@keyframes a-sheen{from{transform:translateX(-100%);opacity:1;}80%{opacity:1;}to{transform:translateX(100%);opacity:0;}}.a-progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:40;pointer-events:none;background:var(--a-accent);transform:scaleX(0);transform-origin:0 50%;}@keyframes a-progress{to{transform:scaleX(1);}}@supports (animation-timeline:view()){article[data-motion="longread"]{view-timeline:--a-article block;}article[data-motion="longread"] > .a-progress{animation:a-progress linear both;animation-timeline:--a-article;animation-range:contain 0% contain 100%;}}@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto;}}::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation-duration:200ms;animation-timing-function:var(--a-ease);}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto !important;}.js .a-hero .a-line,.js .a-hero .a-after,.js article[data-motion] > h1,.js article[data-motion="flow"] > h1 + p,.js .a-draw > g,.js .a-draw > path,.is-in .a-sheen::before,.is-in.a-sheen::before{animation:none !important;}.a-reveal,.a-sec,.a-stagger > *,.a-group .a-line,.a-group .a-after,.a-card::after,.a-card > *,.a-card-media > *,.a-navlink::after,.a-num-on,.js .a-bar,.js .a-bar::before,.js .a-bar::after,.js .a-menu,.btn,.btn-red,.btn-dark,.btn-outline,.tab-btn,.a-btn{transition:none !important;}.btn:active,.btn-red:active,.btn-dark:active,.btn-outline:active,.tab-btn:active,.a-btn:active{transform:none;}}@media print{.is-armed,.is-armed > *,.is-armed .a-line,.is-armed .a-after{opacity:1 !important;transform:none !important;}.a-progress,.a-steps-line{display:none !important;}}</style>
+<script src="/assets/motion.js?v=04b9bdc4" defer onerror="document.documentElement.classList.remove('js')"></script>
+<!-- MOTION:END -->
 <!-- Google Ads tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-977959178"></script>
 <script>
@@ -153,17 +147,17 @@
 
 <div style="min-height:100vh;background:#f3f2f2">
 
-  <div style="position:sticky;top:0;z-index:20;background:#f3f2f2;border-bottom:2px solid #201e1d">
+  <div class="topbar a-bar">
     <div id="bar" style="max-width:1280px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px">
       <a href="#top" style="font-size:19px;font-weight:800;letter-spacing:-.03em;color:#201e1d">Tendering<span style="color:#d40511">.me</span></a>
-      <button type="button" id="nav-toggle" aria-label="Meni" aria-expanded="false" aria-controls="nav" style="display:none;border:2px solid #201e1d;background:transparent;font:inherit;font-weight:700;font-size:13px;letter-spacing:.06em;padding:8px 12px;cursor:pointer">MENI</button>
-      <div id="nav" style="display:flex;align-items:center;gap:28px">
-        <a href="#forenzika" data-i18n="navDemo" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Forenzika</a>
-        <a href="#postupak" data-i18n="navSteps" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">10 koraka javne nabavke</a>
-        <a href="/za-narucioce/" data-i18n="navBuyers" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Za naručioce</a>
-        <a href="/primjeri/" data-i18n="navCases" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Primjeri iz prakse</a>
-        <a href="/vodic/" data-i18n="navGuides" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Vodiči</a>
-        <a href="#cijene" data-i18n="navPrice" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Cijene</a>
+      <button type="button" id="nav-toggle" data-menu-toggle aria-label="Meni" aria-expanded="false" aria-controls="nav" style="display:none;border:2px solid #201e1d;background:transparent;font:inherit;font-weight:700;font-size:13px;letter-spacing:.06em;padding:8px 12px;cursor:pointer">MENI</button>
+      <div id="nav" class="a-menu" style="display:flex;align-items:center;gap:28px">
+        <a href="#forenzika" data-i18n="navDemo" class="a-navlink" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Forenzika</a>
+        <a href="#postupak" data-i18n="navSteps" class="a-navlink" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">10 koraka javne nabavke</a>
+        <a href="/za-narucioce/" data-i18n="navBuyers" class="a-navlink" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Za naručioce</a>
+        <a href="/primjeri/" data-i18n="navCases" class="a-navlink" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Primjeri iz prakse</a>
+        <a href="/vodic/" data-i18n="navGuides" class="a-navlink" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Vodiči</a>
+        <a href="#cijene" data-i18n="navPrice" class="a-navlink" style="font-size:13px;font-weight:600;letter-spacing:.02em;color:#201e1d">Cijene</a>
         <div style="display:flex;border:2px solid #201e1d">
           <a href="/" id="btn-me" class="lang-btn" hreflang="sr-Latn-ME" style="padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.06em">ME</a>
           <a href="/en/" id="btn-en" class="lang-btn" hreflang="en" style="padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.06em">EN</a>
@@ -175,60 +169,35 @@
 
   <div id="top" style="max-width:1280px;margin:0 auto;padding:0 32px">
     <div data-g="split" style="display:grid;grid-template-columns:1.35fr 1fr;gap:0;align-items:stretch;border-bottom:2px solid #201e1d">
-      <div style="padding:80px 48px 72px 0">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
-          <span style="width:9px;height:9px;background:#d40511;animation:blink 1.6s infinite"></span>
+      <div class="a-hero" style="padding:80px 48px 72px 0;--a-base:230ms">
+        <div class="a-after" style="display:flex;align-items:center;gap:10px;margin-bottom:28px;--a-delay:0ms">
+          <span style="width:9px;height:9px;background:#d40511"></span>
           <span data-i18n="heroKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#605d5d">Javne nabavke · Crna Gora</span>
         </div>
-        <h1 style="margin:0;font-size:clamp(44px,6.4vw,92px);font-weight:800;letter-spacing:-.035em;line-height:.96;text-wrap:balance"><span data-i18n="heroTitleA">Javne nabavke u Crnoj Gori po zakonu.</span><br><span data-i18n="heroTitleB" style="color:#d40511">Bez diskriminacije.</span></h1>
-        <p data-i18n="heroLede" style="margin:28px 0 0;max-width:44ch;font-size:clamp(18px,1.6vw,23px);line-height:1.35;font-weight:500;color:#444141;text-wrap:pretty">Vi kažete koji korak pokrećemo. Mi isporučimo analizu i dokument — najkasnije za 24 sata.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:40px">
+        <h1 class="a-title" style="margin:0;font-size:clamp(44px,6.4vw,92px);font-weight:800;letter-spacing:-.035em;line-height:.96;text-wrap:balance"><span class="a-line" data-i18n="heroTitleA">Javne nabavke u Crnoj Gori po zakonu.</span><br><span class="a-line" data-i18n="heroTitleB" style="color:#d40511">Bez diskriminacije.</span></h1>
+        <p data-i18n="heroLede" class="a-after" style="margin:28px 0 0;max-width:44ch;font-size:clamp(18px,1.6vw,23px);line-height:1.35;font-weight:500;color:#444141;text-wrap:pretty">Vi kažete koji korak pokrećemo. Mi isporučimo analizu i dokument — najkasnije za 24 sata.</p>
+        <div class="a-after" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:40px;--ai:1">
           <a href="#forenzika" data-i18n="heroCtaA" class="btn-red" style="display:inline-flex;align-items:center;gap:10px;padding:16px 22px;font-size:15px;font-weight:700;letter-spacing:.01em">Probajte forenziku</a>
           <a href="mailto:tendering@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu" data-i18n="heroCtaB" class="btn-outline" style="display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font-size:15px;font-weight:700;letter-spacing:.01em">Pošaljite tender</a>
         </div>
-        <div data-g="stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;border-top:2px solid #201e1d;background:#d7d3d3">
+        <div data-g="stats" class="a-after" style="--ai:2;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;border-top:2px solid #201e1d;background:#d7d3d3">
           <div style="background:#f3f2f2;padding:18px 24px 0 0">
-            <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">24 h</div>
+            <div class="a-count" data-to="24" data-suffix=" h" style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">24 h</div>
             <div data-i18n="heroF1" style="font-size:12px;font-weight:600;letter-spacing:.04em;color:#605d5d;margin-top:4px">do gotovog dokumenta</div>
           </div>
           <div style="background:#f3f2f2;padding:18px 24px 0">
-            <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">10</div>
+            <div class="a-count" data-to="10" style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">10</div>
             <div data-i18n="heroF2" style="font-size:12px;font-weight:600;letter-spacing:.04em;color:#605d5d;margin-top:4px">koraka postupka po ZJN</div>
           </div>
           <div style="background:#f3f2f2;padding:18px 0 0 24px">
-            <div style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">4.800+</div>
+            <div class="a-count" data-to="4800" data-suffix="+" style="font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1">4.800+</div>
             <div data-i18n="heroF3" style="font-size:12px;font-weight:600;letter-spacing:.04em;color:#605d5d;margin-top:4px">rješenja u bazi</div>
           </div>
         </div>
       </div>
       <div style="border-left:2px solid #201e1d;display:flex;align-items:center;justify-content:center;padding:48px 0;overflow:hidden;position:relative">
-        <div style="position:absolute;inset:0;pointer-events:none">
-          <div data-paper style="position:absolute;left:62%;bottom:-90px;width:46px;height:62px;background:#f8f4f4;border:2px solid #201e1d;animation:fly 9s linear infinite;animation-delay:0s">
-            <div style="height:2px;background:#d7d3d3;margin:12px 8px 0"></div>
-            <div style="height:2px;background:#d7d3d3;margin:6px 8px 0"></div>
-            <div style="height:2px;background:#d40511;margin:6px 8px 0;width:40%"></div>
-          </div>
-          <div data-paper style="position:absolute;left:34%;bottom:-90px;width:60px;height:80px;background:#f8f4f4;border:2px solid #201e1d;animation:fly 12s linear infinite;animation-delay:1.6s">
-            <div style="height:2px;background:#d7d3d3;margin:16px 10px 0"></div>
-            <div style="height:2px;background:#d7d3d3;margin:8px 10px 0"></div>
-            <div style="height:2px;background:#d7d3d3;margin:8px 10px 0;width:60%"></div>
-          </div>
-          <div data-paper style="position:absolute;left:14%;bottom:-90px;width:38px;height:52px;background:#f8f4f4;border:2px solid #201e1d;animation:flyb 10.5s linear infinite;animation-delay:3.2s">
-            <div style="height:2px;background:#d7d3d3;margin:10px 7px 0"></div>
-            <div style="height:2px;background:#d40511;margin:6px 7px 0;width:50%"></div>
-          </div>
-          <div data-paper style="position:absolute;left:78%;bottom:-90px;width:52px;height:70px;background:#f8f4f4;border:2px solid #201e1d;animation:flyb 14s linear infinite;animation-delay:5s">
-            <div style="height:2px;background:#d7d3d3;margin:14px 9px 0"></div>
-            <div style="height:2px;background:#d7d3d3;margin:7px 9px 0"></div>
-            <div style="height:2px;background:#d7d3d3;margin:7px 9px 0;width:45%"></div>
-          </div>
-          <div data-paper style="position:absolute;left:48%;bottom:-90px;width:34px;height:46px;background:#f8f4f4;border:2px solid #201e1d;animation:fly 11s linear infinite;animation-delay:6.8s">
-            <div style="height:2px;background:#d7d3d3;margin:9px 6px 0"></div>
-            <div style="height:2px;background:#d7d3d3;margin:6px 6px 0;width:55%"></div>
-          </div>
-        </div>
-        <svg viewBox="0 0 400 300" role="img" aria-label="Otisak" style="width:100%;max-width:420px;height:auto">
-          <g fill="none" stroke="#201e1d" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="1200" stroke-dashoffset="1200" style="animation:draw 2.4s cubic-bezier(.4,0,.2,1) forwards">
+        <svg class="a-draw" viewBox="0 0 400 300" role="img" aria-label="Otisak" style="width:100%;max-width:420px;height:auto">
+          <g fill="none" stroke="#201e1d" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="1200">
             <path d="M200 40c-70 0-125 55-125 125 0 35 10 70 30 95"></path>
             <path d="M200 60c-58 0-105 47-105 105 0 30 8 58 24 82"></path>
             <path d="M200 80c-47 0-85 38-85 85 0 26 7 50 20 70"></path>
@@ -242,7 +211,7 @@
             <path d="M200 120c25 0 45 20 45 45 0 16-5 32-13 46"></path>
             <path d="M200 160v90"></path>
           </g>
-          <path d="M200 140c14 0 25 11 25 25 0 12-4 24-10 35" fill="none" stroke="#d40511" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="80" stroke-dashoffset="80" style="animation:draw 1s cubic-bezier(.4,0,.2,1) 2.2s forwards"></path>
+          <path d="M200 140c14 0 25 11 25 25 0 12-4 24-10 35" fill="none" stroke="#d40511" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="80"></path>
         </svg>
       </div>
     </div>
@@ -250,13 +219,13 @@
 
   <div id="forenzika" style="border-bottom:2px solid #201e1d">
     <div style="max-width:1280px;margin:0 auto;padding:88px 32px 96px">
-      <div data-rv style="max-width:820px">
+      <div class="a-reveal" style="max-width:820px">
         <span data-i18n="demoKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Uživo</span>
         <h2 data-i18n="demoTitle" style="margin:14px 0 0;font-size:clamp(32px,4.2vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.02">Kako izgleda otisak u specifikaciji.</h2>
         <p data-i18n="demoLede" style="margin:18px 0 0;max-width:62ch;font-size:19px;line-height:1.45;color:#444141;text-wrap:pretty">Izaberite predmet nabavke i pokrenite forenziku. Ovo su realne vrste odredbi koje na prvi pogled izgledaju tehnički — a zatvaraju tržište na jednog ponuđača.</p>
       </div>
 
-      <div id="tabs" data-rv style="display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border-top:2px solid #201e1d;border-bottom:2px solid #201e1d"></div>
+      <div id="tabs" class="a-reveal" role="group" style="display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border-top:2px solid #201e1d;border-bottom:2px solid #201e1d"></div>
 
       <div data-g="split" style="display:grid;grid-template-columns:1.15fr 1fr;gap:0;margin-top:0;border-bottom:2px solid #201e1d">
         <div style="padding:32px 40px 40px 0;position:relative;overflow:hidden">
@@ -264,17 +233,17 @@
             <span data-i18n="docLabel" style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#605d5d">Tehnička specifikacija</span>
             <span id="doc-source" style="font-size:12px;font-weight:600;letter-spacing:.04em;color:#7d7979"></span>
           </div>
-          <div style="position:relative;background:#f8f4f4;border:2px solid #201e1d;padding:26px 28px">
-            <div id="scanline" style="display:none;position:absolute;left:0;right:0;top:0;height:3px;background:#d40511;box-shadow:0 0 24px 6px rgba(236,48,19,.45);animation:scanline 1.05s linear forwards"></div>
+          <div id="doc-box" style="position:relative;overflow:hidden;background:#f8f4f4;border:2px solid #201e1d;padding:26px 28px">
+            <div id="scanline" class="scan-line" aria-hidden="true" hidden></div>
             <div id="doc-lines"></div>
           </div>
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:22px">
-            <button type="button" id="scan-btn" class="btn-red" style="padding:15px 22px;font-size:15px;font-weight:700;letter-spacing:.01em"></button>
+            <button type="button" id="scan-btn" class="btn-red" data-phase="idle" style="padding:15px 22px;font-size:15px;font-weight:700;letter-spacing:.01em"><span data-l="idle">Pokreni forenziku</span><span data-l="scanning">Analiza u toku…</span><span data-l="done">Ponovi analizu</span></button>
             <span data-i18n="demoHint" style="font-size:13px;font-weight:600;color:#605d5d">Označeno se otkriva nakon analize.</span>
           </div>
         </div>
 
-        <div style="border-left:2px solid #201e1d;padding:32px 0 40px 40px">
+        <div id="demo-out" style="border-left:2px solid #201e1d;padding:32px 0 40px 40px">
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:18px">
             <span data-i18n="findingsLabel" style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#605d5d">Nalaz</span>
             <span id="findings-count" style="font-size:12px;font-weight:700;letter-spacing:.04em;color:#96040e">—</span>
@@ -282,8 +251,8 @@
           <div id="empty-state" style="border-top:2px solid #d7d3d3;padding-top:24px">
             <p data-i18n="emptyState" style="margin:0;max-width:36ch;font-size:16px;line-height:1.5;color:#7d7979">Pokrenite forenziku da vidite šta se u ovoj specifikaciji ne može ispuniti ni jednim drugim proizvodom.</p>
           </div>
-          <div id="findings"></div>
-          <div id="demo-cta-wrap" style="display:none;border-top:2px solid #201e1d;padding-top:20px;margin-top:4px">
+          <div id="findings" hidden></div>
+          <div id="demo-cta-wrap" hidden style="border-top:2px solid #201e1d;padding-top:20px;margin-top:4px">
             <a href="mailto:tendering@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu" data-i18n="demoCta" class="btn-dark" style="display:inline-flex;align-items:center;gap:10px;padding:14px 20px;font-size:14px;font-weight:700">Pošaljite svoj tender na analizu</a>
           </div>
         </div>
@@ -294,14 +263,16 @@
 
   <div id="postupak" style="border-bottom:2px solid #201e1d">
     <div style="max-width:1280px;margin:0 auto;padding:88px 32px 96px">
-      <div data-rv style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end" data-g="flow">
+      <div class="a-reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end" data-g="flow">
         <div>
           <span data-i18n="stepsKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Cijeli postupak po ZJN</span>
           <h2 data-i18n="stepsTitle" style="margin:14px 0 0;font-size:clamp(32px,4.2vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.02">Od tenderske dokumentacije do Upravnog suda.</h2>
         </div>
         <p data-i18n="stepsLede" style="margin:0;font-size:18px;line-height:1.5;color:#444141;text-wrap:pretty">Deset koraka, za svaki predmet nabavke — od vozila i medicinske opreme do softvera i građevinskih radova. Za svaki isporučujemo dokument dovoljno rano za rok koji zakon propisuje.</p>
       </div>
-      <div id="steps-grid" data-g="steps" style="display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:48px;background:#201e1d;border:2px solid #201e1d"><div class="step-card" data-step="0" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">01</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Istraživanje tržišta</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Tehnički dijalog prije objave — prilika da se uslovi oblikuju na vrijeme.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 85</div></div><div class="step-card" data-step="1" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">02</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza tenderske dokumentacije</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Forenzička analiza specifikacije čim se objavi: sakriveni brend, nesrazmjerni uslovi, rokovi.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Nalaz · besplatno</div></div><div class="step-card" data-step="2" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">03</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Zahtjev za pojašnjenje</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Pitanja koja naručioca obavezuju da na zapisnik kaže šta zapravo nabavlja.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 95</div></div><div class="step-card" data-step="3" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">04</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Predlog za izmjenu</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Razlozi za otklanjanje diskriminatornih odredbi, u roku od 8 dana od objave.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 94</div></div><div class="step-card" data-step="4" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">05</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza zapisnika</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Ko je ponudio, koliko, i šta u ponudama ne odgovara uslovima.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Zapisnik</div></div><div class="step-card" data-step="5" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">06</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza ponuda</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Pregled konkurentskih ponuda, stavka po stavka, i priprema dokaza.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Zahtjev za uvid</div></div><div class="step-card" data-step="6" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">07</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza odluke</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Odluka o izboru ili poništenju — osnov za žalbu ili prihvatanje.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Ocjena odluke</div></div><div class="step-card" data-step="7" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">08</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Žalba Komisiji*</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Žalba spremna za podnošenje, sa navodima, dokazima i praksom Komisije.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 185–188</div></div><div class="step-card" data-step="8" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">09</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza rješenja</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Poređenje rješenja Komisije sa praksom iz baze od 4.800+ rješenja.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Analiza rješenja</div></div><div class="step-card" data-step="9" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511">10</span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Tužba Upravnom sudu*</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Tužba kada Komisija pogriješi — i praćenje izvršenja presude.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Upravni spor</div></div></div>
+      <div id="steps-wrap" class="a-steps" style="margin-top:48px"><span class="a-steps-line" aria-hidden="true"></span>
+      <div id="steps-grid" data-g="steps" class="a-stagger" style="display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:#201e1d;border:2px solid #201e1d"><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">01<span class="a-num-on" aria-hidden="true">01</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Istraživanje tržišta</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Tehnički dijalog prije objave — prilika da se uslovi oblikuju na vrijeme.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 85</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">02<span class="a-num-on" aria-hidden="true">02</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza tenderske dokumentacije</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Forenzička analiza specifikacije čim se objavi: sakriveni brend, nesrazmjerni uslovi, rokovi.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Nalaz · besplatno</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">03<span class="a-num-on" aria-hidden="true">03</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Zahtjev za pojašnjenje</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Pitanja koja naručioca obavezuju da na zapisnik kaže šta zapravo nabavlja.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 95</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">04<span class="a-num-on" aria-hidden="true">04</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Predlog za izmjenu</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Razlozi za otklanjanje diskriminatornih odredbi, u roku od 8 dana od objave.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 94</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">05<span class="a-num-on" aria-hidden="true">05</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza zapisnika</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Ko je ponudio, koliko, i šta u ponudama ne odgovara uslovima.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Zapisnik</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">06<span class="a-num-on" aria-hidden="true">06</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza ponuda</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Pregled konkurentskih ponuda, stavka po stavka, i priprema dokaza.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Zahtjev za uvid</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">07<span class="a-num-on" aria-hidden="true">07</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza odluke</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Odluka o izboru ili poništenju — osnov za žalbu ili prihvatanje.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Ocjena odluke</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">08<span class="a-num-on" aria-hidden="true">08</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Žalba Komisiji*</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Žalba spremna za podnošenje, sa navodima, dokazima i praksom Komisije.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">ZJN čl. 185–188</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">09<span class="a-num-on" aria-hidden="true">09</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Analiza rješenja</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Poređenje rješenja Komisije sa praksom iz baze od 4.800+ rješenja.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Analiza rješenja</div></div><div class="step-card a-card" style="background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="step-num a-num">10<span class="a-num-on" aria-hidden="true">10</span></span><span style="width:10px;height:10px;background:#d7d3d3"></span></div><h3 style="margin:20px 0 0;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.2">Tužba Upravnom sudu*</h3><p style="margin:10px 0 0;font-size:13.5px;line-height:1.45;color:#605d5d">Tužba kada Komisija pogriješi — i praćenje izvršenja presude.</p><div style="margin-top:auto;padding-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#201e1d">Upravni spor</div></div></div>
+      </div>
       <p data-i18n="stepsFoot" style="margin:20px 0 0;font-size:13px;color:#7d7979">* Zahtijeva finalnu provjeru od strane klijenta.</p>
       <p style="margin:12px 0 0;font-size:15px;font-weight:600"><a href="/usluge/">Svi koraci sa rokovima →</a></p>
     </div>
@@ -309,28 +280,28 @@
 
   <div style="border-bottom:2px solid #201e1d;overflow:hidden">
     <div class="goods-head" style="max-width:1280px;margin:0 auto;padding:80px 32px 0">
-      <div data-rv style="display:flex;flex-wrap:wrap;gap:24px;align-items:end;justify-content:space-between">
+      <div class="a-reveal" style="display:flex;flex-wrap:wrap;gap:24px;align-items:end;justify-content:space-between">
         <div>
-          <span data-i18n="goodsKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Predmeti nabavke</span>
+          <span id="goods-kicker" data-i18n="goodsKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Predmeti nabavke</span>
           <h2 data-i18n="goodsTitle" style="margin:14px 0 0;max-width:26ch;font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.04">Roba, usluge, radovi — bez izuzetka.</h2>
         </div>
         <p data-i18n="goodsLede" style="margin:0;max-width:38ch;font-size:16px;line-height:1.5;color:#605d5d;text-wrap:pretty">Ista forenzika bez obzira da li se nabavlja magnetna rezonanca, kamionski servis ili tona kabla. Otisak se traži u odredbama, ne u predmetu.</p>
       </div>
     </div>
-    <div data-marquee style="margin-top:44px;padding-bottom:80px;overflow:hidden">
-      <div data-track style="display:flex;gap:2px;width:max-content;padding-left:32px;animation:pan 46s ease-in-out infinite alternate">
-        <figure style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
-          <div style="height:250px;border-bottom:2px solid #201e1d">
+    <div data-marquee class="goods-scroll" tabindex="0" role="region" aria-labelledby="goods-kicker" style="margin-top:44px;padding-bottom:80px">
+      <div data-track class="a-stagger" style="display:flex;gap:2px;width:max-content;padding:0 32px">
+        <figure class="a-card" style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
+          <div class="a-card-media" style="height:250px;border-bottom:2px solid #201e1d">
             <svg viewBox="0 0 360 250" style="width:100%;height:100%;display:block" aria-hidden="true">
               <g fill="none" stroke="#201e1d" stroke-width="2">
-                <circle cx="118" cy="125" r="30" style="animation:wave 2.4s ease-in-out infinite"></circle>
-                <circle cx="118" cy="125" r="56" style="animation:wave 2.4s ease-in-out .3s infinite"></circle>
-                <circle cx="118" cy="125" r="82" style="animation:wave 2.4s ease-in-out .6s infinite"></circle>
+                <circle cx="118" cy="125" r="30"></circle>
+                <circle cx="118" cy="125" r="56"></circle>
+                <circle cx="118" cy="125" r="82"></circle>
                 <rect x="238" y="72" width="86" height="106"></rect>
                 <path d="M254 150h54"></path>
               </g>
               <circle cx="118" cy="125" r="9" fill="#d40511"></circle>
-              <path d="M254 118h20l8-20 8 34 8-14h10" fill="none" stroke="#d40511" stroke-width="2.4" stroke-dasharray="104" style="animation:sweep 3s ease-in-out infinite"></path>
+              <path d="M254 118h20l8-20 8 34 8-14h10" fill="none" stroke="#d40511" stroke-width="2.4" stroke-dasharray="104"></path>
             </svg>
           </div>
           <figcaption style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 16px">
@@ -339,8 +310,8 @@
           </figcaption>
         </figure>
 
-        <figure style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
-          <div style="height:250px;border-bottom:2px solid #201e1d">
+        <figure class="a-card" style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
+          <div class="a-card-media" style="height:250px;border-bottom:2px solid #201e1d">
             <svg viewBox="0 0 360 250" style="width:100%;height:100%;display:block" aria-hidden="true">
               <g fill="none" stroke="#201e1d" stroke-width="2">
                 <rect x="52" y="86" width="200" height="62"></rect>
@@ -351,7 +322,7 @@
               </g>
               <circle cx="104" cy="168" r="7" fill="#201e1d"></circle>
               <circle cx="272" cy="168" r="7" fill="#201e1d"></circle>
-              <path d="M28 200h304" stroke="#d40511" stroke-width="3" stroke-dasharray="24 24" style="animation:road 1.4s linear infinite"></path>
+              <path d="M28 200h304" stroke="#d40511" stroke-width="3" stroke-dasharray="24 24"></path>
             </svg>
           </div>
           <figcaption style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 16px">
@@ -360,16 +331,16 @@
           </figcaption>
         </figure>
 
-        <figure style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
-          <div style="height:250px;border-bottom:2px solid #201e1d">
+        <figure class="a-card" style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
+          <div class="a-card-media" style="height:250px;border-bottom:2px solid #201e1d">
             <svg viewBox="0 0 360 250" style="width:100%;height:100%;display:block" aria-hidden="true">
               <g fill="none" stroke="#201e1d" stroke-width="2">
-                <g style="animation:roll 9s linear infinite;transform-origin:132px 118px">
+                <g>
                   <circle cx="132" cy="118" r="58"></circle>
                   <circle cx="132" cy="118" r="24"></circle>
                   <path d="M132 60v-16M132 176v16M74 118H58M190 118h16M91 77L80 66M173 145l11 11M173 91l11-11M91 159l-11 11"></path>
                 </g>
-                <g style="animation:roll 6s linear infinite reverse;transform-origin:246px 176px">
+                <g>
                   <circle cx="246" cy="176" r="34"></circle>
                   <circle cx="246" cy="176" r="13"></circle>
                   <path d="M246 142v-12M246 210v12M212 176h-12M280 176h12"></path>
@@ -385,15 +356,15 @@
           </figcaption>
         </figure>
 
-        <figure style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
-          <div style="height:250px;border-bottom:2px solid #201e1d">
+        <figure class="a-card" style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
+          <div class="a-card-media" style="height:250px;border-bottom:2px solid #201e1d">
             <svg viewBox="0 0 360 250" style="width:100%;height:100%;display:block" aria-hidden="true">
               <g fill="none" stroke="#201e1d" stroke-width="2">
                 <path d="M64 216V44M148 216V44M232 216V44M316 216V44"></path>
                 <path d="M64 44h252M64 100h252M64 156h252M40 216h296"></path>
                 <path d="M64 44l84 56M232 100l84 56M148 156l84-56"></path>
               </g>
-              <g style="animation:lift 3.4s ease-in-out infinite">
+              <g>
                 <rect x="112" y="118" width="72" height="30" fill="#d40511"></rect>
               </g>
               <path d="M148 44v74" stroke="#201e1d" stroke-width="2"></path>
@@ -405,8 +376,8 @@
           </figcaption>
         </figure>
 
-        <figure style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
-          <div style="height:250px;border-bottom:2px solid #201e1d">
+        <figure class="a-card" style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
+          <div class="a-card-media" style="height:250px;border-bottom:2px solid #201e1d">
             <svg viewBox="0 0 360 250" style="width:100%;height:100%;display:block" aria-hidden="true">
               <g fill="none" stroke="#201e1d" stroke-width="2">
                 <rect x="76" y="52" width="60" height="60"></rect>
@@ -416,7 +387,7 @@
                 <rect x="160" y="124" width="60" height="60"></rect>
                 <rect x="244" y="124" width="60" height="60"></rect>
               </g>
-              <rect x="76" y="52" width="60" height="60" fill="#d40511" style="animation:hop 8s ease-in-out infinite"></rect>
+              <rect x="76" y="52" width="60" height="60" fill="#d40511"></rect>
             </svg>
           </div>
           <figcaption style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 16px">
@@ -425,12 +396,12 @@
           </figcaption>
         </figure>
 
-        <figure style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
-          <div style="height:250px;border-bottom:2px solid #201e1d">
+        <figure class="a-card" style="margin:0;width:360px;border:2px solid #201e1d;background:#f8f4f4">
+          <div class="a-card-media" style="height:250px;border-bottom:2px solid #201e1d">
             <svg viewBox="0 0 360 250" style="width:100%;height:100%;display:block" aria-hidden="true">
-              <rect x="84" y="150" width="36" height="52" fill="#201e1d" style="animation:fillup 3.2s ease-in-out infinite;transform-origin:84px 202px"></rect>
-              <rect x="162" y="150" width="36" height="52" fill="#d40511" style="animation:fillup 3.2s ease-in-out .5s infinite;transform-origin:162px 202px"></rect>
-              <rect x="240" y="150" width="36" height="52" fill="#201e1d" style="animation:fillup 3.2s ease-in-out 1s infinite;transform-origin:240px 202px"></rect>
+              <rect x="84" y="150" width="36" height="52" fill="#201e1d" style="transform-origin:84px 202px"></rect>
+              <rect x="162" y="150" width="36" height="52" fill="#d40511" style="transform-origin:162px 202px"></rect>
+              <rect x="240" y="150" width="36" height="52" fill="#201e1d" style="transform-origin:240px 202px"></rect>
               <g fill="none" stroke="#201e1d" stroke-width="2">
                 <rect x="84" y="48" width="36" height="154"></rect>
                 <rect x="162" y="48" width="36" height="154"></rect>
@@ -449,20 +420,20 @@
     </div>
   </div>
 
-  <div data-rv data-poster style="background:#d40511;color:#fff;border-bottom:2px solid #201e1d">
-    <div style="max-width:1280px;margin:0 auto;padding:88px 32px 92px">
+  <div data-poster style="background:#d40511;color:#fff;border-bottom:2px solid #201e1d">
+    <div class="a-reveal" style="max-width:1280px;margin:0 auto;padding:88px 32px 92px">
       <h2 data-i18n="posterTitle" style="margin:0;max-width:22ch;font-size:clamp(38px,5.6vw,84px);font-weight:800;letter-spacing:-.035em;line-height:.98">Rokovi se mjere danima. Mi radimo u satima.</h2>
       <div data-g="poster" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;background:rgba(255,255,255,.45)">
         <div style="background:#d40511;padding:28px 28px 0 0">
-          <div id="c1" style="font-size:clamp(52px,7vw,104px);font-weight:800;letter-spacing:-.04em;line-height:1">24 h</div>
+          <div id="c1" class="a-count" data-to="24" data-suffix=" h" style="font-size:clamp(52px,7vw,104px);font-weight:800;letter-spacing:-.04em;line-height:1">24 h</div>
           <p data-i18n="stat1" style="margin:14px 0 0;max-width:26ch;font-size:15px;line-height:1.5;color:#ffd9db">od prijema instrukcije klijenta do gotovog dokumenta, za svaki od deset koraka.</p>
         </div>
         <div style="background:#d40511;padding:28px 28px 0">
-          <div id="c2" style="font-size:clamp(52px,7vw,104px);font-weight:800;letter-spacing:-.04em;line-height:1">50+ mil €</div>
+          <div id="c2" class="a-count" data-to="50" data-suffix="+ mil €" style="font-size:clamp(52px,7vw,104px);font-weight:800;letter-spacing:-.04em;line-height:1">50+ mil €</div>
           <p data-i18n="stat2" style="margin:14px 0 0;max-width:26ch;font-size:15px;line-height:1.5;color:#ffd9db">vrijednost tendera u kojima je naša analiza dovela do izmjene dokumentacije ili poništenja postupka.</p>
         </div>
         <div style="background:#d40511;padding:28px 0 0 28px">
-          <div id="c3" style="font-size:clamp(52px,7vw,104px);font-weight:800;letter-spacing:-.04em;line-height:1">4.800+</div>
+          <div id="c3" class="a-count" data-to="4800" data-suffix="+" style="font-size:clamp(52px,7vw,104px);font-weight:800;letter-spacing:-.04em;line-height:1">4.800+</div>
           <p data-i18n="stat3" style="margin:14px 0 0;max-width:26ch;font-size:15px;line-height:1.5;color:#ffd9db">rješenja Komisije za zaštitu prava u bazi koju poredimo sa vašim slučajem.</p>
         </div>
       </div>
@@ -471,11 +442,11 @@
 
   <div id="cijene" style="border-bottom:2px solid #201e1d">
     <div style="max-width:1280px;margin:0 auto;padding:88px 32px 96px">
-      <div data-rv>
+      <div class="a-reveal">
         <span data-i18n="priceKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Cijene</span>
         <h2 data-i18n="priceTitle" style="margin:14px 0 0;font-size:clamp(32px,4.2vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.02">Dva paketa. Bez sitnih slova.</h2>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:48px;border-top:2px solid #201e1d" data-g="split">
+      <div class="a-reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:48px;border-top:2px solid #201e1d" data-g="split">
         <div style="padding:36px 40px 40px 0">
           <div data-i18n="planA" style="font-size:24px;font-weight:800;letter-spacing:-.02em">Osnovni</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-top:18px">
@@ -486,7 +457,7 @@
           <div id="planA-list" style="margin-top:28px"><div style="border-top:2px solid #d7d3d3;padding:12px 0;font-size:15px;line-height:1.4">Do 3 postupka mjesečno</div><div style="border-top:2px solid #d7d3d3;padding:12px 0;font-size:15px;line-height:1.4">Svaki korak gotov najkasnije za 24 sata</div><div style="border-top:2px solid #d7d3d3;padding:12px 0;font-size:15px;line-height:1.4">Forenzička analiza specifikacija</div><div style="border-top:2px solid #d7d3d3;padding:12px 0;font-size:15px;line-height:1.4">Zahtjevi za pojašnjenje i izmjenu TD</div></div>
           <a href="mailto:tendering@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj" data-i18n="planACta" class="btn-outline" style="display:inline-flex;align-items:center;margin-top:28px;padding:14px 22px;font-size:15px;font-weight:700">Izaberi Osnovni</a>
         </div>
-        <div style="border-left:2px solid #201e1d;padding:36px 0 40px 40px;background:#eae9e9">
+        <div class="a-sheen" style="border-left:2px solid #201e1d;padding:36px 0 40px 40px;background:#eae9e9">
           <div style="display:flex;align-items:center;gap:12px">
             <span data-i18n="planB" style="font-size:24px;font-weight:800;letter-spacing:-.02em">Max</span>
             <span data-i18n="planBTag" style="background:#d40511;color:#fff;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Cijeli postupak</span>
@@ -506,11 +477,11 @@
 
   <div id="pitanja" style="border-bottom:2px solid #201e1d">
     <div style="max-width:1280px;margin:0 auto;padding:88px 32px 96px">
-      <div data-rv>
+      <div class="a-reveal">
         <span data-i18n="faqKicker" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#96040e">Česta pitanja</span>
         <h2 data-i18n="faqTitle" style="margin:14px 0 0;font-size:clamp(32px,4.2vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.02">Prije nego što pošaljete tender.</h2>
       </div>
-      <div data-rv style="margin-top:40px;border-top:2px solid #201e1d;max-width:860px">
+      <div class="a-stagger" style="margin-top:40px;border-top:2px solid #201e1d;max-width:860px">
         <div style="border-bottom:2px solid #d7d3d3;padding:22px 0"><h3 data-i18n="faq1q" style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.015em">Koliki je rok za žalbu na tendersku dokumentaciju?</h3><p data-i18n="faq1a" style="margin:10px 0 0;font-size:16px;line-height:1.55;color:#444141">Zavisi od roka za ponude — čl. 186 ZJN propisuje 20 dana, 10 dana ili polovinu roka za ponude. Računa se od objave osnovne dokumentacije; vikend i praznik pomjeraju rok na prvi radni dan.</p><a data-i18n="faq1l" href="/vodic/rokovi-za-zalbu/" style="display:inline-block;margin-top:10px;font-size:14px;font-weight:700">Sve o rokovima →</a></div>
         <div style="border-bottom:2px solid #d7d3d3;padding:22px 0"><h3 data-i18n="faq2q" style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.015em">Koliko košta žalba Komisiji?</h3><p data-i18n="faq2a" style="margin:10px 0 0;font-size:16px;line-height:1.55;color:#444141">1 % procijenjene vrijednosti, najviše 20.000 €, po svakoj partiji koju žalba dotiče (čl. 188 ZJN). Vraća se ako je žalba osnovana.</p><a data-i18n="faq2l" href="/vodic/naknada-za-zalbu/" style="display:inline-block;margin-top:10px;font-size:14px;font-weight:700">O naknadi →</a></div>
         <div style="border-bottom:2px solid #d7d3d3;padding:22px 0"><h3 data-i18n="faq3q" style="margin:0;font-size:19px;font-weight:700;letter-spacing:-.015em">Šta je zahtjev za pojašnjenje?</h3><p data-i18n="faq3a" style="margin:10px 0 0;font-size:16px;line-height:1.55;color:#444141">Pitanje naručiocu po čl. 95 ZJN, najkasnije 10 dana prije roka za ponude; naručilac odgovara u roku od 5 dana i odgovor objavljuje svima na ESJN.</p><a data-i18n="faq3l" href="/usluge/zahtjev-za-pojasnjenje/" style="display:inline-block;margin-top:10px;font-size:14px;font-weight:700">Usluga →</a></div>
@@ -521,12 +492,12 @@
   </div>
 
   <div id="kontakt" style="border-bottom:2px solid #201e1d">
-    <div style="max-width:1280px;margin:0 auto;padding:88px 32px 96px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end" data-g="flow">
-      <div data-rv>
-        <h2 data-i18n="contactTitle" style="margin:0;max-width:20ch;font-size:clamp(36px,5vw,76px);font-weight:800;letter-spacing:-.035em;line-height:.98">Pošaljite nam tender.</h2>
-        <p data-i18n="contactLede" style="margin:22px 0 0;max-width:48ch;font-size:19px;line-height:1.45;color:#444141">Prvu analizu radimo bez naknade. Ako otisak postoji, naći ćemo ga.</p>
+    <div class="a-group" style="max-width:1280px;margin:0 auto;padding:88px 32px 96px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end" data-g="flow">
+      <div>
+        <h2 data-i18n="contactTitle" class="a-title a-line" style="margin:0;max-width:20ch;font-size:clamp(36px,5vw,76px);font-weight:800;letter-spacing:-.035em;line-height:.98">Pošaljite nam tender.</h2>
+        <p data-i18n="contactLede" class="a-after" style="margin:22px 0 0;max-width:48ch;font-size:19px;line-height:1.45;color:#444141">Prvu analizu radimo bez naknade. Ako otisak postoji, naći ćemo ga.</p>
       </div>
-      <div data-rv style="display:flex;flex-direction:column;gap:2px;border-top:2px solid #201e1d;padding-top:24px">
+      <div class="a-after" style="--ai:1;display:flex;flex-direction:column;gap:2px;border-top:2px solid #201e1d;padding-top:24px">
         <a href="mailto:tendering@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu" class="btn-red" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;font-size:17px;font-weight:700">tendering@fidelityconsulting.me</a>
         <a href="tel:+38267525774" class="btn-outline" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;font-size:17px;font-weight:700">067 525 774</a>
       </div>
@@ -769,6 +740,9 @@ const SPECS = [
 ];
 
 const ACCENT = "#d40511";
+const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+const $ = (id) => document.getElementById(id);
+const reduced = () => !!(window.Motion && window.Motion.reduced) || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 
 function parseLine(line) {
   const out = [];
@@ -783,8 +757,9 @@ function parseLine(line) {
   return out;
 }
 
-const state = { lang: document.documentElement.getAttribute("data-lang") || "me", spec: 0, phase: "idle", shown: 0, counted: false, c1: 0, c2: 0, c3: 0 };
-let scanTimer = null, stepTimer = null, countRaf = null;
+const state = { lang: document.documentElement.getAttribute("data-lang") || "me", spec: 0, phase: "idle" };
+// Demo: svaki prolaz ima svoj broj; klik, promjena predmeta ili prekid poništava prethodni (animacija, rAF, tajmeri).
+const demo = { run: 0, anim: null, raf: 0, timers: [], fades: [], swap: null };
 
 function renderText() {
   const t = T[state.lang];
@@ -801,48 +776,40 @@ function renderText() {
 }
 
 function renderLangButtons() {
-  const me = document.getElementById("btn-me"), en = document.getElementById("btn-en");
+  const me = $("btn-me"), en = $("btn-en");
   me.style.background = state.lang === "me" ? "#201e1d" : "transparent";
   me.style.color = state.lang === "me" ? "#f3f2f2" : "#201e1d";
   en.style.background = state.lang === "en" ? "#201e1d" : "transparent";
   en.style.color = state.lang === "en" ? "#f3f2f2" : "#201e1d";
 }
 
+// Tabovi se prave jednom; izbor se mijenja na mjestu (fokus ostaje na dugmetu).
 function renderTabs() {
-  const wrap = document.getElementById("tabs");
+  const wrap = $("tabs");
   wrap.innerHTML = "";
   SPECS.forEach((s, i) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "tab-btn";
     btn.textContent = s.tab[state.lang];
-    const active = i === state.spec;
-    btn.style.flex = "1 1 200px";
-    btn.style.textAlign = "left";
-    btn.style.background = active ? "#201e1d" : "transparent";
-    btn.style.color = active ? "#f3f2f2" : "#201e1d";
-    btn.style.padding = "18px 20px";
-    btn.style.fontSize = "15px";
-    btn.style.fontWeight = "700";
-    btn.style.letterSpacing = "-.01em";
-    btn.addEventListener("click", () => pickSpec(i));
+    btn.addEventListener("click", () => switchSpec(i));
     wrap.appendChild(btn);
+  });
+  updateTabs();
+}
+
+function updateTabs() {
+  Array.prototype.forEach.call($("tabs").children, (b, i) => {
+    b.classList.toggle("is-active", i === state.spec);
+    b.setAttribute("aria-pressed", i === state.spec ? "true" : "false");
   });
 }
 
-function restartScanline() {
-  const el = document.getElementById("scanline");
-  if (state.phase !== "scanning") { el.style.display = "none"; return; }
-  el.style.display = "none";
-  void el.offsetWidth;
-  el.style.display = "block";
-}
-
+// Sporne odredbe su riječi (.mk), da ih linija skenera pali red po red, tačno kad pređe preko njih.
 function renderDoc() {
   const spec = SPECS[state.spec];
-  document.getElementById("doc-source").textContent = spec.source[state.lang];
-  const done = state.phase === "done";
-  const wrap = document.getElementById("doc-lines");
+  $("doc-source").textContent = spec.source[state.lang];
+  const wrap = $("doc-lines");
   wrap.innerHTML = "";
   spec.lines[state.lang].forEach((raw, i) => {
     const row = document.createElement("div");
@@ -853,33 +820,31 @@ function renderDoc() {
     const p = document.createElement("p");
     p.style.cssText = "margin:0;font-size:15px;line-height:1.85;color:#201e1d";
     parseLine(raw).forEach((tok) => {
-      const span = document.createElement("span");
-      span.textContent = tok.text;
-      if (tok.f) {
-        span.style.cssText = done
-          ? "background:" + ACCENT + ";color:#fff;padding:1px 4px;font-weight:600;box-decoration-break:clone"
-          : "background:#eae9e9;padding:1px 4px;box-decoration-break:clone";
-      }
-      p.appendChild(span);
+      if (!tok.f) { p.appendChild(document.createTextNode(tok.text)); return; }
+      const words = tok.text.match(/\S+\s*/g) || [];
+      words.forEach((w, k) => {
+        const last = k === words.length - 1;
+        const mk = document.createElement("span");
+        mk.className = "mk" + (k === 0 ? " mk-a" : "") + (last ? " mk-z" : "");
+        mk.textContent = last ? w.replace(/\s+$/, "") : w;
+        p.appendChild(mk);
+      });
     });
     row.appendChild(n);
     row.appendChild(p);
     wrap.appendChild(row);
   });
-  restartScanline();
 }
 
+// Svi nalazi predmeta se prave odmah (skriveni), pa se otkrivaju jedan po jedan.
 function renderFindings() {
   const spec = SPECS[state.spec];
-  const done = state.phase === "done";
-  const wrap = document.getElementById("findings");
+  const wrap = $("findings");
   wrap.innerHTML = "";
-  document.getElementById("empty-state").style.display = state.phase === "idle" ? "block" : "none";
-
-  const shown = done ? spec.findings.slice(0, state.shown) : [];
-  shown.forEach((f) => {
+  spec.findings.forEach((f) => {
     const div = document.createElement("div");
-    div.style.cssText = "border-top:2px solid #201e1d;padding:18px 0 20px";
+    div.className = "finding";
+    div.dataset.kind = f.kind;
     const row = document.createElement("div");
     row.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:10px";
     const tag = document.createElement("span");
@@ -903,55 +868,166 @@ function renderFindings() {
     div.appendChild(why);
     wrap.appendChild(div);
   });
+}
 
-  const flagged = spec.findings.filter((f) => f.kind === "flag").length;
-  document.getElementById("findings-count").textContent = done ? flagged + (state.lang === "me" ? " spornih odredbi" : " contested clauses") : "—";
-
-  const fullyDone = done && state.shown >= spec.findings.length;
-  document.getElementById("demo-cta-wrap").style.display = fullyDone ? "block" : "none";
+function setFlagCount(n) {
+  $("findings-count").textContent = n == null ? "—" : n + (state.lang === "me" ? " spornih odredbi" : " contested clauses");
 }
 
 function renderScanBtn() {
-  const t = T[state.lang];
-  const btn = document.getElementById("scan-btn");
-  const scanning = state.phase === "scanning";
-  const done = state.phase === "done";
-  btn.textContent = scanning ? t.scanRunning : (done ? t.scanDone : t.scanIdle);
-  btn.style.background = scanning ? "#201e1d" : ACCENT;
-  btn.style.color = "#fff";
+  const t = T[state.lang], btn = $("scan-btn");
+  btn.querySelector('[data-l="idle"]').textContent = t.scanIdle;
+  btn.querySelector('[data-l="scanning"]').textContent = t.scanRunning;
+  btn.querySelector('[data-l="done"]').textContent = t.scanDone;
+  btn.dataset.phase = state.phase;
+  btn.classList.toggle("is-busy", state.phase === "scanning");
+}
+
+function clearRun() {
+  demo.run += 1;
+  if (demo.anim) { demo.anim.cancel(); demo.anim = null; }
+  cancelAnimationFrame(demo.raf);
+  demo.timers.forEach(clearTimeout);
+  demo.timers = [];
+}
+
+// Početno stanje izabranog predmeta: tekst bez oznaka, prazan nalaz.
+function resetDemo() {
+  clearRun();
+  state.phase = "idle";
+  renderDoc();
+  renderFindings();
+  $("scanline").hidden = true;
+  $("findings").hidden = true;
+  $("empty-state").hidden = false;
+  $("demo-cta-wrap").hidden = true;
+  setFlagCount(null);
+  renderScanBtn();
+}
+
+function runScan() {
+  if (demo.swap) demo.swap(true);
+  clearRun();
+  const run = demo.run;
+  document.querySelectorAll("#doc-lines .mk").forEach((m) => m.classList.remove("is-hit"));
+  Array.prototype.forEach.call($("findings").children, (f) => f.classList.remove("is-in"));
+  // Prostor za nalaz se zauzima odmah, na klik — kasnije ispisivanje ne pomjera ostatak strane.
+  $("empty-state").hidden = true;
+  $("findings").hidden = false;
+  $("demo-cta-wrap").hidden = false;
+  $("demo-cta-wrap").classList.add("is-hidden");
+  setFlagCount(null);
+  state.phase = "scanning";
+  renderScanBtn();
+  const box = $("doc-box"), line = $("scanline");
+  if (reduced() || !line.animate) { finishScan(run, true); return; }
+  const h = box.clientHeight - 3;
+  line.hidden = false;
+  // Linija ide konstantnom brzinom (mjerni instrument): 1,5 s odozgo nadolje, pa se gasi.
+  demo.anim = line.animate([
+    { transform: "translateY(0)", opacity: 1 },
+    { transform: "translateY(" + h + "px)", opacity: 1, offset: 0.92 },
+    { transform: "translateY(" + h + "px)", opacity: 0 }
+  ], { duration: 1500, easing: "linear" });
+  const marks = Array.prototype.slice.call(box.querySelectorAll(".mk"));
+  const tick = () => {
+    if (run !== demo.run) return;
+    const y = line.getBoundingClientRect().top + 1.5;
+    marks.forEach((m) => {
+      if (m.classList.contains("is-hit")) return;
+      const r = m.getBoundingClientRect();
+      if (r.top + r.height / 2 <= y) m.classList.add("is-hit");
+    });
+    if (demo.anim && demo.anim.playState === "running") demo.raf = requestAnimationFrame(tick);
+  };
+  demo.raf = requestAnimationFrame(tick);
+  demo.anim.finished.then(() => { if (run === demo.run) finishScan(run, false); }, () => {});
+}
+
+// Kraj skeniranja: sve oznake crvene, nalazi jedan po jedan (150 ms), broj spornih raste sa svakim.
+function finishScan(run, instant) {
+  cancelAnimationFrame(demo.raf);
+  if (demo.anim) { demo.anim.cancel(); demo.anim = null; }
+  $("scanline").hidden = true;
+  document.querySelectorAll("#doc-lines .mk").forEach((m) => m.classList.add("is-hit"));
+  state.phase = "done";
+  renderScanBtn();
+  const items = Array.prototype.slice.call($("findings").children);
+  let flagged = 0;
+  const show = (i) => {
+    if (run !== demo.run) return;
+    items[i].classList.add("is-in");
+    if (items[i].dataset.kind === "flag") setFlagCount(++flagged);
+    if (i + 1 < items.length) {
+      if (instant) show(i + 1);
+      else demo.timers.push(setTimeout(() => show(i + 1), 150));
+    } else {
+      $("demo-cta-wrap").classList.remove("is-hidden");
+    }
+  };
+  if (items.length) show(0);
+}
+
+// Promjena predmeta: crossfade 200 ms (100 ms van, zamjena, 100 ms unutra) i početno stanje.
+function switchSpec(i) {
+  if (i === state.spec) return;
+  if (demo.swap) demo.swap(true);
+  clearRun();
+  state.spec = i;
+  updateTabs();
+  const panes = [$("doc-source"), $("doc-lines"), $("demo-out")];
+  if (reduced() || !panes[0].animate) { resetDemo(); return; }
+  const outs = panes.map((el) => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: EASE, fill: "forwards" }));
+  let done = false;
+  demo.swap = (now) => {
+    if (done) return;
+    done = true;
+    demo.swap = null;
+    resetDemo();
+    outs.forEach((a) => a.cancel());
+    if (!now) panes.forEach((el) => el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 100, easing: EASE }));
+  };
+  Promise.all(outs.map((a) => a.finished)).then(() => { if (demo.swap) demo.swap(false); }, () => {});
 }
 
 function openStep(i) {
   const t = T[state.lang], s = STEPS[state.lang][i];
-  const dlg = document.getElementById("step-dialog");
-  document.getElementById("dlg-kicker").textContent = t.dlgStep + " " + String(i + 1).padStart(2, "0") + " · " + s[2];
-  document.getElementById("dlg-title").textContent = s[0];
-  document.getElementById("dlg-when").textContent = t.dlgWhen + ": " + s[5];
-  document.getElementById("dlg-text").textContent = s[4];
-  document.getElementById("dlg-cta").textContent = t.dlgCta;
-  const more = document.getElementById("dlg-more");
+  const dlg = $("step-dialog");
+  $("dlg-kicker").textContent = t.dlgStep + " " + String(i + 1).padStart(2, "0") + " · " + s[2];
+  $("dlg-title").textContent = s[0];
+  $("dlg-when").textContent = t.dlgWhen + ": " + s[5];
+  $("dlg-text").textContent = s[4];
+  $("dlg-cta").textContent = t.dlgCta;
+  const more = $("dlg-more");
   more.textContent = t.dlgMore;
   more.href = s[3] || "#";
   more.style.display = s[3] ? "inline-flex" : "none";
-  document.getElementById("dlg-close").setAttribute("aria-label", t.dlgClose);
+  $("dlg-close").setAttribute("aria-label", t.dlgClose);
   dlg.showModal();
 }
 
+// Kartice koraka: broj ima sivi i crveni sloj (crveni se pali kad ga stigne linija napretka — assets/motion.js).
 function renderSteps() {
-  const grid = document.getElementById("steps-grid");
+  const grid = $("steps-grid");
   grid.innerHTML = "";
   STEPS[state.lang].forEach((s, i) => {
     const card = document.createElement("div");
-    card.className = "step-card";
+    card.className = "step-card a-card";
     card.setAttribute("role", "button"); card.tabIndex = 0;
     card.addEventListener("click", () => openStep(i));
     card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openStep(i); } });
     card.style.cssText = "background:#f3f2f2;padding:22px 20px 26px;min-height:230px;display:flex;flex-direction:column";
     const top = document.createElement("div");
     top.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:8px";
+    const nn = String(i + 1).padStart(2, "0");
     const num = document.createElement("span");
-    num.style.cssText = "font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1;color:#d40511";
-    num.textContent = String(i + 1).padStart(2, "0");
+    num.className = "step-num a-num";
+    num.textContent = nn;
+    const on = document.createElement("span");
+    on.className = "a-num-on";
+    on.setAttribute("aria-hidden", "true");
+    on.textContent = nn;
+    num.appendChild(on);
     const dot = document.createElement("span");
     dot.style.cssText = "width:10px;height:10px;background:#d7d3d3";
     top.appendChild(num);
@@ -974,7 +1050,7 @@ function renderSteps() {
 }
 
 function renderPlans() {
-  const a = document.getElementById("planA-list"), b = document.getElementById("planB-list");
+  const a = $("planA-list"), b = $("planB-list");
   a.innerHTML = ""; b.innerHTML = "";
   PLANS[state.lang].a.forEach((x) => {
     const d = document.createElement("div");
@@ -990,106 +1066,27 @@ function renderPlans() {
   });
 }
 
-function render() {
+document.addEventListener("DOMContentLoaded", () => {
   renderText();
   renderLangButtons();
   renderTabs();
-  renderDoc();
-  renderFindings();
-  renderScanBtn();
+  resetDemo();
   renderSteps();
   renderPlans();
-}
 
-function pickSpec(i) {
-  clearTimeout(scanTimer); clearTimeout(stepTimer);
-  state.spec = i; state.phase = "idle"; state.shown = 0;
-  render();
-  runScan();
-}
+  $("scan-btn").addEventListener("click", () => runScan());
+  // Prekid skeniranja (skriven tab, promjena širine): odmah konačno stanje.
+  document.addEventListener("visibilitychange", () => { if (document.hidden && state.phase === "scanning") finishScan(demo.run, true); });
+  let width = window.innerWidth;
+  window.addEventListener("resize", () => {
+    if (window.innerWidth === width) return;
+    width = window.innerWidth;
+    if (state.phase === "scanning") finishScan(demo.run, true);
+  });
 
-function runScan() {
-  clearTimeout(scanTimer); clearTimeout(stepTimer);
-  state.phase = "scanning"; state.shown = 0;
-  renderDoc(); renderFindings(); renderScanBtn();
-  scanTimer = setTimeout(() => {
-    state.phase = "done";
-    renderDoc(); renderFindings(); renderScanBtn();
-    const n = SPECS[state.spec].findings.length;
-    let i = 0;
-    const step = () => {
-      i += 1;
-      state.shown = i;
-      renderFindings();
-      if (i < n) stepTimer = setTimeout(step, 300);
-    };
-    stepTimer = setTimeout(step, 120);
-  }, 1100);
-}
-
-function countUp() {
-  if (state.counted) return;
-  state.counted = true;
-  const start = performance.now(), dur = 1400;
-  const tick = (now) => {
-    const p = Math.min(1, (now - start) / dur);
-    const e = 1 - Math.pow(1 - p, 3);
-    state.c1 = Math.round(24 * e);
-    state.c2 = Math.round(50 * e);
-    state.c3 = Math.round(4800 * e);
-    document.getElementById("c1").textContent = state.c1 + " h";
-    document.getElementById("c2").textContent = state.c2 + "+ mil €";
-    document.getElementById("c3").textContent = state.c3.toLocaleString(state.lang === "me" ? "de-DE" : "en-US") + "+";
-    if (p < 1) countRaf = requestAnimationFrame(tick);
-  };
-  countRaf = requestAnimationFrame(tick);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("scan-btn").addEventListener("click", () => runScan());
-
-  render();
-
-  const navT = document.getElementById("nav-toggle"), nav = document.getElementById("nav");
-  navT.addEventListener("click", () => { const o = nav.classList.toggle("open"); navT.setAttribute("aria-expanded", o ? "true" : "false"); });
-  nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { nav.classList.remove("open"); navT.setAttribute("aria-expanded", "false"); }));
-
-  const dlg = document.getElementById("step-dialog");
-  document.getElementById("dlg-close").addEventListener("click", () => dlg.close());
+  const dlg = $("step-dialog");
+  $("dlg-close").addEventListener("click", () => dlg.close());
   dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      e.target.setAttribute("data-in", "");
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll("[data-rv]").forEach((el) => io.observe(el));
-
-  // Skok na sekciju preko linka (#postupak i sl.): odmah prikaži njen sadržaj, bez čekanja na scroll-reveal.
-  const revealTarget = () => {
-    const t = location.hash && document.querySelector(location.hash);
-    if (!t) return;
-    t.querySelectorAll("[data-rv]").forEach((el) => { el.setAttribute("data-in", ""); io.unobserve(el); });
-    if (t.hasAttribute("data-rv")) { t.setAttribute("data-in", ""); io.unobserve(t); }
-  };
-  revealTarget();
-  window.addEventListener("hashchange", revealTarget);
-
-  const poster = document.querySelector("[data-poster]");
-  const statsIo = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { countUp(); statsIo.disconnect(); } });
-  }, { threshold: 0.3 });
-  if (poster) statsIo.observe(poster); else countUp();
-
-  const demo = document.getElementById("forenzika");
-  const demoIo = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting && state.phase === "idle") { runScan(); demoIo.disconnect(); }
-    });
-  }, { threshold: 0.35 });
-  if (demo) demoIo.observe(demo);
 });
 
 })();
