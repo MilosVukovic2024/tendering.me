@@ -284,13 +284,68 @@ def build_praksa(entries):
     return urls
 
 
+def en_texts(src):
+    """Engleski tekstovi iz skripte početne: T.en (rječnik), STEPS.en, PLANS.en — isti izvor koji koristi JS."""
+    js = src[src.rindex("<script>"):]
+    t_block = re.search(r"const T = \{.*?\n  en: \{(.*?)\n  \}\n\};", js, re.S).group(1)
+    t = {k: json.loads('"' + v + '"') for k, v in re.findall(r'(\w+): "((?:[^"\\]|\\.)*)"', t_block)}
+    steps = json.loads(re.search(r"const STEPS = \{.*?\n  en: (\[.*?\])\n\};", js, re.S).group(1))
+    plans = re.search(r"const PLANS = \{.*?\n  en: \{\s*a: (\[.*?\]),\s*b: (\[.*?\])\s*\}", js, re.S)
+    return t, steps, (json.loads(plans.group(1)), json.loads(plans.group(2)))
+
+
+def prerender_en(out):
+    """Upiši EN tekst u HTML (/en/ više ne prikazuje crnogorski tekst prije JS-a; nema pomjeranja pri zamjeni).
+    JS (renderText, renderSteps, renderPlans) na /en/ i dalje radi isto — samo upisuje iste vrijednosti."""
+    t, steps, (plan_a, plan_b) = en_texts(out)
+    esc = lambda x: html.escape(x, quote=False)
+
+    def i18n(m):
+        key = m.group(3)
+        return m.group(1) + esc(t[key]) + m.group(5) if key in t else m.group(0)
+    head, sep, script = out.rpartition("<script>")
+    head = re.sub(r'(<(\w+)\b[^>]*\bdata-i18n="(\w+)"[^>]*>)([^<]*)(</\2>)', i18n, head)
+    # Linkovi koje renderText mijenja na EN
+    links = {"navGuides": "/en/guide/montenegro-public-procurement-law/", "navPrice": "/en/pricing/",
+             "faq1l": "/en/services/tender-appeal-montenegro/", "faq2l": "/en/services/tender-appeal-montenegro/",
+             "faq3l": "/en/guide/montenegro-public-procurement-law/"}
+    for key, href in links.items():
+        head, n = re.subn(r'<a\b[^>]*\bdata-i18n="' + key + r'"[^>]*>',
+                          lambda m: re.sub(r'href="[^"]*"', 'href="' + href + '"', m.group(0)), head)
+        if n != 1:
+            raise SystemExit(f"index.html: link {key} nije pronađen")
+    # Dugme demoa, statične kartice koraka i stavke paketa
+    for phase, key in (("idle", "scanIdle"), ("scanning", "scanRunning"), ("done", "scanDone")):
+        head = head.replace(f'<span data-l="{phase}">' + re.search(f'<span data-l="{phase}">([^<]*)<', head).group(1),
+                            f'<span data-l="{phase}">' + esc(t[key]), 1)
+    grid = re.search(r'(<div id="steps-grid"[^>]*>)(.*?)(</div>\n      </div>)', head, re.S)
+    cards = grid.group(2)
+    for tag, idx in (("h3", 0), ("p", 1)):
+        vals = iter(steps)
+        cards = re.sub(rf"(<{tag}\b[^>]*>)[^<]*(</{tag}>)", lambda m: m.group(1) + esc(next(vals)[idx]) + m.group(2), cards)
+    vals = iter(steps)
+    cards = re.sub(r'(<div style="margin-top:auto;[^"]*">)[^<]*(</div>)', lambda m: m.group(1) + esc(next(vals)[2]) + m.group(2), cards)
+    head = head[:grid.start(2)] + cards + head[grid.end(2):]
+    for list_id, items in (("planA-list", plan_a), ("planB-list", plan_b)):
+        m = re.search(rf'(<div id="{list_id}"[^>]*>)(.*?)(</div></div>)', head)
+        row = re.search(r'<div style="[^"]*">', m.group(2)).group(0)
+        head = head[:m.start(2)] + "".join(row + esc(x) + "</div>" for x in items[:-1]) + row + esc(items[-1]) + head[m.end(2):]
+    # Brojke u engleskom formatu (4,800+)
+    head = re.sub(r'(class="a-count" data-to="(\d{4,})"[^>]*>)(\d{1,3})\.(\d{3})',
+                  lambda m: m.group(1) + m.group(3) + "," + m.group(4), head)
+    return head + sep + script
+
+
 def build_en_home():
-    """en/index.html iz index.html: EN head + podrazumijevani jezik."""
+    """en/index.html iz index.html: EN head, podrazumijevani jezik i engleski tekst upisan u HTML."""
     src = (ROOT / "index.html").read_text(encoding="utf-8")
     head_me = re.search(r"<!-- SEO:START -->.*?<!-- SEO:END -->", src, re.S).group(0)
     head_en = (ROOT / "templates" / "head-en.html").read_text(encoding="utf-8")
     out = src.replace(head_me, head_en)
     out = out.replace('<html lang="sr-Latn-ME" data-lang="me">', '<html lang="en" data-lang="en">')
+    if out.count('data-lang="en"') != 1:
+        raise SystemExit("index.html: <html lang=… data-lang=…> nije u očekivanom obliku")
+    out = prerender_en(out)
     (ROOT / "en").mkdir(exist_ok=True)
     (ROOT / "en" / "index.html").write_text(out, encoding="utf-8")
     return "/en/"
