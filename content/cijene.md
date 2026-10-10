@@ -25,7 +25,7 @@ Prvu analizu tenderske dokumentacije radimo bez naknade. Pretplata počinje kad 
 </ul>
 <a class="btn btn-outline" href="mailto:tendering@fidelityconsulting.me?subject=Paket%20Osnovni%20%E2%80%94%20499%20%E2%82%AC/mj">Izaberi Osnovni</a>
 </div>
-<div class="plan">
+<div class="plan a-sheen">
 <div class="name">Max <span class="tag">Cijeli postupak</span></div>
 <div class="price"><b>1.499 €</b><span>/mj bez PDV</span></div>
 <div class="sub">ili 16.499 € godišnje</div>

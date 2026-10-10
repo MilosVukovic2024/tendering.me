@@ -13,7 +13,7 @@ Izlaz:  <url>/index.html za svaku stranicu, en/index.html, sitemap.xml,
 
 Vercel ne pokreće ništa — generisani HTML se commituje.
 """
-import json, re, html, datetime
+import json, re, html, datetime, gzip, hashlib
 from pathlib import Path
 import markdown
 
@@ -67,6 +67,54 @@ def front_matter(text):
     return meta, m.group(2)
 
 
+ASSETS = ROOT / "assets"
+
+
+def css_min(css):
+    """Bez komentara i suvišnih razmaka — dovoljno za inline <style>."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = re.sub(r"\s+", " ", css)
+    css = re.sub(r"\s*([{};,])\s*", r"\1", css)
+    return re.sub(r":\s+", ":", css).strip()
+
+
+# Fontovi sa sajta (assets/fonts.css): preload + @font-face inline, bez zahtjeva prema Google Fonts.
+FONTS = ("".join(f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="font/woff2" crossorigin>\n'
+                 for f in ("archivo-latin.woff2", "archivo-latin-ext.woff2"))
+         + "<style>" + css_min((ASSETS / "fonts.css").read_text(encoding="utf-8")) + "</style>")
+
+
+# Animacije (assets/motion.css + assets/motion.js — jedini izvor): CSS inline, JS sa ?v=<hash> (keš na Vercelu: vercel.json).
+# Inline skripta postavlja .js prije prvog prikaza (bez JS-a ništa nije skriveno) i preskače prelaz strane pri skoku na #sidro.
+_motion_js = (ASSETS / "motion.js").read_bytes().replace(b"\r\n", b"\n")
+MOTION_JS_GZIP = len(gzip.compress(_motion_js, 9))
+if MOTION_JS_GZIP > 15000:
+    raise SystemExit(f"assets/motion.js: {MOTION_JS_GZIP} B gzip — limit je 15 kB")
+MOTION = ('<script>document.documentElement.classList.add("js");addEventListener("pagereveal",function(e){'
+          'if(e.viewTransition&&location.hash)e.viewTransition.skipTransition()})</script>\n'
+          "<style>" + css_min((ASSETS / "motion.css").read_text(encoding="utf-8")) + "</style>\n"
+          f'<script src="/assets/motion.js?v={hashlib.sha256(_motion_js).hexdigest()[:8]}" defer '
+          "onerror=\"document.documentElement.classList.remove('js')\"></script>")
+
+
+def inject(src, name, block, required=True):
+    """Zamijeni sadržaj između <!-- NAME:START … --> i <!-- NAME:END --> (najviše jedan par)."""
+    pat = re.compile(r"(<!-- " + name + r":START[^>]*-->\n).*?(<!-- " + name + r":END -->)", re.S)
+    out, n = pat.subn(lambda m: m.group(1) + block + "\n" + m.group(2), src, count=1)
+    if n != 1 and required:
+        raise SystemExit(f"index.html: nedostaje marker {name}")
+    return out
+
+
+def build_home_assets():
+    """Zajedničke blokove upiši i u index.html (ručno održavanu početnu), prije generisanja /en/."""
+    p = ROOT / "index.html"
+    src = p.read_text(encoding="utf-8")
+    out = inject(inject(src, "FONTS", FONTS), "MOTION", MOTION, required=False)
+    if out != src:
+        p.write_text(out, encoding="utf-8")
+
+
 MAILTO = "mailto:tendering@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu"
 
 
@@ -74,7 +122,8 @@ def md(text):
     # Samostalan red "[Tekst dugmeta]" → crveno dugme sa mailto linkom.
     text = re.sub(r"^\[([^\]\n]+)\]\s*(?:·.*)?$",
                   lambda m: f'<a class="btn btn-red" href="{MAILTO}">{m.group(1)}</a>', text, flags=re.M)
-    h = markdown.markdown(text, extensions=["tables", "attr_list", "md_in_html"])
+    # sane_lists: numerisana lista počinje od svog prvog broja (/usluge/: koraci 5–7 i 8–10, ne 1–3).
+    h = markdown.markdown(text, extensions=["tables", "attr_list", "md_in_html", "sane_lists"])
     return h.replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
 
 
@@ -114,6 +163,20 @@ def faq_schema(body_html):
                             "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in qa]}
 
 
+# Profil animacije po šablonu (vidi assets/motion.css): "flow" — sekcije ulaze pri skrolu; "longread" — samo naslov
+# i linija napretka čitanja, tekst se ne animira. Ključ je type iz front mattera ili URL; strana bez profila nema animaciju sadržaja.
+MOTION_KIND = {"usluga": "flow", "vodic": "longread", "guide": "longread", "blog": "longread", "praksa": "longread",
+               "/usluge/": "flow", "/vodic/": "flow", "/blog/": "flow", "/primjeri/": "flow", "/praksa/": "flow", "/praksa/tema/": "flow",
+               "/cijene/": "flow", "/en/pricing/": "flow", "/o-nama/": "flow"}
+
+
+def motion_kind(meta):
+    url = meta["url"]
+    parent = url.rstrip("/").rsplit("/", 1)[0] + "/"
+    # Redoslijed: tačan URL (hub strane), pa type iz front mattera, pa roditelj (samo /praksa/tema/<slug>/, bez type-a).
+    return MOTION_KIND.get(url) or MOTION_KIND.get(meta.get("type", "")) or (MOTION_KIND.get(parent) if parent != "/" else None)
+
+
 def render(meta, body_md, extra_schema=None):
     lang = meta.get("lang", "me")
     url = meta["url"]
@@ -143,6 +206,7 @@ def render(meta, body_md, extra_schema=None):
                     f'<link rel="alternate" hreflang="en" href="{SITE}{en_url}">\n'
                     f'<link rel="alternate" hreflang="x-default" href="{SITE}{me_url}">')
 
+    kind = motion_kind(meta)
     cta = (("Send us a tender — first review free", "Document within 24 hours.")
            if lang == "en" else ("Pošaljite nam tender — prva analiza besplatna", "Dokument za 24 sata."))
     out = TEMPLATE
@@ -150,15 +214,17 @@ def render(meta, body_md, extra_schema=None):
         "LANG": "en" if lang == "en" else "sr-Latn-ME",
         "TITLE": html.escape(meta["title"] + (" | Tendering.me" if len(meta["title"]) < 45 else "")),
         "DESCRIPTION": html.escape(meta["description"]),
-        "CANONICAL": SITE + url, "HREFLANG": hreflang,
+        "CANONICAL": SITE + url, "HREFLANG": hreflang, "FONTS": FONTS, "MOTION": MOTION,
+        "ARTICLE_ATTR": f' data-motion="{kind}"' if kind else "",
+        "PROGRESS": '<div class="a-progress" aria-hidden="true"></div>' if kind == "longread" else "",
         "OG_LOCALE": "en_US" if lang == "en" else "sr_ME",
         "SCHEMA": "\n".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas),
         "BREADCRUMB": bc_html, "BODY": body_html,
         "CTA_TITLE": cta[0], "CTA_SUB": cta[1],
         "NAV_HOME": "/en/" if lang == "en" else "/",
-        "NAV": (('<a href="/en/services/tender-appeal-montenegro/">Appeals</a><a href="/en/guide/montenegro-public-procurement-law/">Guide</a><a href="/en/pricing/">Pricing</a><a href="/">ME</a>')
+        "NAV": (('<a class="a-navlink" href="/en/services/tender-appeal-montenegro/">Appeals</a><a class="a-navlink" href="/en/guide/montenegro-public-procurement-law/">Guide</a><a class="a-navlink" href="/en/pricing/">Pricing</a><a class="a-navlink" href="/">ME</a>')
                 if lang == "en" else
-                '<a href="/#postupak">10 koraka javne nabavke</a><a href="/za-narucioce/">Za naručioce</a><a href="/primjeri/">Primjeri iz prakse</a><a href="/vodic/">Vodiči</a><a href="/cijene/">Cijene</a><a href="/en/">EN</a>'),
+                '<a class="a-navlink" href="/#postupak">10 koraka javne nabavke</a><a class="a-navlink" href="/za-narucioce/">Za naručioce</a><a class="a-navlink" href="/primjeri/">Primjeri iz prakse</a><a class="a-navlink" href="/vodic/">Vodiči</a><a class="a-navlink" href="/cijene/">Cijene</a><a class="a-navlink" href="/en/">EN</a>'),
         "YEAR": str(datetime.date.today().year),
     }.items():
         out = out.replace("{{" + k + "}}", v)
@@ -224,13 +290,68 @@ def build_praksa(entries):
     return urls
 
 
+def en_texts(src):
+    """Engleski tekstovi iz skripte početne: T.en (rječnik), STEPS.en, PLANS.en — isti izvor koji koristi JS."""
+    js = src[src.rindex("<script>"):]
+    t_block = re.search(r"const T = \{.*?\n  en: \{(.*?)\n  \}\n\};", js, re.S).group(1)
+    t = {k: json.loads('"' + v + '"') for k, v in re.findall(r'(\w+): "((?:[^"\\]|\\.)*)"', t_block)}
+    steps = json.loads(re.search(r"const STEPS = \{.*?\n  en: (\[.*?\])\n\};", js, re.S).group(1))
+    plans = re.search(r"const PLANS = \{.*?\n  en: \{\s*a: (\[.*?\]),\s*b: (\[.*?\])\s*\}", js, re.S)
+    return t, steps, (json.loads(plans.group(1)), json.loads(plans.group(2)))
+
+
+def prerender_en(out):
+    """Upiši EN tekst u HTML (/en/ više ne prikazuje crnogorski tekst prije JS-a; nema pomjeranja pri zamjeni).
+    JS (renderText, renderSteps, renderPlans) na /en/ i dalje radi isto — samo upisuje iste vrijednosti."""
+    t, steps, (plan_a, plan_b) = en_texts(out)
+    esc = lambda x: html.escape(x, quote=False)
+
+    def i18n(m):
+        key = m.group(3)
+        return m.group(1) + esc(t[key]) + m.group(5) if key in t else m.group(0)
+    head, sep, script = out.rpartition("<script>")
+    head = re.sub(r'(<(\w+)\b[^>]*\bdata-i18n="(\w+)"[^>]*>)([^<]*)(</\2>)', i18n, head)
+    # Linkovi koje renderText mijenja na EN
+    links = {"navGuides": "/en/guide/montenegro-public-procurement-law/", "navPrice": "/en/pricing/",
+             "faq1l": "/en/services/tender-appeal-montenegro/", "faq2l": "/en/services/tender-appeal-montenegro/",
+             "faq3l": "/en/guide/montenegro-public-procurement-law/"}
+    for key, href in links.items():
+        head, n = re.subn(r'<a\b[^>]*\bdata-i18n="' + key + r'"[^>]*>',
+                          lambda m: re.sub(r'href="[^"]*"', 'href="' + href + '"', m.group(0)), head)
+        if n != 1:
+            raise SystemExit(f"index.html: link {key} nije pronađen")
+    # Dugme demoa, statične kartice koraka i stavke paketa
+    for phase, key in (("idle", "scanIdle"), ("scanning", "scanRunning"), ("done", "scanDone")):
+        head = head.replace(f'<span data-l="{phase}">' + re.search(f'<span data-l="{phase}">([^<]*)<', head).group(1),
+                            f'<span data-l="{phase}">' + esc(t[key]), 1)
+    grid = re.search(r'(<div id="steps-grid"[^>]*>)(.*?)(</div>\n      </div>)', head, re.S)
+    cards = grid.group(2)
+    for tag, idx in (("h3", 0), ("p", 1)):
+        vals = iter(steps)
+        cards = re.sub(rf"(<{tag}\b[^>]*>)[^<]*(</{tag}>)", lambda m: m.group(1) + esc(next(vals)[idx]) + m.group(2), cards)
+    vals = iter(steps)
+    cards = re.sub(r'(<div style="margin-top:auto;[^"]*">)[^<]*(</div>)', lambda m: m.group(1) + esc(next(vals)[2]) + m.group(2), cards)
+    head = head[:grid.start(2)] + cards + head[grid.end(2):]
+    for list_id, items in (("planA-list", plan_a), ("planB-list", plan_b)):
+        m = re.search(rf'(<div id="{list_id}"[^>]*>)(.*?)(</div></div>)', head)
+        row = re.search(r'<div style="[^"]*">', m.group(2)).group(0)
+        head = head[:m.start(2)] + "".join(row + esc(x) + "</div>" for x in items[:-1]) + row + esc(items[-1]) + head[m.end(2):]
+    # Brojke u engleskom formatu (4,800+)
+    head = re.sub(r'(class="a-count" data-to="(\d{4,})"[^>]*>)(\d{1,3})\.(\d{3})',
+                  lambda m: m.group(1) + m.group(3) + "," + m.group(4), head)
+    return head + sep + script
+
+
 def build_en_home():
-    """en/index.html iz index.html: EN head + podrazumijevani jezik."""
+    """en/index.html iz index.html: EN head, podrazumijevani jezik i engleski tekst upisan u HTML."""
     src = (ROOT / "index.html").read_text(encoding="utf-8")
     head_me = re.search(r"<!-- SEO:START -->.*?<!-- SEO:END -->", src, re.S).group(0)
     head_en = (ROOT / "templates" / "head-en.html").read_text(encoding="utf-8")
     out = src.replace(head_me, head_en)
     out = out.replace('<html lang="sr-Latn-ME" data-lang="me">', '<html lang="en" data-lang="en">')
+    if out.count('data-lang="en"') != 1:
+        raise SystemExit("index.html: <html lang=… data-lang=…> nije u očekivanom obliku")
+    out = prerender_en(out)
     (ROOT / "en").mkdir(exist_ok=True)
     (ROOT / "en" / "index.html").write_text(out, encoding="utf-8")
     return "/en/"
@@ -246,6 +367,7 @@ def build_sitemap(urls):
 if __name__ == "__main__":
     urls, praksa = build_pages()
     urls += build_praksa(praksa)
+    build_home_assets()
     urls.append(build_en_home())
     build_sitemap(sorted(set(urls)))
     print(f"OK — {len(urls) + 1} stranica, sitemap.xml ažuriran.")

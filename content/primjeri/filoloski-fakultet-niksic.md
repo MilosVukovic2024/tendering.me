@@ -9,9 +9,9 @@ description: Filološki fakultet Nikšić, postupak #121490, 9,8 mil €. Jedana
 
 # Izmjena tenderske dokumentacije za posao od 9,8 miliona eura
 
-*Ministarstvo javnih radova · izgradnja nove zgrade Filološkog fakulteta u Nikšiću · postupak #121490 · procijenjena vrijednost 9,8 miliona EUR*
+*Ministarstvo javnih radova · izgradnja nove zgrade Filološkog fakulteta u Nikšiću · postupak #121490 · procijenjena vrijednost <span class="a-count" data-to="9.8" data-dec="1">9,8</span> miliona EUR*
 
-6. septembra 2026. objavljena je tenderska dokumentacija Ministarstva javnih radova za izgradnju nove zgrade Filološkog fakulteta u Nikšiću (postupak #121490, procijenjena vrijednost 9,8 miliona EUR).
+6\. septembra 2026. objavljena je tenderska dokumentacija Ministarstva javnih radova za izgradnju nove zgrade Filološkog fakulteta u Nikšiću (postupak #121490, procijenjena vrijednost 9,8 miliona EUR).
 
 Kroz naš softver tendering.me za manje od 24 časa identifikovano je **jedanaest spornih tačaka** u dokumentaciji: od uslova minimalnog prometa koji premašuje zakonski maksimum iz člana 104 ZJN, preko referenci koje su neproporcionalno sužavale krug ponuđača, do tehničkih specifikacija koje su na desetine pozicija navodile robne znakove i kataloške oznake bez riječi „ili ekvivalentno".
 

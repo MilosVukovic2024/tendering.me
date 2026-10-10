@@ -49,10 +49,14 @@ Izmjena dokumentacije kasnije od 15 dana prije roka za ponude povlači obavezno 
 
 ## Kako radimo
 
+<div class="a-steps" markdown="1">
+
 1. Pošaljete nacrt: specifikaciju, uslove sposobnosti, kriterijume, nacrt ugovora, obrasce.
 2. Prvo gradimo domensku sliku predmeta: standardi, broj ozbiljnih proizvođača, uobičajeni rasponi parametara — da strog ali standardan zahtjev ne proglasimo spornim, ni da propustimo diskriminaciju koja „izgleda tehnički".
 3. Nalaz i predlog korigovanih odredbi u roku od 24 sata.
 4. Kad korigujete dokumentaciju, šaljete finalnu verziju — završna provjera prije objave na ESJN.
+
+</div>
 
 Ton dokumenta je kolegijalan i praktičan: pišemo za komisiju, ne protiv nje. Bez brendiranja — dokument je interni radni materijal naručioca.
 
