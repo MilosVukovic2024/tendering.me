@@ -13,6 +13,8 @@ content/**/*.md            sve ostale stranice: front matter + Markdown
 templates/page.html        šablon za content stranice
 templates/head-en.html     <head> za EN početnu
 build.py                   md → HTML, sitemap.xml, /praksa/ hub i tema-stranice
+assets/fonts/              Archivo (varijabilni woff2, latin + latin-ext; licenca OFL.txt)
+assets/fonts.css           @font-face — build.py ga umeće inline u <head> (šablon: {{FONTS}}, index.html: FONTS markeri)
 vercel.json                trailingSlash, (tendering.me → www radi Vercel)
 robots.txt, sitemap.xml
 usluge/ vodic/ blog/ praksa/ cijene/ o-nama/ en/   ← GENERISANO, ne uređivati ručno

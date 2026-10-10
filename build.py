@@ -67,6 +67,41 @@ def front_matter(text):
     return meta, m.group(2)
 
 
+ASSETS = ROOT / "assets"
+
+
+def css_min(css):
+    """Bez komentara i suvišnih razmaka — dovoljno za inline <style>."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = re.sub(r"\s+", " ", css)
+    css = re.sub(r"\s*([{};,])\s*", r"\1", css)
+    return re.sub(r":\s+", ":", css).strip()
+
+
+# Fontovi sa sajta (assets/fonts.css): preload + @font-face inline, bez zahtjeva prema Google Fonts.
+FONTS = ("".join(f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="font/woff2" crossorigin>\n'
+                 for f in ("archivo-latin.woff2", "archivo-latin-ext.woff2"))
+         + "<style>" + css_min((ASSETS / "fonts.css").read_text(encoding="utf-8")) + "</style>")
+
+
+def inject(src, name, block):
+    """Zamijeni sadržaj između <!-- NAME:START … --> i <!-- NAME:END --> (mora postojati tačno jedan par)."""
+    pat = re.compile(r"(<!-- " + name + r":START[^>]*-->\n).*?(<!-- " + name + r":END -->)", re.S)
+    out, n = pat.subn(lambda m: m.group(1) + block + "\n" + m.group(2), src, count=1)
+    if n != 1:
+        raise SystemExit(f"index.html: nedostaje marker {name}")
+    return out
+
+
+def build_home_assets():
+    """Zajedničke blokove upiši i u index.html (ručno održavanu početnu), prije generisanja /en/."""
+    p = ROOT / "index.html"
+    src = p.read_text(encoding="utf-8")
+    out = inject(src, "FONTS", FONTS)
+    if out != src:
+        p.write_text(out, encoding="utf-8")
+
+
 MAILTO = "mailto:tendering@fidelityconsulting.me?subject=Tender%20za%20prvu%20%28besplatnu%29%20analizu"
 
 
@@ -150,7 +185,7 @@ def render(meta, body_md, extra_schema=None):
         "LANG": "en" if lang == "en" else "sr-Latn-ME",
         "TITLE": html.escape(meta["title"] + (" | Tendering.me" if len(meta["title"]) < 45 else "")),
         "DESCRIPTION": html.escape(meta["description"]),
-        "CANONICAL": SITE + url, "HREFLANG": hreflang,
+        "CANONICAL": SITE + url, "HREFLANG": hreflang, "FONTS": FONTS,
         "OG_LOCALE": "en_US" if lang == "en" else "sr_ME",
         "SCHEMA": "\n".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas),
         "BREADCRUMB": bc_html, "BODY": body_html,
@@ -246,6 +281,7 @@ def build_sitemap(urls):
 if __name__ == "__main__":
     urls, praksa = build_pages()
     urls += build_praksa(praksa)
+    build_home_assets()
     urls.append(build_en_home())
     build_sitemap(sorted(set(urls)))
     print(f"OK — {len(urls) + 1} stranica, sitemap.xml ažuriran.")

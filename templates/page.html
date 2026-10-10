@@ -17,13 +17,11 @@
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="{{OG_LOCALE}}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap">
+{{FONTS}}
 {{SCHEMA}}
 <style>
   *{box-sizing:border-box}
-  body{margin:0;background:#f3f2f2;color:#201e1d;font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:#f3f2f2;color:#201e1d;font-family:"Archivo","Archivo Fallback",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:#96040e;text-decoration:none}a:hover{color:#d40511}
   ::selection{background:#ffc4c7}:focus-visible{outline:2px solid #d40511;outline-offset:2px}
   .wrap{max-width:1280px;margin:0 auto;padding:0 32px}
