@@ -205,7 +205,7 @@
       es.forEach(function (e) {
         if (!e.isIntersecting) return;
         io.unobserve(e.target);
-        if (!e.target.dataset.seen) count(e.target);
+        count(e.target);
       });
     }, { rootMargin: "0px 0px -15% 0px" });
     els.forEach(function (el) {
@@ -217,8 +217,8 @@
         if (elapsed <= delay + 120) setTimeout(function () { count(el); }, Math.max(0, delay - elapsed));
         return;
       }
-      // Van heroja: broji se samo ako nije bila vidljiva pri učitavanju (inače bi se vidio skok konačno → 0).
-      if (inView) el.dataset.seen = "1";
+      // Van heroja, vidljiva pri učitavanju: broji od nule samo ako ništa još nije prikazano (bez skoka konačno → 0).
+      if (inView) { if (!fcp) count(el); return; }
       io.observe(el);
     });
   }
