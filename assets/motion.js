@@ -251,6 +251,16 @@
     });
   }
 
+  /* ── Sjaj (.a-sheen): jednom, kad je element bar do pola u vidnom polju ── */
+  function initSheen() {
+    var els = $$(".a-sheen");
+    if (reduced || !els.length || !hasIO) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-shine"); io.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
   /* ── Linija čitanja: CSS animation-timeline gdje postoji, inače rAF ── */
   function initProgress() {
     var bar = d.querySelector(".a-progress");
@@ -271,7 +281,7 @@
 
   // Poslije skripti strane (njihov DOMContentLoaded je registrovan ranije), da animacije vide konačni DOM.
   // defer skripta se izvršava prije DOMContentLoaded (readyState je tada već "interactive").
-  function init() { [initBar, initMenu, initReveal, initCount, initSteps, initProgress].forEach(function (f) { safe(f)(); }); }
+  function init() { [initBar, initMenu, initReveal, initCount, initSteps, initSheen, initProgress].forEach(function (f) { safe(f)(); }); }
   var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
   if (d.readyState === "complete" || (nav && nav.domContentLoadedEventStart > 0)) init();
   else d.addEventListener("DOMContentLoaded", init);

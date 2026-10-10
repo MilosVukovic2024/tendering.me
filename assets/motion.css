@@ -140,16 +140,14 @@ article .a-steps { --a-line-x: -14px; } /* liste u tekstu: linija lijevo od ozna
 .a-steps.is-live li::marker { color: #7d7979; }
 .a-steps.is-live li.is-on::marker { color: var(--a-accent); }
 
-/* ── Jednokratan sjaj po gornjoj ivici (paket Max) ── */
+/* ── Jednokratan sjaj po gornjoj ivici (paket Max) kad prvi put uđe u vidno polje (is-shine dodaje motion.js) ── */
 .a-sheen { position: relative; clip-path: inset(-2px 0 0 0); }
 .a-sheen::before {
   content: ""; position: absolute; left: 0; top: -2px; width: 100%; height: 2px; pointer-events: none;
   background: linear-gradient(90deg, transparent, var(--a-accent) 35%, #ff8a92 50%, var(--a-accent) 65%, transparent);
   transform: translateX(-100%); opacity: 0;
 }
-.is-in .a-sheen::before, .is-in.a-sheen::before {
-  animation: a-sheen 900ms var(--a-ease) 350ms;
-}
+.a-sheen.is-shine::before { animation: a-sheen 900ms var(--a-ease) 350ms; }
 @keyframes a-sheen { from { transform: translateX(-100%); opacity: 1; } 80% { opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
 
 /* ── Linija napretka čitanja (vodiči, članci): mjeri samo članak ── */
@@ -180,7 +178,7 @@ article .a-steps { --a-line-x: -14px; } /* liste u tekstu: linija lijevo od ozna
   html { scroll-behavior: auto !important; }
   .js .a-hero .a-line, .js .a-hero .a-after, .js article[data-motion] > h1, .js article[data-motion="flow"] > h1 + p,
   .js article[data-motion="flow"] > h1 + p + ul > li,
-  .js .a-draw > g, .js .a-draw > path, .is-in .a-sheen::before, .is-in.a-sheen::before { animation: none !important; }
+  .js .a-draw > g, .js .a-draw > path, .a-sheen.is-shine::before { animation: none !important; }
   .a-reveal, .a-sec, .a-stagger > *, .a-group .a-line, .a-group .a-after, .a-card::after, .a-card > *, .a-card-media > *,
   .a-navlink::after, .a-num-on, .js .a-bar, .js .a-bar::before, .js .a-bar::after, .js .a-menu,
   .btn, .btn-red, .btn-dark, .btn-outline, .tab-btn, .a-btn { transition: none !important; }
