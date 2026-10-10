@@ -26,6 +26,10 @@
   animation-delay: var(--a-delay, calc(var(--a-base, 150ms) + var(--ai, 0) * 60ms));
 }
 .js article[data-motion="flow"] > h1 + p { animation: a-rise-t var(--a-enter) var(--a-ease) 150ms backwards; }
+/* Lista odmah ispod uvoda (hub strane: vodiči, primjeri, blog) ulazi sa naslovom, u nizu po 60 ms — samo pomak (može biti LCP). */
+.js article[data-motion="flow"] > h1 + p + ul > li { animation: a-rise-t var(--a-enter) var(--a-ease) backwards; animation-delay: calc(230ms + var(--li, 0) * 60ms); }
+article > h1 + p + ul > li:nth-child(2) { --li: 1; } article > h1 + p + ul > li:nth-child(3) { --li: 2; }
+article > h1 + p + ul > li:nth-child(4) { --li: 3; } article > h1 + p + ul > li:nth-child(n+5) { --li: 4; }
 /* Otisak prsta: iscrtavanje ≤ 1,1 s (dashoffset samo u animaciji — bez nje je nacrtan). */
 @keyframes a-draw { from { stroke-dashoffset: var(--a-len); } }
 .js .a-draw > g { --a-len: 1200; animation: a-draw 900ms var(--a-ease) 100ms backwards; }
@@ -175,6 +179,7 @@ article .a-steps { --a-line-x: -14px; } /* liste u tekstu: linija lijevo od ozna
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
   .js .a-hero .a-line, .js .a-hero .a-after, .js article[data-motion] > h1, .js article[data-motion="flow"] > h1 + p,
+  .js article[data-motion="flow"] > h1 + p + ul > li,
   .js .a-draw > g, .js .a-draw > path, .is-in .a-sheen::before, .is-in.a-sheen::before { animation: none !important; }
   .a-reveal, .a-sec, .a-stagger > *, .a-group .a-line, .a-group .a-after, .a-card::after, .a-card > *, .a-card-media > *,
   .a-navlink::after, .a-num-on, .js .a-bar, .js .a-bar::before, .js .a-bar::after, .js .a-menu,

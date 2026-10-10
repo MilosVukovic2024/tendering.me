@@ -10,6 +10,8 @@ description: Deset koraka po ZJN, od analize tenderske dokumentacije do tužbe U
 
 Vi kažete koji korak pokrećemo. Mi isporučimo analizu i dokument najkasnije za 24 sata. Svaki korak ima zakonski rok — i zato svaki ima svoju stranicu sa rokom, sadržajem i praksom.
 
+<div class="a-steps" markdown="1">
+
 ## Prije objave i odmah po objavi
 
 1. **Istraživanje tržišta i tehnički dijalog** — prilika da se uslovi oblikuju prije nego što dokumentacija izađe (čl. 85 ZJN).
@@ -28,6 +30,8 @@ Vi kažete koji korak pokrećemo. Mi isporučimo analizu i dokument najkasnije z
 8. **[Žalba Komisiji za zaštitu prava](/usluge/zalba-komisiji-za-zastitu-prava/)** — čl. 185–188; rok po čl. 186, naknada 1 %.
 9. **Analiza rješenja Komisije** — poređenje sa 4.800+ rješenja i presuda u bazi.
 10. **[Tužba Upravnom sudu](/usluge/tuzba-upravnom-sudu/)** — upravni spor i praćenje izvršenja presude.
+
+</div>
 
 *Dokumenti za korake 8 i 10 zahtijevaju finalnu provjeru od strane klijenta; zastupanje pred sudom vrši advokat.*
 

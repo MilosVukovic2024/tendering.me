@@ -164,11 +164,14 @@ def faq_schema(body_html):
 
 # Profil animacije po šablonu (vidi assets/motion.css): "flow" — sekcije ulaze pri skrolu; "longread" — samo naslov
 # i linija napretka čitanja, tekst se ne animira. Ključ je type iz front mattera ili URL; strana bez profila nema animaciju sadržaja.
-MOTION_KIND = {"usluga": "flow", "vodic": "longread", "guide": "longread", "blog": "longread", "praksa": "longread"}
+MOTION_KIND = {"usluga": "flow", "vodic": "longread", "guide": "longread", "blog": "longread", "praksa": "longread",
+               "/usluge/": "flow", "/vodic/": "flow", "/blog/": "flow", "/primjeri/": "flow", "/praksa/": "flow", "/praksa/tema/": "flow"}
 
 
 def motion_kind(meta):
-    return MOTION_KIND.get(meta["url"]) or MOTION_KIND.get(meta.get("type", ""))
+    url = meta["url"]
+    parent = url.rstrip("/").rsplit("/", 1)[0] + "/"
+    return MOTION_KIND.get(url) or (MOTION_KIND.get(parent) if parent != "/" else None) or MOTION_KIND.get(meta.get("type", ""))
 
 
 def render(meta, body_md, extra_schema=None):
