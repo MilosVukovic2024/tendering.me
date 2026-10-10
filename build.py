@@ -173,7 +173,8 @@ MOTION_KIND = {"usluga": "flow", "vodic": "longread", "guide": "longread", "blog
 def motion_kind(meta):
     url = meta["url"]
     parent = url.rstrip("/").rsplit("/", 1)[0] + "/"
-    return MOTION_KIND.get(url) or (MOTION_KIND.get(parent) if parent != "/" else None) or MOTION_KIND.get(meta.get("type", ""))
+    # Redoslijed: tačan URL (hub strane), pa type iz front mattera, pa roditelj (samo /praksa/tema/<slug>/, bez type-a).
+    return MOTION_KIND.get(url) or MOTION_KIND.get(meta.get("type", "")) or (MOTION_KIND.get(parent) if parent != "/" else None)
 
 
 def render(meta, body_md, extra_schema=None):

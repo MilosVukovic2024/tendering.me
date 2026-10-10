@@ -26,6 +26,8 @@
   animation-delay: var(--a-delay, calc(var(--a-base, 150ms) + var(--ai, 0) * 60ms));
 }
 .js article[data-motion="flow"] > h1 + p { animation: a-rise-t var(--a-enter) var(--a-ease) 150ms backwards; }
+/* Podnaslov heroja na početnoj: samo pomak (može biti LCP), u vrijeme podnaslova (--a-base). */
+.js .a-hero .a-lede { animation: a-rise-t var(--a-enter) var(--a-ease) var(--a-base, 150ms) backwards; }
 /* Lista odmah ispod uvoda (hub strane: vodiči, primjeri, blog) ulazi sa naslovom, u nizu po 60 ms — samo pomak (može biti LCP). */
 .js article[data-motion="flow"] > h1 + p + ul > li { animation: a-rise-t var(--a-enter) var(--a-ease) backwards; animation-delay: calc(230ms + var(--li, 0) * 60ms); }
 article > h1 + p + ul > li:nth-child(2) { --li: 1; } article > h1 + p + ul > li:nth-child(3) { --li: 2; }
@@ -141,13 +143,14 @@ article .a-steps { --a-line-x: -14px; } /* liste u tekstu: linija lijevo od ozna
 .a-steps.is-live li.is-on::marker { color: var(--a-accent); }
 
 /* ── Jednokratan sjaj po gornjoj ivici (paket Max) kad prvi put uđe u vidno polje (is-shine dodaje motion.js) ── */
-.a-sheen { position: relative; clip-path: inset(-2px 0 0 0); }
-.a-sheen::before {
-  content: ""; position: absolute; left: 0; top: -2px; width: 100%; height: 2px; pointer-events: none;
+.a-sheen { position: relative; }
+.a-sheen-bar { position: absolute; left: 0; right: 0; top: -2px; height: 2px; overflow: hidden; pointer-events: none; }
+.a-sheen-bar::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(90deg, transparent, var(--a-accent) 35%, #ff8a92 50%, var(--a-accent) 65%, transparent);
   transform: translateX(-100%); opacity: 0;
 }
-.a-sheen.is-shine::before { animation: a-sheen 900ms var(--a-ease) 350ms; }
+.a-sheen.is-shine .a-sheen-bar::before { animation: a-sheen 900ms var(--a-ease) 350ms; }
 @keyframes a-sheen { from { transform: translateX(-100%); opacity: 1; } 80% { opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
 
 /* ── Linija napretka čitanja (vodiči, članci): mjeri samo članak ── */
@@ -178,7 +181,7 @@ article .a-steps { --a-line-x: -14px; } /* liste u tekstu: linija lijevo od ozna
   html { scroll-behavior: auto !important; }
   .js .a-hero .a-line, .js .a-hero .a-after, .js article[data-motion] > h1, .js article[data-motion="flow"] > h1 + p,
   .js article[data-motion="flow"] > h1 + p + ul > li,
-  .js .a-draw > g, .js .a-draw > path, .a-sheen.is-shine::before { animation: none !important; }
+  .js .a-draw > g, .js .a-draw > path, .a-sheen.is-shine .a-sheen-bar::before, .js .a-hero .a-lede { animation: none !important; }
   .a-reveal, .a-sec, .a-stagger > *, .a-group .a-line, .a-group .a-after, .a-card::after, .a-card > *, .a-card-media > *,
   .a-navlink::after, .a-num-on, .js .a-bar, .js .a-bar::before, .js .a-bar::after, .js .a-menu,
   .btn, .btn-red, .btn-dark, .btn-outline, .tab-btn, .a-btn { transition: none !important; }

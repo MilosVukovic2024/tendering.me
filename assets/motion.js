@@ -8,7 +8,12 @@
   html.classList.add("motion");
 
   // Greška u ovom fajlu ne smije sakriti sadržaj: skini prekidače, sve postaje vidljivo.
-  function fail() { html.classList.remove("motion", "js"); }
+  function fail() {
+    html.classList.remove("motion", "js");
+    $$(".a-menu").forEach(function (m) { m.removeAttribute("inert"); m.classList.remove("open"); });
+    $$(".a-steps").forEach(function (b) { b.classList.remove("is-live"); });
+    $$(".is-armed").forEach(function (m) { m.classList.remove("is-armed"); });
+  }
   w.addEventListener("error", function (e) { if (e && e.filename && e.filename.indexOf("/assets/motion.js") > -1) fail(); });
   function safe(fn) { return function () { try { fn.apply(this, arguments); } catch (err) { fail(); if (w.console) console.error(err); } }; }
 
@@ -46,7 +51,7 @@
   function initMenu() {
     var tg = d.querySelector("[data-menu-toggle]");
     var panel = tg && d.getElementById(tg.getAttribute("aria-controls"));
-    if (!panel) return;
+    if (!panel || !html.classList.contains("js")) return;
     var mq = w.matchMedia("(max-width: 900px)");
     function isOpen() { return panel.classList.contains("open"); }
     function set(open, focusToggle) {
@@ -79,7 +84,7 @@
      Jedinica = .a-reveal | .a-stagger | .a-group, ili sekcija markdown strane (h2 + blokovi do sljedećeg h2).
      Skriva se (is-armed) tek kad je ispod vidnog polja i u pojasu 25 % ispod njega; otkriva se (is-in) kad pređe 90 % visine.
      Šta je vidljivo pri učitavanju, posle skoka na #sidro ili povratka nazad — nikad se ne skriva. */
-  var units = [], byHead = new Map(), armIO, inIO, endIO;
+  var units = [], byHead = new Map(), byMember = new Map(), armIO, inIO, endIO;
 
   function addUnit(head, members) {
     if (!head || byHead.has(head)) return;
@@ -89,7 +94,7 @@
   }
   function arm(u) {
     u.state = 1;
-    u.members.forEach(function (m) { m.classList.add("is-armed"); });
+    u.members.forEach(function (m) { m.classList.add("is-armed"); byMember.set(m, u); inIO.observe(m); });
     inIO.observe(u.head);
   }
   function reveal(u, instant, offset) {
@@ -99,11 +104,16 @@
     armIO.unobserve(u.head); inIO.unobserve(u.head);
     if (!wasArmed) return;
     u.members.forEach(function (m) {
+      inIO.unobserve(m);
       if (instant) m.classList.add("a-instant");
       if (offset) m.style.setProperty("--rb", offset + "ms");
       m.classList.add("is-in");
       m.classList.remove("is-armed");
     });
+    // a-instant samo za ovaj prelaz; poslije toga hover i ostale mikrointerakcije rade normalno
+    if (instant) requestAnimationFrame(function () { requestAnimationFrame(function () {
+      u.members.forEach(function (m) { m.classList.remove("a-instant"); });
+    }); });
   }
   function revealAll(instant) { units.forEach(function (u) { reveal(u, instant); }); }
 
@@ -144,16 +154,18 @@
       });
     }, { rootMargin: "0px 0px 25% 0px" });
     inIO = new IntersectionObserver(function (es) {
-      var hits = es.filter(function (e) { return e.isIntersecting; })
-        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left; });
-      hits.forEach(function (e, i) { var u = byHead.get(e.target); if (u) reveal(u, false, Math.min(i, 4) * 60); });
+      var seen = [];
+      es.filter(function (e) { return e.isIntersecting; })
+        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left; })
+        .forEach(function (e) { var u = byHead.get(e.target) || byMember.get(e.target); if (u && u.state === 1 && seen.indexOf(u) < 0) seen.push(u); });
+      seen.forEach(function (u, i) { reveal(u, false, Math.min(i, 4) * 60); });
     }, { rootMargin: "0px 0px -10% 0px" });
     // Kraj dokumenta: ono što ne može preći 90 % visine (dno strane) otkriva se kad se stigne do kraja.
     var end = d.createElement("div");
     end.setAttribute("aria-hidden", "true");
     end.style.cssText = "height:1px;margin-top:-1px;pointer-events:none";
     d.body.appendChild(end);
-    endIO = new IntersectionObserver(function (es) { if (es[0].isIntersecting) units.forEach(function (u) { if (u.state === 1) reveal(u); }); });
+    endIO = new IntersectionObserver(function (es) { if (es[es.length - 1].isIntersecting) units.forEach(function (u) { if (u.state === 1) reveal(u); }); });
     endIO.observe(end);
     scanUnits(d);
     // Fokus tastaturom na skrivenom elementu → odmah vidljivo.
@@ -189,12 +201,14 @@
     el.appendChild(real); el.appendChild(anim);
     el.style.display = getComputedStyle(el).display === "inline" ? "inline-grid" : "grid";
     el.classList.add("is-counting");
-    var t0 = performance.now();
+    var t0 = performance.now(), done = false;
+    function finish() { if (done) return; done = true; el.classList.remove("is-counting"); anim.remove(); el.style.display = ""; }
+    setTimeout(finish, 1300); // završava i ako pregledač privremeno ne crta kadrove (rAF stoji)
     (function tick(now) {
+      if (done) return;
       var p = Math.min(1, (now - t0) / 1200);
       anim.textContent = pre + fmt(to * ease(p), dec, en) + suf;
-      if (p < 1) return requestAnimationFrame(tick);
-      el.classList.remove("is-counting"); anim.remove(); el.style.display = "";
+      if (p < 1) requestAnimationFrame(tick); else finish();
     })(t0);
   }
   function initCount() {
@@ -208,17 +222,17 @@
         count(e.target);
       });
     }, { rootMargin: "0px 0px -15% 0px" });
+    // Bez čitanja geometrije (nema forsiranog layouta pri učitavanju): brojke na vrhu strane se odlučuju po vremenu, ostale preko IO.
     els.forEach(function (el) {
-      var r = el.getBoundingClientRect(), inView = r.top < vh() && r.bottom > 0;
-      if (inView && el.closest(".a-hero")) {
+      if (el.closest(".a-hero")) {
         // Hero: brojanje kreće kad se brojka pojavi (CSS kašnjenje ulaska); ako je skripta zakasnila, ostaje statično.
         var host = el.closest(".a-after") || el, delay = parseFloat(getComputedStyle(host).animationDelay) * 1000 || 0;
         var elapsed = fcp ? performance.now() - fcp : 0;
         if (elapsed <= delay + 120) setTimeout(function () { count(el); }, Math.max(0, delay - elapsed));
         return;
       }
-      // Van heroja, vidljiva pri učitavanju: broji od nule samo ako ništa još nije prikazano (bez skoka konačno → 0).
-      if (inView) { if (!fcp) count(el); return; }
+      // Odmah ispod naslova članka: broji od nule samo ako ništa još nije prikazano (bez skoka konačno → 0).
+      if (el.closest("article > h1 + p")) { if (!fcp) count(el); return; }
       io.observe(el);
     });
   }
@@ -247,7 +261,7 @@
       function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
       function start() { if (on || done) return; on = true; w.addEventListener("scroll", onScroll, { passive: true }); w.addEventListener("resize", onScroll); onScroll(); }
       function stop() { if (!on) return; on = false; w.removeEventListener("scroll", onScroll); w.removeEventListener("resize", onScroll); }
-      new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else stop(); }).observe(box);
+      new IntersectionObserver(function (es) { if (es[es.length - 1].isIntersecting) start(); else stop(); }).observe(box);
     });
   }
 
@@ -255,6 +269,11 @@
   function initSheen() {
     var els = $$(".a-sheen");
     if (reduced || !els.length || !hasIO) return;
+    els.forEach(function (el) {
+      var bar = d.createElement("span");
+      bar.className = "a-sheen-bar"; bar.setAttribute("aria-hidden", "true");
+      el.insertBefore(bar, el.firstChild);
+    });
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-shine"); io.unobserve(e.target); } });
     }, { threshold: 0.5 });
@@ -274,7 +293,7 @@
     function req() { if (!raf) raf = requestAnimationFrame(up); }
     w.addEventListener("scroll", req, { passive: true });
     w.addEventListener("resize", req);
-    up();
+    req();
   }
 
   w.Motion = { reduced: reduced, ease: ease, refresh: function (root) { if (armIO) scanUnits(root || d); } };
