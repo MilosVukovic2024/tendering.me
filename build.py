@@ -13,7 +13,7 @@ Izlaz:  <url>/index.html za svaku stranicu, en/index.html, sitemap.xml,
 
 Vercel ne pokreće ništa — generisani HTML se commituje.
 """
-import json, re, html, datetime
+import json, re, html, datetime, gzip, hashlib
 from pathlib import Path
 import markdown
 
@@ -84,11 +84,24 @@ FONTS = ("".join(f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="
          + "<style>" + css_min((ASSETS / "fonts.css").read_text(encoding="utf-8")) + "</style>")
 
 
-def inject(src, name, block):
-    """Zamijeni sadržaj između <!-- NAME:START … --> i <!-- NAME:END --> (mora postojati tačno jedan par)."""
+# Animacije (assets/motion.css + assets/motion.js — jedini izvor): CSS inline, JS sa ?v=<hash> (keš na Vercelu: vercel.json).
+# Inline skripta postavlja .js prije prvog prikaza (bez JS-a ništa nije skriveno) i preskače prelaz strane pri skoku na #sidro.
+_motion_js = (ASSETS / "motion.js").read_bytes().replace(b"\r\n", b"\n")
+MOTION_JS_GZIP = len(gzip.compress(_motion_js, 9))
+if MOTION_JS_GZIP > 15000:
+    raise SystemExit(f"assets/motion.js: {MOTION_JS_GZIP} B gzip — limit je 15 kB")
+MOTION = ('<script>document.documentElement.classList.add("js");addEventListener("pagereveal",function(e){'
+          'if(e.viewTransition&&location.hash)e.viewTransition.skipTransition()})</script>\n'
+          "<style>" + css_min((ASSETS / "motion.css").read_text(encoding="utf-8")) + "</style>\n"
+          f'<script src="/assets/motion.js?v={hashlib.sha256(_motion_js).hexdigest()[:8]}" defer '
+          "onerror=\"document.documentElement.classList.remove('js')\"></script>")
+
+
+def inject(src, name, block, required=True):
+    """Zamijeni sadržaj između <!-- NAME:START … --> i <!-- NAME:END --> (najviše jedan par)."""
     pat = re.compile(r"(<!-- " + name + r":START[^>]*-->\n).*?(<!-- " + name + r":END -->)", re.S)
     out, n = pat.subn(lambda m: m.group(1) + block + "\n" + m.group(2), src, count=1)
-    if n != 1:
+    if n != 1 and required:
         raise SystemExit(f"index.html: nedostaje marker {name}")
     return out
 
@@ -97,7 +110,7 @@ def build_home_assets():
     """Zajedničke blokove upiši i u index.html (ručno održavanu početnu), prije generisanja /en/."""
     p = ROOT / "index.html"
     src = p.read_text(encoding="utf-8")
-    out = inject(src, "FONTS", FONTS)
+    out = inject(inject(src, "FONTS", FONTS), "MOTION", MOTION, required=False)
     if out != src:
         p.write_text(out, encoding="utf-8")
 
@@ -149,6 +162,15 @@ def faq_schema(body_html):
                             "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in qa]}
 
 
+# Profil animacije po šablonu (vidi assets/motion.css): "flow" — sekcije ulaze pri skrolu; "longread" — samo naslov
+# i linija napretka čitanja, tekst se ne animira. Ključ je type iz front mattera ili URL; strana bez profila nema animaciju sadržaja.
+MOTION_KIND = {}
+
+
+def motion_kind(meta):
+    return MOTION_KIND.get(meta["url"]) or MOTION_KIND.get(meta.get("type", ""))
+
+
 def render(meta, body_md, extra_schema=None):
     lang = meta.get("lang", "me")
     url = meta["url"]
@@ -178,6 +200,7 @@ def render(meta, body_md, extra_schema=None):
                     f'<link rel="alternate" hreflang="en" href="{SITE}{en_url}">\n'
                     f'<link rel="alternate" hreflang="x-default" href="{SITE}{me_url}">')
 
+    kind = motion_kind(meta)
     cta = (("Send us a tender — first review free", "Document within 24 hours.")
            if lang == "en" else ("Pošaljite nam tender — prva analiza besplatna", "Dokument za 24 sata."))
     out = TEMPLATE
@@ -185,15 +208,17 @@ def render(meta, body_md, extra_schema=None):
         "LANG": "en" if lang == "en" else "sr-Latn-ME",
         "TITLE": html.escape(meta["title"] + (" | Tendering.me" if len(meta["title"]) < 45 else "")),
         "DESCRIPTION": html.escape(meta["description"]),
-        "CANONICAL": SITE + url, "HREFLANG": hreflang, "FONTS": FONTS,
+        "CANONICAL": SITE + url, "HREFLANG": hreflang, "FONTS": FONTS, "MOTION": MOTION,
+        "ARTICLE_ATTR": f' data-motion="{kind}"' if kind else "",
+        "PROGRESS": '<div class="a-progress" aria-hidden="true"></div>' if kind == "longread" else "",
         "OG_LOCALE": "en_US" if lang == "en" else "sr_ME",
         "SCHEMA": "\n".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas),
         "BREADCRUMB": bc_html, "BODY": body_html,
         "CTA_TITLE": cta[0], "CTA_SUB": cta[1],
         "NAV_HOME": "/en/" if lang == "en" else "/",
-        "NAV": (('<a href="/en/services/tender-appeal-montenegro/">Appeals</a><a href="/en/guide/montenegro-public-procurement-law/">Guide</a><a href="/en/pricing/">Pricing</a><a href="/">ME</a>')
+        "NAV": (('<a class="a-navlink" href="/en/services/tender-appeal-montenegro/">Appeals</a><a class="a-navlink" href="/en/guide/montenegro-public-procurement-law/">Guide</a><a class="a-navlink" href="/en/pricing/">Pricing</a><a class="a-navlink" href="/">ME</a>')
                 if lang == "en" else
-                '<a href="/#postupak">10 koraka javne nabavke</a><a href="/za-narucioce/">Za naručioce</a><a href="/primjeri/">Primjeri iz prakse</a><a href="/vodic/">Vodiči</a><a href="/cijene/">Cijene</a><a href="/en/">EN</a>'),
+                '<a class="a-navlink" href="/#postupak">10 koraka javne nabavke</a><a class="a-navlink" href="/za-narucioce/">Za naručioce</a><a class="a-navlink" href="/primjeri/">Primjeri iz prakse</a><a class="a-navlink" href="/vodic/">Vodiči</a><a class="a-navlink" href="/cijene/">Cijene</a><a class="a-navlink" href="/en/">EN</a>'),
         "YEAR": str(datetime.date.today().year),
     }.items():
         out = out.replace("{{" + k + "}}", v)
