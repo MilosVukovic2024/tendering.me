@@ -14,9 +14,13 @@ Prvi korak nije žalba. Prvi korak je da naručilac **na zapisnik** kaže zašto
 
 ## Rokovi
 
+<div class="a-steps" markdown="1">
+
 - Zahtjev se podnosi **najkasnije 10 dana prije isteka roka za podnošenje ponuda** (čl. 95 st. 1).
 - Naručilac je dužan da odgovori **u roku od 5 dana** (čl. 95 st. 2) i da odgovor objavi na ESJN-u svim zainteresovanim licima.
 - Pojašnjenje je dio tenderske dokumentacije, ali se njime **ne smije mijenjati** sadržaj dokumentacije (čl. 95 st. 3). Ako naručilac kroz „pojašnjenje" doda ili promijeni karakteristiku — to je bitna povreda koju Komisija poništava po službenoj dužnosti.
+
+</div>
 
 ## Šta radi dobro pojašnjenje
 

@@ -14,9 +14,13 @@ Između pojašnjenja i žalbe stoji korak koji većina ponuđača preskoči — 
 
 ## Rokovi
 
+<div class="a-steps" markdown="1">
+
 - Predlog se podnosi **u roku od 8 dana od dana objave tenderske dokumentacije** (čl. 94 st. 4).
 - Naručilac odgovara **u roku od 3 dana** (čl. 94 st. 6).
 - Ako naručilac izmijeni dokumentaciju, dužan je da produži rok za ponude (čl. 94 st. 2).
+
+</div>
 
 Odgovor naručioca na predlog je **obavještenje, ne akt** — protiv njega nema žalbe. Rok za žalbu na dokumentaciju i dalje teče od objave osnovne dokumentacije. To znači: predlog i žalbu često pripremamo paralelno.
 

@@ -123,6 +123,7 @@
 
 /* ── Linija napretka koraka: puni se sa skrolom; broj/oznaka dobija akcent kad je linija stigne ── */
 .a-steps { position: relative; }
+article .a-steps { --a-line-x: -14px; } /* liste u tekstu: linija lijevo od oznaka */
 .a-steps-line { display: none; }
 .a-steps.is-live > .a-steps-line {
   display: block; position: absolute; top: 0; bottom: 0; left: var(--a-line-x, 0); width: 2px;
