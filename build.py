@@ -122,7 +122,8 @@ def md(text):
     # Samostalan red "[Tekst dugmeta]" → crveno dugme sa mailto linkom.
     text = re.sub(r"^\[([^\]\n]+)\]\s*(?:·.*)?$",
                   lambda m: f'<a class="btn btn-red" href="{MAILTO}">{m.group(1)}</a>', text, flags=re.M)
-    h = markdown.markdown(text, extensions=["tables", "attr_list", "md_in_html"])
+    # sane_lists: numerisana lista počinje od svog prvog broja (/usluge/: koraci 5–7 i 8–10, ne 1–3).
+    h = markdown.markdown(text, extensions=["tables", "attr_list", "md_in_html", "sane_lists"])
     return h.replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
 
 
