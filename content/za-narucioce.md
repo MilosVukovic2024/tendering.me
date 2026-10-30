@@ -6,6 +6,12 @@ title: Za naručioce — kontrola tenderske dokumentacije prije objave
 description: Preventivna kontrola nacrta tenderske dokumentacije za komisije naručilaca: nalaz nekonzistentnosti po ZJN, ocjena rizika i predlog kako sporne odredbe treba da glase. Prije objave na ESJN.
 ---
 
+<p style="container-type:inline-size;margin:0 0 24px;padding:clamp(18px,2.4vw,26px) clamp(18px,2.8vw,30px);background:#d40511;border:2px solid #201e1d;color:#fff;font-size:clamp(20px,3vw,34px);font-weight:800;letter-spacing:-.025em;line-height:1.2">
+Prijava za radionicu:
+<a href="tel:+38269659906" style="color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;white-space:nowrap">069 659 906</a>&nbsp;i
+<a href="mailto:tendering@fidelityconsulting.me?subject=Prijava%20za%20radionicu" style="color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;font-size:min(1em,6.2cqi);overflow-wrap:anywhere">tendering@fidelityconsulting.me</a>
+</p>
+
 # Kontrola tenderske dokumentacije prije objave
 
 Ista forenzika kojom ponuđači obaraju tendere — samo okrenuta u vašu korist. Prije nego što nacrt ode na ESJN, čitamo ga onako kako će ga čitati najiskusniji ponuđač koji traži rupu: odredbu po odredbu, sa pitanjem *„kako bih ovo napao?"* — pa svaku rupu zatvorimo prije objave.
