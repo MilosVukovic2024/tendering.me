@@ -8,6 +8,7 @@ Statički HTML, hostovan na Vercelu. Vercel ne pokreće build — generisani HTM
 
 ```
 index.html                 ME početna (ručno se održava; SEO blok između <!-- SEO:START --> i <!-- SEO:END -->)
+radionica/index.html       stranica radionice 8.12.2026 (ručno se održava, samostalan HTML)
 en/index.html              generiše build.py iz index.html (EN head iz templates/head-en.html)
 content/**/*.md            sve ostale stranice: front matter + Markdown
 templates/page.html        šablon za content stranice

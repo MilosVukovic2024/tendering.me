@@ -10,6 +10,7 @@ description: Preventivna kontrola nacrta tenderske dokumentacije za komisije nar
 Prijava za radionicu:
 <a href="tel:+38269659906" style="color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;white-space:nowrap">069 659 906</a>&nbsp;i
 <a href="mailto:tendering@fidelityconsulting.me?subject=Prijava%20za%20radionicu" style="color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;font-size:min(1em,6.2cqi);overflow-wrap:anywhere">tendering@fidelityconsulting.me</a>
+<br><a href="/radionica/" style="color:#fff;font-size:.55em;font-weight:700;letter-spacing:0;text-decoration:underline;text-underline-offset:4px">Program i detalji radionice →</a>
 </p>
 
 # Kontrola tenderske dokumentacije prije objave

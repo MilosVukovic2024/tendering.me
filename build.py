@@ -369,5 +369,6 @@ if __name__ == "__main__":
     urls += build_praksa(praksa)
     build_home_assets()
     urls.append(build_en_home())
+    urls.append("/radionica/")  # radionica/index.html — ručno održavana stranica
     build_sitemap(sorted(set(urls)))
     print(f"OK — {len(urls) + 1} stranica, sitemap.xml ažuriran.")
