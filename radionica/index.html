@@ -87,8 +87,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Hero */
 .hero{padding-block:64px 72px}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:9px 16px;border-radius:12px}
-.kicker{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:26px}
+.pill{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(24px,3vw,38px);line-height:1.05;letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);margin:0 0 18px}
+.kicker{margin-bottom:6px}
 .kicker span{font-size:14px;color:var(--mute)}
 h1{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,6.2vw,80px);line-height:.98;letter-spacing:-.04em;margin:0 0 22px;text-wrap:balance}
 .lede{font-size:clamp(19px,2vw,23px);line-height:1.4;margin:0 0 14px;color:var(--ink);font-weight:500;letter-spacing:-.01em}
@@ -264,7 +264,8 @@ footer nav a:hover{color:var(--ink)}
   <section class="hero">
     <div class="wrap">
       <div>
-        <div class="kicker"><span class="pill">Za naručioce i ponuđače</span><span>Radionica · Podgorica 2026</span></div>
+        <div class="kicker"><span>Radionica · Podgorica 2026</span></div>
+        <p class="pill">Za naručioce i&nbsp;ponuđače</p>
         <h1>Vještačka <span class="red">inteligencija</span> u javnim nabavkama</h1>
         <p class="lede">Kako da budete sigurni da je tender napisan <span class="red">po zakonu?</span></p>
         <p class="sub">Prvi događaj u Crnoj Gori posvećen primjeni vještačke inteligencije u javnim nabavkama. Pokazaćemo kako da propuste u tenderskoj dokumentaciji i ponudi prepoznate prije nego što postanu problem.</p>
