@@ -224,7 +224,7 @@ def render(meta, body_md, extra_schema=None):
         "NAV_HOME": "/en/" if lang == "en" else "/",
         "NAV": (('<a class="a-navlink" href="/en/services/tender-appeal-montenegro/">Appeals</a><a class="a-navlink" href="/en/guide/montenegro-public-procurement-law/">Guide</a><a class="a-navlink" href="/en/pricing/">Pricing</a><a class="a-navlink" href="/">ME</a>')
                 if lang == "en" else
-                '<a class="a-navlink" href="/#postupak">10 koraka javne nabavke</a><a class="a-navlink" href="/za-narucioce/">Za naručioce</a><a class="a-navlink" href="/primjeri/">Primjeri iz prakse</a><a class="a-navlink" href="/vodic/">Vodiči</a><a class="a-navlink" href="/cijene/">Cijene</a><a class="a-navlink" href="/en/">EN</a>'),
+                '<a class="a-navlink" href="/#postupak">10 koraka javne nabavke</a><a class="a-navlink" href="/za-narucioce/">Za naručioce</a><a class="a-navlink" href="/radionica/">Radionica</a><a class="a-navlink" href="/primjeri/">Primjeri iz prakse</a><a class="a-navlink" href="/vodic/">Vodiči</a><a class="a-navlink" href="/cijene/">Cijene</a><a class="a-navlink" href="/en/">EN</a>'),
         "YEAR": str(datetime.date.today().year),
     }.items():
         out = out.replace("{{" + k + "}}", v)
